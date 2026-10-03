@@ -16,21 +16,22 @@ image = (
 
 data_volume = modal.Volume.from_name("primora-data", create_if_missing=True)
 DATA_DIR = "/data"
+supabase_secret = modal.Secret.from_name("primora-supabase")
 
 
-@app.function(image=image, volumes={DATA_DIR: data_volume}, schedule=modal.Cron("0 * * * *"), timeout=1800)
+@app.function(image=image, volumes={DATA_DIR: data_volume}, secrets=[supabase_secret], schedule=modal.Cron("0 * * * *"), timeout=1800)
 def refresh_postings():
     """Hourly: pull SimplifyJobs history, update postings, emit open-now alerts. (Tracker 1.1, 1.10)"""
     print("refresh_postings: hello from Primora (pipeline not built yet)")
 
 
-@app.function(image=image, volumes={DATA_DIR: data_volume}, schedule=modal.Cron("0 6 * * *"), timeout=3600)
+@app.function(image=image, volumes={DATA_DIR: data_volume}, secrets=[supabase_secret], schedule=modal.Cron("0 6 * * *"), timeout=3600)
 def retrain_and_predict():
     """Nightly: fit model, check vs baseline, write predictions. (Tracker 1.8, 1.10)"""
     print("retrain_and_predict: hello from Primora (model not built yet)")
 
 
-@app.function(image=image)
+@app.function(image=image, secrets=[supabase_secret])
 @modal.asgi_app()
 def api():
     from primora_api.main import app as fastapi_app

@@ -21,7 +21,7 @@ Takes Primora from an empty repo to a launched Chrome extension + dashboard. Ord
 - [x] **0.1 Repo layout.** Monorepo: `pipeline/` (Python, uv), `api/` (FastAPI), `web/` (React + Vite + TS), `extension/` (WXT + React + TS), `docs/`. README, `.gitignore`, `.env.example`. Done: repo structure committed; `pipeline` env installs.
 - [x] **0.2 Python env.** uv project with duckdb, polars (or pandas), lifelines, scikit-survival, matplotlib, jupyter, and MLflow or W&B. Done: a notebook imports everything.
 - [ ] **0.3 Supabase.** New project; migration for the 7 tables (companies, postings, openings, predictions, targets, applications, alerts); row-level security on user tables; Google sign-in enabled. Done: tables visible in Supabase; a test sign-in works.
-- [ ] **0.4 Modal.** Account + CLI auth; hello-world scheduled function; FastAPI `/health` web endpoint; Supabase keys in Modal Secrets. Done: `modal deploy` gives a URL that returns ok, and the scheduled function shows runs in the dashboard.
+- [x] **0.4 Modal.** Account + CLI auth; hello-world scheduled function; FastAPI `/health` web endpoint; Supabase keys in Modal Secrets. Done: `modal deploy` gives a URL that returns ok, and the scheduled function shows runs in the dashboard.
 
 ## Phase 1 -- Data + simple model (Daniel drives)
 - [ ] **1.1 Extract history.** Clone SimplifyJobs; walk every commit touching `.github/scripts/listings.json`; write per-listing observations (listing ID, commit time, active, fields) to Parquet. Done: Parquet exists; listing counts sanity-checked against the current file (about 17k).
@@ -80,6 +80,9 @@ Workday detection (FR-11), Gmail outcome classifier (FR-16, GPU cluster for fine
 - 2026-09-24: 0.2 done. `uv sync` OK; duckdb 1.5.5, lifelines 0.30.3, scikit-survival 0.28.0, mlflow, modal 1.5.5 import; API `/health` returns ok via TestClient.
 - 2026-09-24: 0.3 partial. `supabase/` initialized; initial migration (7 tables + RLS) written and parses (25 statements). Still needs: cloud project, `supabase link`, `db push`, Google sign-in.
 - 2026-09-24: 0.4 partial. Modal app written (hourly + nightly stubs, API endpoint, `primora-data` volume). Still needs: `modal token new`, then `modal deploy`.
+- 2026-10-03: Phase 0 scaffolding committed. Modal authed (workspace `dalmartin`) and deployed: `https://dalmartin--primora-api.modal.run/health` returns ok; `refresh_postings` runs. Remaining for 0.4: Supabase keys in Modal Secrets (after 0.3).
+- 2026-10-03: 0.3 mostly done. Supabase org + project `primora` (ref `alwzilzgszpxnjmlqcxx`, us-west-2) created; linked; migration pushed; all 7 tables respond via REST. Keys in local `.env` (ignored) and Modal secret `primora-supabase`. Still needs: Google sign-in provider (Google Cloud OAuth client) + test sign-in.
+- 2026-10-03: 0.4 done. Secret attached to all 3 functions; redeployed; `/health` ok.
 
 ---
 
