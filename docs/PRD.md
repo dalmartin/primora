@@ -1,8 +1,9 @@
-# Internship Radar -- PRD
+# Primora -- PRD
 
 **Status:** final (locked 2026-09-24)
 **Stakes:** launch-bound. Daniel is user #1, then other CS students.
-**Source:** [[projects/internship-radar/idea-brief-internship-radar]]
+**Source:** [[projects/primora/idea-brief-primora]]
+**Code + build tracker:** `~/Documents/My Projects/primora/` (`docs/BUILD-TRACKER.md`)
 
 ## 0. One-liner
 A browser extension and dashboard for CS students applying to internships in volume: it predicts when high-value roles will open, gives you a head start to prep, logs each application automatically, and tells you which applications are still alive.
@@ -176,4 +177,4 @@ Key design choice: **predictions are computed in batch, not on request.** Openin
 - **Alerts when the browser is closed:** extension polling only works while Chrome runs. Good enough for v1, or add web push / email as a backup?
 - **Pre-Nov 2022 history:** worth parsing old README markdown for more cycles? Probably later, if backtests show thin data hurts.
 - **Build order:** extension logging first (value for Daniel now) or data + model first (the core)? For `shipmate` to settle.
-- **Name:** "Internship Radar" is a placeholder.
+- **Name:** Primora (renamed from the placeholder "Internship Radar" on 2026-09-24).

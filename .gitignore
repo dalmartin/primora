@@ -1,0 +1,29 @@
+# Python
+.venv/
+__pycache__/
+*.pyc
+.ipynb_checkpoints/
+mlruns/
+mlartifacts/
+
+# Pipeline data (rebuilt from source; lives on the Modal volume in the cloud)
+data/
+
+# Node
+node_modules/
+dist/
+.output/
+.wxt/
+
+# Secrets
+.env
+.env.*
+!.env.example
+
+# Supabase local
+supabase/.branches
+supabase/.temp
+
+# OS / editor
+.DS_Store
+.vscode/

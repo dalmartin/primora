@@ -1,9 +1,9 @@
-# Internship Radar -- Build Tracker
+# Primora -- Build Tracker
 
-**PRD:** `docs/PRD.md` (source of truth for scope; this file tracks *doing* it, not *what* it is). Vault copy: `Tauros/projects/internship-radar/PRD.md`.
+**PRD:** `docs/PRD.md` (source of truth for scope; this file tracks *doing* it, not *what* it is). Vault copy: `Tauros/projects/primora/PRD.md`.
 **Status:** in progress
 
-Takes Internship Radar from an empty repo to a launched Chrome extension + dashboard. Order: a quick scaffolding pass, then **the data and the simple model first** (Daniel's call, 2026-09-24), then the extension and dashboard, then alerts, then the Bayesian model, then launch.
+Takes Primora from an empty repo to a launched Chrome extension + dashboard. Order: a quick scaffolding pass, then **the data and the simple model first** (Daniel's call, 2026-09-24), then the extension and dashboard, then alerts, then the Bayesian model, then launch.
 
 **Hard rules**
 - No LLM at the core. The countdown and ghost signal are models built here.
@@ -18,8 +18,8 @@ Takes Internship Radar from an empty repo to a launched Chrome extension + dashb
 ---
 
 ## Phase 0 -- Foundation (one pass)
-- [ ] **0.1 Repo layout.** Monorepo: `pipeline/` (Python, uv), `api/` (FastAPI), `web/` (React + Vite + TS), `extension/` (WXT + React + TS), `docs/`. README, `.gitignore`, `.env.example`. Done: repo structure committed; `pipeline` env installs.
-- [ ] **0.2 Python env.** uv project with duckdb, polars (or pandas), lifelines, scikit-survival, matplotlib, jupyter, and MLflow or W&B. Done: a notebook imports everything.
+- [x] **0.1 Repo layout.** Monorepo: `pipeline/` (Python, uv), `api/` (FastAPI), `web/` (React + Vite + TS), `extension/` (WXT + React + TS), `docs/`. README, `.gitignore`, `.env.example`. Done: repo structure committed; `pipeline` env installs.
+- [x] **0.2 Python env.** uv project with duckdb, polars (or pandas), lifelines, scikit-survival, matplotlib, jupyter, and MLflow or W&B. Done: a notebook imports everything.
 - [ ] **0.3 Supabase.** New project; migration for the 7 tables (companies, postings, openings, predictions, targets, applications, alerts); row-level security on user tables; Google sign-in enabled. Done: tables visible in Supabase; a test sign-in works.
 - [ ] **0.4 Modal.** Account + CLI auth; hello-world scheduled function; FastAPI `/health` web endpoint; Supabase keys in Modal Secrets. Done: `modal deploy` gives a URL that returns ok, and the scheduled function shows runs in the dashboard.
 
@@ -75,6 +75,11 @@ Workday detection (FR-11), Gmail outcome classifier (FR-16, GPU cluster for fine
 
 ## Progress log
 - 2026-09-24: Tracker created from PRD. Build order set by Daniel: data + simple model first.
+- 2026-09-24: Project renamed Primora (was Internship Radar).
+- 2026-09-24: 0.1 done. uv workspace (`pipeline/`, `api/`), `modal_app.py`, `web/` (Vite React TS, builds), `extension/` (WXT React, builds as "Primora"), README, .gitignore, .env.example.
+- 2026-09-24: 0.2 done. `uv sync` OK; duckdb 1.5.5, lifelines 0.30.3, scikit-survival 0.28.0, mlflow, modal 1.5.5 import; API `/health` returns ok via TestClient.
+- 2026-09-24: 0.3 partial. `supabase/` initialized; initial migration (7 tables + RLS) written and parses (25 statements). Still needs: cloud project, `supabase link`, `db push`, Google sign-in.
+- 2026-09-24: 0.4 partial. Modal app written (hourly + nightly stubs, API endpoint, `primora-data` volume). Still needs: `modal token new`, then `modal deploy`.
 
 ---
 

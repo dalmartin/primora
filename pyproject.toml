@@ -1,0 +1,16 @@
+[project]
+name = "primora"
+version = "0.1.0"
+description = "Primora: internship opening predictions, application tracking, ghost signals."
+requires-python = ">=3.11"
+dependencies = ["primora-pipeline", "primora-api", "modal"]
+
+[tool.uv.workspace]
+members = ["pipeline", "api"]
+
+[tool.uv.sources]
+primora-pipeline = { workspace = true }
+primora-api = { workspace = true }
+
+[dependency-groups]
+dev = ["jupyterlab", "ipykernel", "pytest", "ruff"]
