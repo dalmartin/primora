@@ -2,6 +2,8 @@
 
 Deploy:  modal deploy modal_app.py
 Run once: modal run modal_app.py::refresh_postings
+History:  modal run modal_app.py::extract_history, then
+          modal volume get primora-data history data/
 """
 import modal
 
@@ -10,7 +12,8 @@ app = modal.App("primora")
 image = (
     modal.Image.debian_slim(python_version="3.11")
     .apt_install("git")
-    .pip_install("duckdb", "polars", "pyarrow", "pandas", "lifelines", "fastapi[standard]", "supabase", "pyjwt")
+    .env({"PRIMORA_DATA_DIR": "/data"})
+    .pip_install("duckdb", "polars", "pyarrow", "orjson", "pandas", "lifelines", "fastapi[standard]", "supabase", "pyjwt")
     .add_local_python_source("primora_pipeline", "primora_api")
 )
 
@@ -29,6 +32,17 @@ def refresh_postings():
 def retrain_and_predict():
     """Nightly: fit model, check vs baseline, write predictions. (Tracker 1.8, 1.10)"""
     print("retrain_and_predict: hello from Primora (model not built yet)")
+
+
+@app.function(image=image, volumes={DATA_DIR: data_volume}, timeout=6 * 3600, cpu=4, memory=8192)
+def extract_history(refresh: bool = True):
+    """One-off / on demand: SimplifyJobs git history -> history/*.parquet on the volume. (Tracker 1.1)"""
+    from primora_pipeline.extract_history import extract
+
+    try:
+        extract(refresh=refresh)
+    finally:
+        data_volume.commit()
 
 
 @app.function(image=image, secrets=[supabase_secret])
