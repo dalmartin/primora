@@ -31,6 +31,30 @@ What we learned about the SimplifyJobs data, and the decisions that follow from 
 
 **Spot check (first SWE posting seen, by cycle):** Citadel and Jane Street early July; Google and Microsoft mid-to-late August; Capital One Dec/Jan. Sensible. **Coverage gap:** Meta's first Summer 2025 SWE posting in Simplify is 2025-01-04, but Meta usually opens around September. So Simplify can be months late or miss a company entirely; 1.3 should check how often.
 
+## Simplify lag (tracker 1.3)
+`pipeline/src/primora_pipeline/lag.py` → `simplify_lag.parquet`, `board_coverage.parquet`. Rerun prints every number below.
+
+**Method.** Instead of a 20-30 sample, every SWE posting hosted on Greenhouse, Ashby or Lever is matched to the company's own job board (one request per board, 1,954 boards). Company date: Greenhouse `first_published`, Ashby `publishedAt`, Lever `createdAt`. Includes 652 postings that link to a company's own careers site with a Greenhouse `gh_jid` (Waymo, Lyft, Roku...), resolved by guessing the board token and keeping it only if the job id is on it. **492 SWE postings matched.**
+
+**Limit: this is mostly the current cycle.** Boards only list open jobs, so closed postings from past cycles can't be checked (382 boards are gone entirely). We are assuming past cycles behaved like this one. EU Greenhouse boards (76 postings, e.g. IMC) have no reachable API; Workday, iCIMS, SmartRecruiters and company-built sites (Meta, Google, Amazon, Tesla, TikTok) have no comparable date at all. So the Meta Summer 2025 gap from 1.2 can't be checked this way.
+
+**Postings fall into four buckets:**
+- **Fresh (78%):** a new post Simplify picked up within a week. **Median 4.6 hours behind the company; p75 7h, p90 15h.** Greenhouse and Ashby about 4.5h (p90 under 10h); Lever slower, median 14h, p90 about 5 days (`createdAt` can predate publishing, so Lever may overstate).
+- **Late (7%):** picked up 1 week to 3 months after the company posted. Real misses, e.g. Cloudflare SWE Intern posted 9/16, in Simplify 9/28.
+- **Evergreen (10%):** posts years older than the cycle, reused cycle after cycle (Palantir's Lever posts from 2016-2022; Jane Street, QuantCo). Their company date says nothing about when this cycle opened; Simplify's first_seen is the better signal for these.
+- **Republished (5%, all Ashby):** company date is *after* Simplify saw it, because republishing resets `publishedAt`.
+
+**Coverage (Summer 2027, posts from 2026).** Of 190 explicit Summer 2027 SWE intern posts on boards Simplify already tracks, Simplify has 78%. Posting-level misses don't always matter: a company only needs one SWE posting to count as open.
+
+**Opening-date error, the number that matters.** Per company (95 companies with a Summer 2027 SWE intern post on these boards), compare the board's first such post with Simplify's first SWE cycle-2027 posting from that board:
+- 78 of 95 (82%) appear in Simplify. Of those: 63 within a day, 7 within a week, 6 more than a week late, 2 earlier in Simplify (republished posts). **Median error 0.2 days, p90 3.5 days.**
+- 17 (18%) have no SWE posting in Simplify at all, mostly small companies (Advanced Space, Armadin, Netic) but also AppLovin, SingleStore and Airwallex. A few may be false misses: Simplify sometimes links a company's own site with no recoverable board (C3.ai is one).
+
+**Takeaways for modeling.**
+1. When Simplify has a company, `first_seen` is a good opening date: hours off, not days. No lag correction is needed for the model; treat it as noise of about a day.
+2. The real risk is **coverage, not lag.** Something like 1 in 6 companies' openings are missing or more than a week late. An opening never seen looks like a company that didn't open, which biases toward "opens late / doesn't hire." Worth weighing in 1.4 (which companies count) and when choosing the top ~100 in 1.5 (prefer ones with consistent coverage across cycles).
+3. Evergreen and multi-cycle postings are the same phenomenon seen from two sides (see `multi_cycle` / `terms_changed` in 1.2). For those, the opening is when Simplify (re)tagged them for the cycle, not the post's own date.
+
 ## Decisions
 - **2026-10-04 (Daniel): "opening" = the first SWE-intern posting per company per Summer cycle.** Category-level openings can come later.
 - **For 1.4 (Daniel's call):** how to treat `multi_cycle` and `terms_changed` postings (exclude, or count from when the term changed); and `first_seen_censored` (297 listings already present on 2023-08-02, so the Summer 2024 cycle is left-censored for early openers).
