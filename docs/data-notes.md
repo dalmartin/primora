@@ -96,6 +96,19 @@ What we learned about the SimplifyJobs data, and the decisions that follow from 
 
 **Window end moved to May 31 (Daniel, 2026-10-08).** With Aug 31, a posting tagged for a Summer already underway counted (Jump Trading Summer 2024 "opened" 2024-08-09). The no-season and speedyapply date rules moved with it: a posting from Jun 1 on counts toward the next Summer (Jun-May, was Jul-Jun). Openings now: 2024: 801 (+106 left-censored) · 2025: 1,051 · 2026: 1,680 · 2027 so far: 697.
 
+## Exploratory analysis (tracker 1.6, 2026-10-08)
+`pipeline/notebooks/explore_openings.py` (VS Code cells, or run top to bottom) redraws `docs/figures/1-5`. Dates below are positions in the season: "Sep 1" means Sep 1 of the year before the Summer.
+
+**1. Two waves, and the big one is narrow.** Openings peak in September (main wave, early Aug to early Oct), then a second, smaller wave peaks in February of the Summer year. Prestige and pipeline companies are almost all main-wave; the spring wave is mostly smaller companies. (Figure 1.)
+
+**2. Groups open in a clear order.** Median opening: quant ~Aug 9 (middle half early Jul to early Sep), big tech ~Sep 4, hardware / finance / defense late Sep to early Oct, health ~Dec 20, gov / research ~Jan. By tier: prestige ~Aug 31 (middle half Aug 3 to Oct 5), pipeline ~Sep 5, untiered ~Dec 11. Group carries real signal for pooling. (Figure 2.)
+
+**3. The season is creeping earlier.** In consecutive years, 58-60% of companies opened earlier than the year before; median shift -11 days (2024→25) and -6 days (2025→26). June-July openings: 57 (Summer 2025), 105 (2026), 131 (2027 so far). Caveat: the lists themselves grew over this time, which also makes early posts more visible.
+
+**4. "Same date as last year" is a weak baseline, except for the companies Daniel cares about.** Median error 31-40 days; only ~30% land within 2 weeks. Prestige: median 17 days, 46% within 2 weeks. Quant 18.5 days, big tech 27; health and industrial ~49, gov / research 58. Figure 3 shows why: besides noise around the diagonal, some companies switch between the fall and spring wave year to year. **For the model (1.8):** use group and tier, pool across companies, and allow for two waves (a mixture) rather than one date plus noise. (Figures 3-4.)
+
+**5. Summer 2027 is a little behind, or the lists are.** Of 161 prestige + pipeline companies that opened in both 2025 and 2026, 68% are open as of Oct 8 vs 73% (2025) and 78% (2026) at the same point. 51 tiered companies opened both prior years and haven't yet. Some are overdue by their own history (Citadel and Citadel Securities: Jul 3 both years; D. E. Shaw: Jun-Jul; Uber, Snowflake, Neuralink, Cisco, IBM, OpenAI, ServiceNow: Jun-Sep). Those are either late this year or missed by both lists; worth a manual check of their career pages. (Figure 5.)
+
 ## Decisions
 - **2026-10-04 (Daniel): "opening" = the first SWE-intern posting per company per Summer cycle.** Category-level openings can come later.
 - **2026-10-08 (Daniel), rules for the `openings` table (1.4):**
