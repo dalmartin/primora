@@ -109,6 +109,19 @@ What we learned about the SimplifyJobs data, and the decisions that follow from 
 
 **5. Summer 2027 is a little behind, or the lists are.** Of 161 prestige + pipeline companies that opened in both 2025 and 2026, 68% are open as of Oct 8 vs 73% (2025) and 78% (2026) at the same point. 51 tiered companies opened both prior years and haven't yet. Some are overdue by their own history (Citadel and Citadel Securities: Jul 3 both years; D. E. Shaw: Jun-Jul; Uber, Snowflake, Neuralink, Cisco, IBM, OpenAI, ServiceNow: Jun-Sep). Those are either late this year or missed by both lists; worth a manual check of their career pages. (Figure 5.)
 
+## Baselines (tracker 1.7, 2026-10-08)
+`pipeline/src/primora_pipeline/backtest.py` (`uv run python -m primora_pipeline.backtest`) → `docs/backtests/results.csv`. Hide a cycle, train on the cycles before it, predict p10 / p50 / p90 opening dates, score on companies that opened. Test cycles 2025 (train 2024) and 2026 (train 2024-25). A new model is one function registered in `MODELS`.
+
+| Summer 2026, tiered companies (195) | days off (median) | within 2 weeks | 80% window covers | window width |
+|---|---|---|---|---|
+| `last_year` (172 with history) | 26 | 35% | 87% | 254 days |
+| `group_season` | 57 | 10% | 75% | 206 days |
+| `last_year_or_group` | 29 | 32% | 86% | 252 days |
+
+All companies: `last_year_or_group` 59 days off, 80% coverage, 229-day window. Summer 2025 scores are worse (train is just half-observed 2024; `last_year` has no window there because it needs two train years).
+
+**Reading it.** "Same date as last year" gets the middle date within about 4 weeks for top companies, but its honest 80% window is about 8 months wide, mostly because some companies switch between the fall and spring waves. That's the bar. **1.8's job:** keep the middle date at 4 weeks or better and shrink the 80% window to something useful (a target to agree on: under ~60 days for tiered companies at ~80% coverage).
+
 ## Decisions
 - **2026-10-04 (Daniel): "opening" = the first SWE-intern posting per company per Summer cycle.** Category-level openings can come later.
 - **2026-10-08 (Daniel), rules for the `openings` table (1.4):**
