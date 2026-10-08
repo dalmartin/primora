@@ -94,7 +94,7 @@ What we learned about the SimplifyJobs data, and the decisions that follow from 
 
 **Company merges.** `pipeline/reference/company_aliases.csv` merges spellings ("JP Morgan Chase" → "JPMorgan Chase", "SIG" → "Susquehanna", "Cadence" → "Cadence Design Systems"). Deliberately not merged: Citadel / Citadel Securities (separate firms), TikTok / ByteDance (separate career sites), Cohere / Cohere Health. The speedyapply prefix match now only allows generic extra words ("Technologies", "Group", ...): it had merged "Southern Poverty Law Center" into an unrelated "Southern". 2,652 companies after merges.
 
-**Quirk to revisit:** the cycle window ends Aug 31 of the Summer year, so a posting tagged for a Summer that has already started can still count (Jump Trading Summer 2024 "opened" 2024-08-09). Ending the window Jun 30 would drop those.
+**Window end moved to May 31 (Daniel, 2026-10-08).** With Aug 31, a posting tagged for a Summer already underway counted (Jump Trading Summer 2024 "opened" 2024-08-09). The no-season and speedyapply date rules moved with it: a posting from Jun 1 on counts toward the next Summer (Jun-May, was Jul-Jun). Openings now: 2024: 801 (+106 left-censored) · 2025: 1,051 · 2026: 1,680 · 2027 so far: 697.
 
 ## Decisions
 - **2026-10-04 (Daniel): "opening" = the first SWE-intern posting per company per Summer cycle.** Category-level openings can come later.
@@ -103,6 +103,6 @@ What we learned about the SimplifyJobs data, and the decisions that follow from 
   2. `terms_changed` postings (about 56 reused from earlier cycles) count from the relabel date.
   3. Summer 2024 is kept. Openings already present on 2023-08-02 (`first_seen_censored`) are marked left-censored ("opened on or before 2023-08-02"), not given a guessed date.
   4. No company is dropped for coverage now. Add a coverage flag; the 1.7 backtests decide whether low-coverage companies hurt predictions.
-  5. Cycle window: a tag only counts between Jan 1 of the year before the cycle and Aug 31 of the cycle year.
-  6. SWE intern postings with no season (terms N/A) count toward the Summer after them (Jul-Jun).
+  5. Cycle window: a tag only counts between Jan 1 of the year before the cycle and May 31 of the cycle year (end moved from Aug 31 the same day).
+  6. SWE intern postings with no season (terms N/A) count toward the Summer after them (Jun-May).
   7. speedyapply is a second source; the opening is the earlier of the two lists (rules in the speedyapply section).

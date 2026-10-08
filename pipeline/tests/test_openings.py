@@ -73,6 +73,6 @@ def test_openings(tmp_path, monkeypatch):
     assert o["Acme", 2027]["opened_at_simplify"] == d(160)
     # "Dell" joins "Dell Technologies" by prefix; age 40 > 14 so first_seen; Fall post ignored
     assert o["Dell Technologies", 2027]["opened_at"] == d(160)
-    assert o["Dell Technologies", 2026]["opened_at_speedyapply"] == d(200)  # Feb 2026: Jul-Jun -> 2026
+    assert o["Dell Technologies", 2026]["opened_at_speedyapply"] == d(200)  # Feb 2026: Jun-May -> 2026
     assert o["Solo", 2027]["opened_at"] == d(170) and o["Solo", 2027]["n_speedyapply_postings"] == 1
     assert ("Acme", 2026) in o and o["Acme", 2026]["n_speedyapply_postings"] == 0  # intl ignored

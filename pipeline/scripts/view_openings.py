@@ -58,7 +58,7 @@ def wide(o: pd.DataFrame, companies: pd.DataFrame | None) -> pd.DataFrame:
 
 
 def plot(o: pd.DataFrame, companies: list[str]) -> None:
-    """Opening date within the season for each cycle, all cycles on one Jul-Jun axis."""
+    """Opening date within the season for each cycle, all cycles on one Jan-Jun axis."""
     d = o[o.company_name.isin(companies) & o.opened_at.notna()].copy()
     # shift every cycle onto the Summer 2027 season so dates line up (2027 stays as is)
     d["x"] = d.opened_at.dt.tz_localize(None) + pd.to_timedelta((2027 - d.cycle) * 365, unit="D")

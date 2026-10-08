@@ -13,19 +13,20 @@ Rules (Daniel, 2026-10-08; see docs/data-notes.md):
   2. Openings already in the very first commit (2023-08-02) are left-censored: "on or before".
      Same for speedyapply's first snapshot (2024-01-01) when its Age doesn't give a date.
   3. Nothing is dropped for coverage; `board_misses_2027` and `cycles_open` flag it instead.
-  4. A tag only counts inside the cycle's window, Jan 1 of the year before through Aug 31 of the
-     cycle year. Outside it the tag is a data error or a rolling post, not an opening: e.g.
-     General Motors tagged Summer 2024 in Jan 2026, Amazon's rolling post tagged Summer 2027 in
-     Oct 2024. Counted in `n_out_of_window`.
+  4. A tag only counts inside the cycle's window, Jan 1 of the year before through May 31 of the
+     cycle year (end moved from Aug 31 by Daniel, 2026-10-08). Outside it the tag is a data error,
+     a rolling post, or a posting for a Summer already underway, not an opening: e.g. General
+     Motors tagged Summer 2024 in Jan 2026, Amazon's rolling post tagged Summer 2027 in Oct 2024,
+     Jump Trading tagged Summer 2024 in Aug 2024. Counted in `n_out_of_window`.
   5. SWE intern postings with no season (terms "N/A", common from 2026) count toward the Summer
-     after them: first seen Jul 1 of the year before the cycle through Jun 30 of the cycle, from
+     after them: first seen Jun 1 of the year before the cycle through May 31 of the cycle, from
      first_seen. E.g. Jane Street's Summer 2027 SWE intern, posted 2026-08-03 with terms N/A.
   6. speedyapply (Daniel, 2026-10-08) is a second source; a cycle's opening is the earliest
      date in either list. Its USA internship postings only, same SWE title rule, minus titles
      naming another season (Fall / Spring / Winter, no Summer). Date = speedyapply's posted
      date (first_seen - Age) when Age <= SPEEDY_MAX_AGE days, else first_seen (old postings
      added late are often evergreen). Cycle = the Summer year in the title, else the Summer
-     after the date (Jul-Jun). Rule 4's window applies.
+     after the date (Jun-May). Rule 4's window applies.
 Companies are matched across lists by a normalized name (`company_key`: lowercase, punctuation
 and suffixes like Inc / LLC / Corp dropped), then merged by the hand-checked alias list
 `reference/company_aliases.csv` ("JP Morgan Chase" -> "JPMorgan Chase"), plus a unique
@@ -182,22 +183,22 @@ def build(observations: Path = OBSERVATIONS, postings: Path = POSTINGS, out: Pat
         join tags t on t.listing_id = p.listing_id
             and list_contains(p.terms, 'Summer ' || t.cycle)
         where p.is_swe and t.cycle in ({cycles})
-        union all  -- no season: the Summer after first_seen (Jul-Jun)
+        union all  -- no season: the Summer after first_seen (Jun-May)
         select listing_id, company_key, company_name, title, url, false, added_closed,
-               year(first_seen) + (month(first_seen) >= 7)::int as cycle, first_seen,
+               year(first_seen) + (month(first_seen) >= 6)::int as cycle, first_seen,
                false, true, 'simplify', first_seen = timestamptz '{first_commit.isoformat()}'
         from postings
         where is_swe and season = 'unknown' and regexp_matches(lower(title), 'intern|co-?op')
-          and year(first_seen) + (month(first_seen) >= 7)::int in ({cycles})
+          and year(first_seen) + (month(first_seen) >= 6)::int in ({cycles})
         union all
         select url, company_key, company_name, title, url, false, false,
                coalesce(try_cast(regexp_extract(lower(title), 'summer\\D{{0,3}}(20\\d\\d)', 1) as int),
-                        year(dated) + (month(dated) >= 7)::int) as cycle,
+                        year(dated) + (month(dated) >= 6)::int) as cycle,
                dated, false, false, 'speedyapply', censored
         from speedy_swe
     ),
     windowed as (
-        select *, tagged_at >= make_date(cycle - 1, 1, 1) and tagged_at < make_date(cycle, 9, 1)
+        select *, tagged_at >= make_date(cycle - 1, 1, 1) and tagged_at < make_date(cycle, 6, 1)
                   and not added_closed as usable
         from swe
     ),
