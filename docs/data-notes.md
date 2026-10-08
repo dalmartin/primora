@@ -57,4 +57,8 @@ What we learned about the SimplifyJobs data, and the decisions that follow from 
 
 ## Decisions
 - **2026-10-04 (Daniel): "opening" = the first SWE-intern posting per company per Summer cycle.** Category-level openings can come later.
-- **For 1.4 (Daniel's call):** how to treat `multi_cycle` and `terms_changed` postings (exclude, or count from when the term changed); and `first_seen_censored` (297 listings already present on 2023-08-02, so the Summer 2024 cycle is left-censored for early openers).
+- **2026-10-08 (Daniel), rules for the `openings` table (1.4):**
+  1. `multi_cycle` postings count toward a cycle from when they were first tagged for that cycle, not from the post's original date.
+  2. `terms_changed` postings (about 56 reused from earlier cycles) count from the relabel date.
+  3. Summer 2024 is kept. Openings already present on 2023-08-02 (`first_seen_censored`) are marked left-censored ("opened on or before 2023-08-02"), not given a guessed date.
+  4. No company is dropped for coverage now. Add a coverage flag; the 1.7 backtests decide whether low-coverage companies hurt predictions.
