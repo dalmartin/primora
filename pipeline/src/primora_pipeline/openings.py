@@ -27,14 +27,18 @@ Rules (Daniel, 2026-10-08; see docs/data-notes.md):
      added late are often evergreen). Cycle = the Summer year in the title, else the Summer
      after the date (Jul-Jun). Rule 4's window applies.
 Companies are matched across lists by a normalized name (`company_key`: lowercase, punctuation
-and suffixes like Inc / LLC / Corp dropped), plus a unique word-prefix match for speedyapply
-names Simplify spells longer or shorter ("Dell" / "Dell Technologies").
+and suffixes like Inc / LLC / Corp dropped), then merged by the hand-checked alias list
+`reference/company_aliases.csv` ("JP Morgan Chase" -> "JPMorgan Chase"), plus a unique
+word-prefix match for speedyapply names Simplify spells longer or shorter, when the extra words
+are generic (PREFIX_SUFFIXES: "Dell" / "Dell Technologies", not "Southern" / "Southern Poverty
+Law Center").
 Postings added already closed (backfilled; first_seen says when Simplify found it, not when it
 opened) don't set an opening date.
 
 Columns
   company_key, cycle            one row per company (any SWE posting counted in CYCLES) x cycle
-  company_name    display name: Simplify's most common spelling, else speedyapply's
+  company_name    display name: the alias list's canonical, else Simplify's most common
+                  spelling, else speedyapply's
   status          opened / opened_by (left-censored) / not_yet (current cycle, right-censored)
                   / none (past cycle, nothing seen: didn't hire, or Simplify missed it)
                   / backfilled (only postings Simplify added already closed; no usable date)
@@ -75,12 +79,19 @@ LAG = DATA_DIR / "simplify_lag.parquet"
 COVERAGE = DATA_DIR / "board_coverage.parquet"
 SPEEDYAPPLY = DATA_DIR / "speedyapply_postings.parquet"
 OPENINGS = DATA_DIR / "openings.parquet"
+ALIASES = Path(__file__).resolve().parents[2] / "reference" / "company_aliases.csv"
 
 # Full Summer cycles in the history (starts 2023-08-02) plus the current one. 2023 and 2028
 # have only stray postings.
 CYCLES = (2024, 2025, 2026, 2027)
 CURRENT_CYCLE = 2027
 SPEEDY_MAX_AGE = 14
+
+PREFIX_SUFFIXES = (r"^( (technologies|technology|tech|systems|group|international|holdings|industries"
+                   r"|global|motors|software|solutions|corporation|communications|financial|services"
+                   r"|labs|health|usa|us|america|north america|ai|research|networks|semiconductor"
+                   r"|aerospace|robotics|therapeutics|biosciences|energy|capital|studios|games"
+                   r"|interactive|digital|enterprises|medical|pharmaceuticals?|automation|engineering))+$")
 
 COMPANY_KEY = r"""trim(regexp_replace(regexp_replace(regexp_replace(
     lower(replace({col}, '&', ' and ')), '[^a-z0-9 ]', ' ', 'g'),
@@ -90,19 +101,27 @@ COMPANY_KEY = r"""trim(regexp_replace(regexp_replace(regexp_replace(
 
 def build(observations: Path = OBSERVATIONS, postings: Path = POSTINGS, out: Path = OPENINGS,
           lag: Path = LAG, coverage: Path = COVERAGE,
-          speedyapply: Path = SPEEDYAPPLY) -> duckdb.DuckDBPyConnection:
+          speedyapply: Path = SPEEDYAPPLY, aliases: Path = ALIASES) -> duckdb.DuckDBPyConnection:
     con = duckdb.connect()
     con.execute(f"create or replace view obs as select * from read_parquet('{observations}')")
-    con.execute(f"create or replace view postings as select *, {COMPANY_KEY.format(col='company_name')} "
-                f"as company_key from read_parquet('{postings}')")
+    con.execute(f"""
+    create or replace table aliases as
+    select distinct {COMPANY_KEY.format(col='alias')} as alias_key,
+                    {COMPANY_KEY.format(col='canonical')} as canonical_key, trim(canonical) as canonical
+    from read_csv('{aliases}', header = true, all_varchar = true)
+    """)
+    key = (f"coalesce((select canonical_key from aliases where alias_key = "
+           f"{COMPANY_KEY.format(col='company_name')}), {COMPANY_KEY.format(col='company_name')})")
+    con.execute(f"create or replace table postings as select *, {key} as company_key "
+                f"from read_parquet('{postings}')")
     if speedyapply.exists():
-        con.execute(f"create or replace view speedy as select *, {COMPANY_KEY.format(col='company_name')} "
-                    f"as raw_key from read_parquet('{speedyapply}') where region = 'usa'")
+        con.execute(f"create or replace table speedy as select *, {key} as raw_key "
+                    f"from read_parquet('{speedyapply}') where region = 'usa'")
     else:
         con.execute("create or replace table speedy (url varchar, company_name varchar, title varchar, "
                     "raw_key varchar, first_seen timestamptz, posted_est timestamptz, age_days int)")
     # speedyapply name -> Simplify company_key: exact, else the one Simplify key it word-prefixes
-    con.execute("""
+    con.execute(f"""
     create or replace table speedy_keys as
     with sk as (select distinct raw_key from speedy),
          pk as (select distinct company_key from postings),
@@ -110,6 +129,11 @@ def build(observations: Path = OBSERVATIONS, postings: Path = POSTINGS, out: Pat
             select raw_key, min(company_key) as company_key
             from sk join pk on (pk.company_key like sk.raw_key || ' %' or sk.raw_key like pk.company_key || ' %')
             where least(length(raw_key), length(company_key)) >= 4
+              and regexp_matches(
+                    case when length(raw_key) > length(company_key)
+                         then substr(raw_key, length(company_key) + 1)
+                         else substr(company_key, length(raw_key) + 1) end,
+                    '{PREFIX_SUFFIXES}')
               and raw_key not in (select company_key from pk)
             group by 1 having count(*) = 1)
     select sk.raw_key, coalesce(pk.company_key, prefix.company_key, sk.raw_key) as company_key
@@ -191,11 +215,12 @@ def build(observations: Path = OBSERVATIONS, postings: Path = POSTINGS, out: Pat
                min(tagged_at) filter (where usable and not multi_cycle) as opened_at_excl_multi
         from windowed group by 1, 2
     ),
-    names as (  -- display name: Simplify's most common spelling, else speedyapply's
-        select company_key, arg_max(company_name, n) as company_name from (
+    names as (  -- display name: the alias list's, else Simplify's most common, else speedyapply's
+        select company_key,
+               coalesce(any_value(a.canonical), arg_max(company_name, n)) as company_name from (
             select company_key, company_name,
                    count(*) filter (where source = 'simplify') * 1000000 + count(*) as n
-            from swe group by 1, 2) group by 1
+            from swe group by 1, 2) left join aliases a on a.canonical_key = company_key group by 1
     ),
     grid as (
         select c.company_key, y.cycle

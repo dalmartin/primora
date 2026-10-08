@@ -83,6 +83,19 @@ What we learned about the SimplifyJobs data, and the decisions that follow from 
 
 **Not yet:** speedyapply isn't in the Modal hourly job (1.10). Citadel still shows "not yet" for 2027 in both lists.
 
+## Company metadata (tracker 1.5, 2026-10-08)
+`pipeline/src/primora_pipeline/companies.py` → `companies.parquet` + `companies.csv`: tier and group for **every** company in the openings table (Daniel: "do all of them"). Labels live in `pipeline/reference/company_labels.csv` (edit that file; `make_labels.py` was the one-time first pass and is no longer the source of truth).
+
+**Tier** (PRD FR-4): prestige = FAANG+ and peers students rank alongside them (top quant, top AI labs, elite unicorns), 86 companies in the data. Pipeline = known feeder into prestige (Capital One is Daniel's example): big established programs at large tech, banks, second-tier trading firms, 136. Everything else none. **This is Tauros's first pass; Daniel should correct it.**
+
+**Group** (for pooling in the model): big_tech, quant, finance, fintech, ai, software, hardware_semis, defense_aerospace, auto_mobility, health, consumer_media, industrial_energy, telecom, consulting_services, gov_research, other.
+
+**Coverage:** 1,406 companies hand-labeled (984 of the 1,075 companies seen in 2+ cycles). 433 more get a group from name keywords (`GROUP_RULES`, e.g. "bank" → finance). 813 stay "other": almost all seen in one cycle only. `label_source` says which.
+
+**Company merges.** `pipeline/reference/company_aliases.csv` merges spellings ("JP Morgan Chase" → "JPMorgan Chase", "SIG" → "Susquehanna", "Cadence" → "Cadence Design Systems"). Deliberately not merged: Citadel / Citadel Securities (separate firms), TikTok / ByteDance (separate career sites), Cohere / Cohere Health. The speedyapply prefix match now only allows generic extra words ("Technologies", "Group", ...): it had merged "Southern Poverty Law Center" into an unrelated "Southern". 2,652 companies after merges.
+
+**Quirk to revisit:** the cycle window ends Aug 31 of the Summer year, so a posting tagged for a Summer that has already started can still count (Jump Trading Summer 2024 "opened" 2024-08-09). Ending the window Jun 30 would drop those.
+
 ## Decisions
 - **2026-10-04 (Daniel): "opening" = the first SWE-intern posting per company per Summer cycle.** Category-level openings can come later.
 - **2026-10-08 (Daniel), rules for the `openings` table (1.4):**

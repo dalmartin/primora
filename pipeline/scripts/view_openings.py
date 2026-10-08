@@ -13,6 +13,8 @@ Run (from pipeline/):
   uv run python scripts/view_openings.py --top 100        more rows
   uv run python scripts/view_openings.py jane google      only companies matching these words
   uv run python scripts/view_openings.py --no-plot        table only
+  uv run python scripts/view_openings.py --tier prestige  only prestige companies (or pipeline)
+  uv run python scripts/view_openings.py --group quant    only one group (see companies.py)
 """
 from __future__ import annotations
 
@@ -37,7 +39,7 @@ def cell(r) -> str:
     return {"not_yet": "not yet", "backfilled": "seen, no date"}.get(r.status, "-")
 
 
-def wide(o: pd.DataFrame) -> pd.DataFrame:
+def wide(o: pd.DataFrame, companies: pd.DataFrame | None) -> pd.DataFrame:
     o = o.assign(cell=[cell(r) for r in o.itertuples()])
     w = o.pivot(index="company_key", columns="cycle", values="cell")[CYCLES]
     w.columns = [f"summer_{c}" for c in CYCLES]
@@ -46,7 +48,12 @@ def wide(o: pd.DataFrame) -> pd.DataFrame:
                                          swe_postings=("n_swe_postings", "sum"),
                                          speedyapply_postings=("n_speedyapply_postings", "sum"),
                                          board_misses_2027=("board_misses_2027", "first"))
-    return (stats.join(w).reset_index(drop=True)
+    w = stats.join(w)
+    if companies is not None:
+        w = w.join(companies.set_index("company_key")[["tier", "group"]])
+        w.insert(1, "tier", w.pop("tier"))
+        w.insert(2, "group", w.pop("group"))
+    return (w.reset_index(drop=True)
             .sort_values(["cycles_open", "swe_postings"], ascending=False, ignore_index=True))
 
 
@@ -81,18 +88,26 @@ def main() -> None:
     ap.add_argument("search", nargs="*", help="words to match in company names")
     ap.add_argument("--top", type=int, default=40)
     ap.add_argument("--no-plot", action="store_true")
+    ap.add_argument("--tier", choices=["prestige", "pipeline", "none"])
+    ap.add_argument("--group")
     args = ap.parse_args()
 
     o = pd.read_parquet(DATA_DIR / "openings.parquet")
-    w = wide(o)
+    companies_file = DATA_DIR / "companies.parquet"
+    w = wide(o, pd.read_parquet(companies_file) if companies_file.exists() else None)
     out = DATA_DIR / "openings_wide.csv"
     w.to_csv(out, index=False)
 
+    shown = w
+    if args.tier:
+        shown = shown[shown.tier == args.tier]
+    if args.group:
+        shown = shown[shown.group == args.group]
     if args.search:
         pat = "|".join(args.search)
-        shown = w[w.company_name.str.contains(pat, case=False, regex=True)]
+        shown = shown[shown.company_name.str.contains(pat, case=False, regex=True)]
     else:
-        shown = w.head(args.top)
+        shown = shown.head(args.top)
     with pd.option_context("display.max_rows", None, "display.width", 200):
         print(shown.to_string(index=False))
     print(f"\n{len(w)} companies; full table -> {out}")

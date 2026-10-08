@@ -1,0 +1,1511 @@
+company_name,tier,group
+Abridge,prestige,ai
+AltaML,none,ai
+Anthropic,prestige,ai
+Anyscale,prestige,ai
+Avathon,none,ai
+Baseten,none,ai
+C3.ai,none,ai
+Centific,none,ai
+Cerebras,prestige,ai
+Codeium,none,ai
+Cohere,prestige,ai
+ConductorAI,none,ai
+Cresta,none,ai
+Crusoe,none,ai
+Cursor,prestige,ai
+d-Matrix,none,ai
+DataRobot,none,ai
+Domino Data Lab,none,ai
+Etched,prestige,ai
+Eventual,none,ai
+Field AI,none,ai
+GenBio AI,none,ai
+Genesis Molecular AI,none,ai
+Glean,prestige,ai
+Groq,prestige,ai
+Harvey,prestige,ai
+Hebbia,prestige,ai
+HeyGen,none,ai
+Humane,none,ai
+Inworld,none,ai
+Kumo,none,ai
+Lila Sciences,none,ai
+Matroid,none,ai
+Mechanize,none,ai
+Mercor,prestige,ai
+Newton Research,none,ai
+OpenAI,prestige,ai
+Perplexity,prestige,ai
+Physical Intelligence,prestige,ai
+Quantinuum,none,ai
+Replit,prestige,ai
+Rigetti,none,ai
+SambaNova Systems,none,ai
+SandboxAQ,none,ai
+Scale AI,prestige,ai
+Sierra,none,ai
+Snorkel AI,none,ai
+Suno,none,ai
+TensorWave,none,ai
+Tenstorrent,none,ai
+Together AI,prestige,ai
+Typeface,none,ai
+Uncountable,none,ai
+xAI,prestige,ai
+AAA Club Alliance,none,auto_mobility
+AeroVect,none,auto_mobility
+American Automobile Association,none,auto_mobility
+Amp Robotics,none,auto_mobility
+Ample,none,auto_mobility
+Applied Intuition,prestige,auto_mobility
+Apptronik,none,auto_mobility
+Aptiv,none,auto_mobility
+Aurora,none,auto_mobility
+Aurora Innovation,none,auto_mobility
+Bedrock Robotics,none,auto_mobility
+BorgWarner,none,auto_mobility
+Bosch,none,auto_mobility
+Boston Dynamics,none,auto_mobility
+Boston Dynamics AI Institute,none,auto_mobility
+Bot Auto,none,auto_mobility
+Brain Corp,none,auto_mobility
+CalAmp,none,auto_mobility
+Carbon Robotics,none,auto_mobility
+Caterpillar Inc.,pipeline,auto_mobility
+CDK,none,auto_mobility
+ChargePoint,none,auto_mobility
+CNH Industrial,none,auto_mobility
+CoBot,none,auto_mobility
+Collaborative Robotics,none,auto_mobility
+Copart,none,auto_mobility
+Cruise,none,auto_mobility
+Curri,none,auto_mobility
+Daimler Truck,none,auto_mobility
+Diligent Robotics,none,auto_mobility
+Diversified Automation,none,auto_mobility
+Dusty Robotics,none,auto_mobility
+Figure,none,auto_mobility
+Ford,pipeline,auto_mobility
+Gecko Robotics,none,auto_mobility
+General Motors,pipeline,auto_mobility
+Genuine Parts Company,none,auto_mobility
+Glydways,none,auto_mobility
+GM financial,none,auto_mobility
+GPC,none,auto_mobility
+Harbinger Motors,none,auto_mobility
+Holman,none,auto_mobility
+Hyundai AutoEver America,none,auto_mobility
+Intrinsic,none,auto_mobility
+John Deere,pipeline,auto_mobility
+Kodiak,none,auto_mobility
+Komatsu,none,auto_mobility
+Latitude AI,none,auto_mobility
+LKQ,none,auto_mobility
+Locus Robotics,none,auto_mobility
+Lucid,pipeline,auto_mobility
+Machina Labs,none,auto_mobility
+Magna,none,auto_mobility
+Mapjects,none,auto_mobility
+Mercedes-Benz,none,auto_mobility
+Motional,none,auto_mobility
+Multiply Labs,none,auto_mobility
+Neuralink,prestige,auto_mobility
+Nissan,none,auto_mobility
+Nuro,none,auto_mobility
+Openlane,none,auto_mobility
+Oshkosh,none,auto_mobility
+Paccar,none,auto_mobility
+Parallel Systems,none,auto_mobility
+Persona AI,none,auto_mobility
+Picknik,none,auto_mobility
+Plus,none,auto_mobility
+PlusAI,none,auto_mobility
+pony.ai,none,auto_mobility
+Revantage Corporate Services,none,auto_mobility
+Revel,none,auto_mobility
+Rivian,pipeline,auto_mobility
+Roadie,none,auto_mobility
+Simbe Robotics,none,auto_mobility
+Symbotic,none,auto_mobility
+Tesla,prestige,auto_mobility
+The Boring Company,none,auto_mobility
+Toyota Research Institute,none,auto_mobility
+Valeo,none,auto_mobility
+Viam,none,auto_mobility
+Waymo,prestige,auto_mobility
+WeRide,none,auto_mobility
+Wing,none,auto_mobility
+Woven,none,auto_mobility
+XPeng Motors,none,auto_mobility
+Zipcar,none,auto_mobility
+Zipline,prestige,auto_mobility
+Zoox,prestige,auto_mobility
+Adobe,prestige,big_tech
+Airbnb,prestige,big_tech
+Amazon,prestige,big_tech
+Amazon Robotics,none,big_tech
+Apple,prestige,big_tech
+Block,pipeline,big_tech
+Box,pipeline,big_tech
+ByteDance,prestige,big_tech
+Cisco,pipeline,big_tech
+Dell Technologies,pipeline,big_tech
+DiDi Global,none,big_tech
+Discord,prestige,big_tech
+DoorDash,prestige,big_tech
+Dropbox,pipeline,big_tech
+eBay,pipeline,big_tech
+Etsy,none,big_tech
+Expedia,pipeline,big_tech
+Google,prestige,big_tech
+Hewlett Packard Enterprise,pipeline,big_tech
+HP,pipeline,big_tech
+IBM,pipeline,big_tech
+Intuit,pipeline,big_tech
+LinkedIn,prestige,big_tech
+Lyft,prestige,big_tech
+Meta,prestige,big_tech
+Microsoft,prestige,big_tech
+Netflix,prestige,big_tech
+NVIDIA,prestige,big_tech
+Oracle,pipeline,big_tech
+Pinterest,prestige,big_tech
+Reddit,prestige,big_tech
+Roku,pipeline,big_tech
+Salesforce,prestige,big_tech
+Samsung,none,big_tech
+Samsung Research America,none,big_tech
+Snap Inc.,prestige,big_tech
+Sony,none,big_tech
+Spotify,prestige,big_tech
+Square,pipeline,big_tech
+Tencent,none,big_tech
+TikTok,prestige,big_tech
+Twitch,none,big_tech
+Uber,prestige,big_tech
+Uber Freight,none,big_tech
+Wayfair,pipeline,big_tech
+X Development,prestige,big_tech
+Yahoo,none,big_tech
+Zoom,none,big_tech
+Accenture,pipeline,consulting_services
+ALKU,none,consulting_services
+Avanade,none,consulting_services
+Bain,none,consulting_services
+BCG,none,consulting_services
+CAI,none,consulting_services
+Capgemini,none,consulting_services
+CGI,none,consulting_services
+Cisive,none,consulting_services
+Codal,none,consulting_services
+Deloitte,pipeline,consulting_services
+DMA,none,consulting_services
+EisnerAmper,none,consulting_services
+EY,none,consulting_services
+Gartner,none,consulting_services
+Hatch IT,none,consulting_services
+Infosys,none,consulting_services
+Jahnel Group,none,consulting_services
+JLL,none,consulting_services
+Jones Lang LaSalle (JLL),none,consulting_services
+Konrad,none,consulting_services
+KPMG,none,consulting_services
+Kyndryl Holdings,none,consulting_services
+Lean TECHniques,none,consulting_services
+Marsh,none,consulting_services
+Maximus,none,consulting_services
+McKinsey,none,consulting_services
+Mindex,none,consulting_services
+Mirego,none,consulting_services
+Persistent Systems,none,consulting_services
+PricewaterhouseCoopers (PwC),none,consulting_services
+PwC,none,consulting_services
+Reply,none,consulting_services
+Robert Half,none,consulting_services
+RSM,none,consulting_services
+SHI,none,consulting_services
+Slalom,none,consulting_services
+Specialisterne,none,consulting_services
+talentpluto,none,consulting_services
+TalentWerx,none,consulting_services
+TCS,none,consulting_services
+TransPerfect,none,consulting_services
+Tranzact,none,consulting_services
+Udig,none,consulting_services
+Unisys,none,consulting_services
+Viget,none,consulting_services
+WebFX,none,consulting_services
+ZS,none,consulting_services
+7-Eleven,none,consumer_media
+84.51 Degrees,none,consumer_media
+A Thinking Ape,none,consumer_media
+ABC Fitness,none,consumer_media
+Ace Hardware,none,consumer_media
+AEG,none,consumer_media
+Albertsons,none,consumer_media
+Alo Yoga,none,consumer_media
+Amadeus,none,consumer_media
+American Airlines,none,consumer_media
+Arc'teryx Equipment,none,consumer_media
+ATPCO,none,consumer_media
+Bass Pro Shops,none,consumer_media
+Best Buy,none,consumer_media
+Bloxd,none,consumer_media
+Breeze Airways,none,consumer_media
+Brunswick,none,consumer_media
+Business Wire,none,consumer_media
+C&S Wholesale Grocers,none,consumer_media
+Cadent,none,consumer_media
+Cargill,none,consumer_media
+Centerfield,none,consumer_media
+Chamberlain Group,none,consumer_media
+Chick-fil-A,none,consumer_media
+Choice Hotels,none,consumer_media
+Church & Dwight,none,consumer_media
+Coca-Cola,none,consumer_media
+Columbia Sportswear Company,none,consumer_media
+Comcast,pipeline,consumer_media
+Conagra Brands,none,consumer_media
+Costco,none,consumer_media
+Cox,none,consumer_media
+Cox Enterprises,none,consumer_media
+Delta Air Lines,none,consumer_media
+Detroit Pistons,none,consumer_media
+Dick's Sporting Goods,none,consumer_media
+Dish,none,consumer_media
+DotDash Meredith,none,consumer_media
+Dow Jones,none,consumer_media
+DraftKings,none,consumer_media
+Enterprise,none,consumer_media
+FanDuel,none,consumer_media
+Favor,none,consumer_media
+Fetch,none,consumer_media
+FightCamp,none,consumer_media
+Fizz,none,consumer_media
+Gamechanger,none,consumer_media
+General Mills,none,consumer_media
+Genies,none,consumer_media
+Grainger,none,consumer_media
+H-E-B,none,consumer_media
+Hearst,none,consumer_media
+Hiebing,none,consumer_media
+Hitachi,none,consumer_media
+HMH,none,consumer_media
+Hyatt,none,consumer_media
+ibotta,none,consumer_media
+iHeartMedia,none,consumer_media
+iHerb,none,consumer_media
+Instawork,none,consumer_media
+Iron Mountain,none,consumer_media
+Kargo,none,consumer_media
+Kraft Heinz,none,consumer_media
+Kroger,none,consumer_media
+L.L.Bean,none,consumer_media
+Life Fitness,none,consumer_media
+Live Nation Entertainment,none,consumer_media
+Loop Returns,none,consumer_media
+Lowes,none,consumer_media
+Lululemon,none,consumer_media
+Marriott,none,consumer_media
+Mars,none,consumer_media
+McDonald's,none,consumer_media
+Mistplay,none,consumer_media
+MLB,none,consumer_media
+MyFitnessPal,none,consumer_media
+NBCUniversal,none,consumer_media
+Neighbor,none,consumer_media
+Nestle,none,consumer_media
+NewsBreak,none,consumer_media
+Niantic,none,consumer_media
+Nike,none,consumer_media
+Nintendo,pipeline,consumer_media
+Nordstrom,none,consumer_media
+OfferUp,none,consumer_media
+Oklahoma City Thunder,none,consumer_media
+P&G - Procter & Gamble,none,consumer_media
+Paramount,none,consumer_media
+Patterson Companies,none,consumer_media
+Pearson,none,consumer_media
+Pebl,none,consumer_media
+Peloton,none,consumer_media
+PepsiCo,none,consumer_media
+PlayStation,none,consumer_media
+PMG,none,consumer_media
+Polaris,none,consumer_media
+PrizePicks,none,consumer_media
+Realtor.com,none,consumer_media
+Red Ventures,none,consumer_media
+ResponsiveAds,none,consumer_media
+Rilla,none,consumer_media
+Sabre,none,consumer_media
+SanMar,none,consumer_media
+Scholastic,none,consumer_media
+SharkNinja,none,consumer_media
+SHEIN,none,consumer_media
+ShopBack,none,consumer_media
+Simon Property Group,none,consumer_media
+SiriusXM,none,consumer_media
+Skechers,none,consumer_media
+skillz,none,consumer_media
+Snackpass,none,consumer_media
+Snap-on,none,consumer_media
+Sony Interactive Entertainment,pipeline,consumer_media
+Sony Pictures Imageworks,none,consumer_media
+Southwest Airlines,none,consumer_media
+SpartanNash,none,consumer_media
+Spectrum,none,consumer_media
+Spot & Tango,none,consumer_media
+Staples,none,consumer_media
+Starbucks,none,consumer_media
+Starz,none,consumer_media
+Swivel,none,consumer_media
+Sysco,none,consumer_media
+Target,pipeline,consumer_media
+Tatari,none,consumer_media
+The Home Depot,none,consumer_media
+The New York Times,none,consumer_media
+The Toro Company,none,consumer_media
+The Walt Disney Company,pipeline,consumer_media
+The Washington Post,none,consumer_media
+Ticketmaster,none,consumer_media
+TodayTix Group,none,consumer_media
+TripAdvisor,none,consumer_media
+U-Haul,none,consumer_media
+Uline,none,consumer_media
+United Airlines,none,consumer_media
+US Foods,none,consumer_media
+W.W. Grainger,none,consumer_media
+Walmart,pipeline,consumer_media
+Warner Bros.,none,consumer_media
+Warner Bros. Discovery,none,consumer_media
+Washpost,none,consumer_media
+Wunderman Thompson,none,consumer_media
+Xfinity,none,consumer_media
+Acron Aviation,none,defense_aerospace
+Advanced Space,none,defense_aerospace
+Aechelon Technology,none,defense_aerospace
+AeroVironment,none,defense_aerospace
+Airbus,none,defense_aerospace
+Akima,none,defense_aerospace
+Amentum,none,defense_aerospace
+Anduril,prestige,defense_aerospace
+Apex,none,defense_aerospace
+Archer,none,defense_aerospace
+Arsiem Corporation,none,defense_aerospace
+Astranis,none,defense_aerospace
+Axiom Space,none,defense_aerospace
+Axon,none,defense_aerospace
+BAE Systems,none,defense_aerospace
+Ball Aerospace,none,defense_aerospace
+Black Cape,none,defense_aerospace
+BlackSky,none,defense_aerospace
+Blue Origin,none,defense_aerospace
+Bluestaq,none,defense_aerospace
+Boeing,pipeline,defense_aerospace
+Boom Supersonic,none,defense_aerospace
+Booz Allen,pipeline,defense_aerospace
+By Light Professional IT Services,none,defense_aerospace
+CACI,none,defense_aerospace
+CAE,none,defense_aerospace
+Calspan,none,defense_aerospace
+Capella,none,defense_aerospace
+Capella Space,none,defense_aerospace
+CesiumAstro,none,defense_aerospace
+Charles River Analytics,none,defense_aerospace
+Collins Aerospace,none,defense_aerospace
+Cubic,none,defense_aerospace
+Curtiss-Wright Corporation,none,defense_aerospace
+Darkhive,none,defense_aerospace
+Draper,none,defense_aerospace
+Echodyne,none,defense_aerospace
+Echostar,none,defense_aerospace
+Epirus,none,defense_aerospace
+Expedition Technology,none,defense_aerospace
+Firefly,none,defense_aerospace
+Flock Safety,none,defense_aerospace
+GDIT,none,defense_aerospace
+GE Aerospace,none,defense_aerospace
+General Dynamics,none,defense_aerospace
+General Dynamics Information Technology,none,defense_aerospace
+General Dynamics Mission Systems,pipeline,defense_aerospace
+General Dynamics UK,none,defense_aerospace
+Gulfstream,none,defense_aerospace
+Hadrian,none,defense_aerospace
+Hermeus,none,defense_aerospace
+Honeywell,pipeline,defense_aerospace
+HRL Laboratories,none,defense_aerospace
+i3 Corps,none,defense_aerospace
+ICF,none,defense_aerospace
+Impulse Space,none,defense_aerospace
+Innovative Defense Technologies,none,defense_aerospace
+Integration Innovation (i3),none,defense_aerospace
+Intelsat,none,defense_aerospace
+Iridium,none,defense_aerospace
+Joby Aviation,none,defense_aerospace
+Johns Hopkins Applied Physics Laboratory,none,defense_aerospace
+K2 Space,none,defense_aerospace
+KBR,none,defense_aerospace
+L3Harris Technologies,pipeline,defense_aerospace
+Leidos,pipeline,defense_aerospace
+Leonardo,none,defense_aerospace
+LMI,none,defense_aerospace
+Lockheed Martin,pipeline,defense_aerospace
+Lunar Outpost,none,defense_aerospace
+Mach Industries,none,defense_aerospace
+Mach9,none,defense_aerospace
+ManTech,none,defense_aerospace
+Maxar Technologies,none,defense_aerospace
+Merlin Labs,none,defense_aerospace
+METECS,none,defense_aerospace
+Metron,none,defense_aerospace
+MITRE,none,defense_aerospace
+"Moebius Solutions, Inc.",none,defense_aerospace
+Moog,none,defense_aerospace
+MORSE Corp Co-op Opportunities,none,defense_aerospace
+Muon Space,none,defense_aerospace
+Nightwing Intelligence Solutions,none,defense_aerospace
+"Noetic Strategies, Inc",none,defense_aerospace
+Nominal,none,defense_aerospace
+Northrop Grumman,pipeline,defense_aerospace
+NT Concepts,none,defense_aerospace
+Panasonic Avionics,none,defense_aerospace
+Parsons,none,defense_aerospace
+Peraton,none,defense_aerospace
+Planet,none,defense_aerospace
+Radiance Technologies,none,defense_aerospace
+Raft,none,defense_aerospace
+RedHorse,none,defense_aerospace
+REGENT,none,defense_aerospace
+Relativity Space,none,defense_aerospace
+Reliable Robotics,none,defense_aerospace
+Research Innovations,none,defense_aerospace
+Rocket Lab,none,defense_aerospace
+Rolls Royce,none,defense_aerospace
+RTX,pipeline,defense_aerospace
+Saab,none,defense_aerospace
+SAIC,none,defense_aerospace
+Saronic,prestige,defense_aerospace
+Sentinel Group,none,defense_aerospace
+Shield AI,prestige,defense_aerospace
+Sierra Nevada Corporation,none,defense_aerospace
+Sierra Space,none,defense_aerospace
+Silvus Technologies,none,defense_aerospace
+SimVentions,none,defense_aerospace
+Skydio,prestige,defense_aerospace
+Skyryse,none,defense_aerospace
+Smiths Detection,none,defense_aerospace
+SMX,none,defense_aerospace
+Space Dynamics Laboratory,none,defense_aerospace
+SpaceX,prestige,defense_aerospace
+Sparksoft,none,defense_aerospace
+SRI,none,defense_aerospace
+Standard Aero,none,defense_aerospace
+Stellar Solutions,none,defense_aerospace
+Stoke Space,none,defense_aerospace
+Syracuse Research Corporation,none,defense_aerospace
+Teledyne,none,defense_aerospace
+Telesat,none,defense_aerospace
+Tenet3,none,defense_aerospace
+Textron,none,defense_aerospace
+Thales,none,defense_aerospace
+"Thales Defense & Security, Inc.",none,defense_aerospace
+The Aerospace Corporation,none,defense_aerospace
+The Boeing Company,pipeline,defense_aerospace
+The Exploration Company,none,defense_aerospace
+Torch Technologies,none,defense_aerospace
+True Anomaly,none,defense_aerospace
+Turion Space,none,defense_aerospace
+Two Six Technologies,none,defense_aerospace
+Ultra,none,defense_aerospace
+Ultra Intelligence and Communications,none,defense_aerospace
+United Launch Alliance,none,defense_aerospace
+Ursa Major,none,defense_aerospace
+Varda,none,defense_aerospace
+Varda Space,none,defense_aerospace
+Viasat,none,defense_aerospace
+Voyager Technologies,none,defense_aerospace
+Wisk,none,defense_aerospace
+Xantium,none,defense_aerospace
+Acadian Asset Management,none,finance
+Addepar,none,finance
+Advisor360°,none,finance
+AllianceBernstein,none,finance
+Allied Solutions,none,finance
+Allstate Insurance Company,pipeline,finance
+Ally Financial,pipeline,finance
+American Century Investments,none,finance
+American Express,pipeline,finance
+American Financial Group,none,finance
+Apex Fintech Solutions,none,finance
+Arcesium,none,finance
+Arch Capital Group,none,finance
+Artisan Partners,none,finance
+AssetMark,none,finance
+Assurant,none,finance
+Assured Guaranty,none,finance
+Athene,none,finance
+Audax Group,none,finance
+Auto-Owners Insurance,none,finance
+Axos Bank,none,finance
+Baird,none,finance
+Bank of America,pipeline,finance
+Bank of Montreal,pipeline,finance
+Barclays,pipeline,finance
+BECU,none,finance
+Berkley Insurance,none,finance
+BlackRock,pipeline,finance
+Blackstone,none,finance
+Bloomberg,prestige,finance
+BNY,pipeline,finance
+Broadridge,none,finance
+Cambridge Associates,none,finance
+Capital One,pipeline,finance
+Cboe,pipeline,finance
+Charles Schwab,pipeline,finance
+Chatham Financial,none,finance
+CIBC,pipeline,finance
+Citco,none,finance
+Citigroup,pipeline,finance
+Citizens Financial Group,pipeline,finance
+Clayton,none,finance
+Clearwater Analytics,none,finance
+CME Group,pipeline,finance
+CNA Insurance,none,finance
+Coalition,none,finance
+CoBank,none,finance
+Computershare,none,finance
+Corelogic,none,finance
+Corpay,none,finance
+COUNTRY Financial,none,finance
+Credit Acceptance Careers,none,finance
+Dimensional Fund Advisors,none,finance
+Discover,pipeline,finance
+DriveTime,none,finance
+Empower,none,finance
+Enfusion,none,finance
+Envestnet,none,finance
+Equifax,none,finance
+Experian,none,finance
+FactSet,pipeline,finance
+Fannie Mae,none,finance
+Federal Reserve,none,finance
+Federal Reserve Bank of Boston,none,finance
+Federal Reserve Bank of Chicago,none,finance
+Fidelity,none,finance
+Fidelity Investments,pipeline,finance
+Fidelity National Information Services,none,finance
+Fifth Third Bank,pipeline,finance
+Finra,none,finance
+First American,none,finance
+First National Bank,none,finance
+FIS,none,finance
+Fiserv,none,finance
+FM Global,none,finance
+Freddie Mac,none,finance
+GCM Grosvenor,none,finance
+Geico,pipeline,finance
+Genworth,none,finance
+Global Payments,none,finance
+Goldman Sachs,pipeline,finance
+Great American Insurance Company,none,finance
+GreatAmerica,none,finance
+Guardian Life,none,finance
+GuideStone,none,finance
+Hamilton Lane,none,finance
+Horace Mann,none,finance
+IEX Group,none,finance
+ING,none,finance
+Intact,none,finance
+Interactive Brokers,none,finance
+Intercontinental Exchange,none,finance
+JM Family,none,finance
+JPMorgan Chase,pipeline,finance
+Lazard,none,finance
+Liberty Mutual Insurance,pipeline,finance
+Live Oak Bank,none,finance
+LPL Financial Holdings,none,finance
+Manulife,none,finance
+MarketAxess,none,finance
+Mastercard,pipeline,finance
+MetLife,none,finance
+MFS,none,finance
+MGIC,none,finance
+Moody's,pipeline,finance
+Morgan Stanley,pipeline,finance
+Nasdaq,pipeline,finance
+National Indemnity,none,finance
+Navy Federal,none,finance
+Nelnet,none,finance
+Newrez,none,finance
+NinjaTrader,none,finance
+Northern Trust,pipeline,finance
+Northwestern Mutual,pipeline,finance
+OCC,none,finance
+ONE Finance,none,finance
+Options Clearing Corporation,none,finance
+Pacific Life,none,finance
+Penn Mutual,none,finance
+PIMCO,none,finance
+Primerica,none,finance
+Principal Financial Group,none,finance
+Progressive,none,finance
+Prudential,none,finance
+Radian,none,finance
+Revolution,none,finance
+Rocket Companies,none,finance
+Rocket Mortgage,none,finance
+Royal Bank of Canada,pipeline,finance
+S&P Global,pipeline,finance
+SageSure,none,finance
+Sallie Mae,none,finance
+Santander,none,finance
+Sentry,none,finance
+Sentry Insurance,none,finance
+SitusAMC,none,finance
+SS&C,none,finance
+State Farm,pipeline,finance
+State Street,pipeline,finance
+Stewart,none,finance
+Stifel,none,finance
+Sun Life,none,finance
+SWBC,none,finance
+Synchrony,pipeline,finance
+T. Rowe Price,pipeline,finance
+TD Bank,pipeline,finance
+TD Securities,none,finance
+The Federal Reserve System,none,finance
+The Hartford,none,finance
+The Standard,none,finance
+TheGuarantors,none,finance
+Thomson Reuters,pipeline,finance
+Thrivent,none,finance
+Tradeweb,pipeline,finance
+Travelers,none,finance
+TruStage,none,finance
+Upbound Group,none,finance
+US Bank,pipeline,finance
+USAA,pipeline,finance
+Vanguard,pipeline,finance
+Velera,none,finance
+Veterans United,none,finance
+Visa,pipeline,finance
+Voya Financial,none,finance
+W.R. Berkley,none,finance
+Webster Bank,none,finance
+Wells Fargo,pipeline,finance
+Western & Southern,none,finance
+Western Union,none,finance
+Wex,none,finance
+William Blair,none,finance
+Zions Bank,none,finance
+Acorns,none,fintech
+Affirm,pipeline,fintech
+Altruist,none,fintech
+Ambrook,none,fintech
+Anchorage,none,fintech
+Best Egg,none,fintech
+Betterment,none,fintech
+BILL,none,fintech
+Billtrust,none,fintech
+Binance,none,fintech
+Bits,none,fintech
+Brex,prestige,fintech
+Certik,none,fintech
+Chime,pipeline,fintech
+Circle,none,fintech
+Coinbase,prestige,fintech
+Dwolla,none,fintech
+Early Warning,none,fintech
+EarnIn,none,fintech
+Enova,none,fintech
+Ethic,none,fintech
+Galileo Financial Technologies,none,fintech
+Gemini,none,fintech
+Givelify,none,fintech
+GoFundMe,none,fintech
+Interac,none,fintech
+Kensho,none,fintech
+Kraken,none,fintech
+Lendbuzz,none,fintech
+Lightspark,none,fintech
+Mercury,prestige,fintech
+Modern Treasury,none,fintech
+MoneyLion,none,fintech
+Monzo,none,fintech
+nCino,none,fintech
+OnePay,none,fintech
+Parafin,none,fintech
+PayPal,pipeline,fintech
+Perpay,none,fintech
+Persona,none,fintech
+Pinata,none,fintech
+PitchBook,none,fintech
+Plaid,prestige,fintech
+Ramp,prestige,fintech
+Remitly,none,fintech
+Ripple,none,fintech
+Robinhood,prestige,fintech
+SoFi,pipeline,fintech
+Stripe,prestige,fintech
+SumUp,none,fintech
+Swift,none,fintech
+Talos,none,fintech
+Tegus,none,fintech
+Toast,pipeline,fintech
+Wealth.com,none,fintech
+Wealthsimple,none,fintech
+Zip,none,fintech
+ALSAC,none,gov_research
+Argonne National Laboratory,none,gov_research
+Arkansas Center for Data Sciences,none,gov_research
+Art of Problem Solving,none,gov_research
+Ascend Learning,none,gov_research
+CAMBA,none,gov_research
+Carnegie Mellon University,none,gov_research
+Chan Zuckerberg Initiative,none,gov_research
+Clerkie,none,gov_research
+Commonwealth of Massachusetts,none,gov_research
+Compassion International,none,gov_research
+Dordt University,none,gov_research
+Emory University,none,gov_research
+Fermilab,none,gov_research
+"Findhelp, A Public Benefit Corporation",none,gov_research
+Ithaka,none,gov_research
+Lawrence Livermore National Laboratory,none,gov_research
+Los Alamos National Laboratory,none,gov_research
+Mission Bit,none,gov_research
+NASA,none,gov_research
+National Renewable Energy Laboratory,none,gov_research
+Oak Ridge National Laboratory,none,gov_research
+OCLC,none,gov_research
+Oklahoma State Government,none,gov_research
+Pacific Northwest National Laboratory,none,gov_research
+Sandia National Laboratories,none,gov_research
+Savannah River National Laboratory,none,gov_research
+Simons Foundation,none,gov_research
+Southern Poverty Law Center,none,gov_research
+State of Wisconsin Investment Board,none,gov_research
+Strategic Education,none,gov_research
+USAFacts,none,gov_research
+Washington University in St. Louis,none,gov_research
+WGU,none,gov_research
+WGU - Western Governors University,none,gov_research
+Achronix Semiconductor,none,hardware_semis
+Altera Corporation,none,hardware_semis
+Ambarella,none,hardware_semis
+AMD,pipeline,hardware_semis
+Analog Devices,pipeline,hardware_semis
+Applied Materials,pipeline,hardware_semis
+Arlo,none,hardware_semis
+Arm Limited,none,hardware_semis
+ASM,none,hardware_semis
+ASML,none,hardware_semis
+Astera,none,hardware_semis
+Atomic Semi,none,hardware_semis
+Avnet,none,hardware_semis
+Axcelis,none,hardware_semis
+Belden,none,hardware_semis
+Bose,none,hardware_semis
+Broadcom,pipeline,hardware_semis
+Brooks Automation,none,hardware_semis
+Cirrus Logic,none,hardware_semis
+Cognex,none,hardware_semis
+Coherent,none,hardware_semis
+Corning,none,hardware_semis
+EMC,none,hardware_semis
+Flex,none,hardware_semis
+Garmin,none,hardware_semis
+GlobalFoundries,none,hardware_semis
+Graphcore,none,hardware_semis
+HARMAN,none,hardware_semis
+Impinj,none,hardware_semis
+Intel,pipeline,hardware_semis
+Jabil,none,hardware_semis
+Keysight,none,hardware_semis
+KLA,pipeline,hardware_semis
+Lam Research,none,hardware_semis
+Lattice Semiconductor,none,hardware_semis
+Logitech,none,hardware_semis
+Lumentum,none,hardware_semis
+Marvell,pipeline,hardware_semis
+Metalenz,none,hardware_semis
+Microchip Technology,none,hardware_semis
+Micron Technology,pipeline,hardware_semis
+MKS Instruments,none,hardware_semis
+Monolithic Power Systems,none,hardware_semis
+NXP Semiconductors,none,hardware_semis
+Onto Innovation,none,hardware_semis
+Plexus,none,hardware_semis
+Qorvo,none,hardware_semis
+Quadric,none,hardware_semis
+Qualcomm,pipeline,hardware_semis
+Rivos,none,hardware_semis
+Sandisk,none,hardware_semis
+Seagate,none,hardware_semis
+Semtech,none,hardware_semis
+Sensata,none,hardware_semis
+Shure,none,hardware_semis
+Silicon Labs,none,hardware_semis
+SiMa.ai,none,hardware_semis
+Skyworks,none,hardware_semis
+Solidigm,none,hardware_semis
+Sonos,none,hardware_semis
+TEL,none,hardware_semis
+Teradyne,none,hardware_semis
+TetraMem,none,hardware_semis
+Texas Instruments,pipeline,hardware_semis
+Tokyo Electron,none,hardware_semis
+TTM Technologies,none,hardware_semis
+Varex Imaging Corporation,none,hardware_semis
+Western Digital,pipeline,hardware_semis
+Zebra,none,hardware_semis
+Abbott,none,health
+AbbVie,none,health
+Accolade,none,health
+Agilent Technologies,none,health
+Alcon,none,health
+Altasciences,none,health
+AmerisourceBergen,none,health
+Amgen,none,health
+Arine,none,health
+AstraZeneca,none,health
+Baxter International,none,health
+Becton Dickinson,none,health
+BillionToOne,none,health
+Bio-Rad Laboratories,none,health
+Blue Cross and Blue Shield of Kansas,none,health
+Blue Cross Blue Shield,none,health
+Blue Shield of California,none,health
+Boston Scientific,none,health
+Bracco,none,health
+Brightree,none,health
+Bristol Myers Squibb,none,health
+Cardinal Health,none,health
+Cencora,none,health
+Centene,none,health
+Cigna,none,health
+CodaMetrix,none,health
+Commure,none,health
+Cotiviti,none,health
+CVS Health,none,health
+CVS Pharmacy,none,health
+Cytiva,none,health
+Daiichi Sankyo,none,health
+Danaher Corporation,none,health
+Dandy,none,health
+Delta Dental,none,health
+Dexcom,none,health
+Edwards Lifesciences,none,health
+Elekta,none,health
+Element Biosciences,none,health
+Elevance Health,none,health
+Epic,pipeline,health
+Exact Sciences,none,health
+Excellus BCBS,none,health
+Fresenius Kabi,none,health
+Fresenius Medical Care,none,health
+Fullscript,none,health
+Garner Health,none,health
+GE Healthcare,none,health
+Genentech,none,health
+Gilead Sciences,none,health
+Globus Medical,none,health
+GRAIL,none,health
+Grow Therapy,none,health
+HCSC,none,health
+HeartFlow,none,health
+Henry Schein,none,health
+Highmark Health,none,health
+Hologic,none,health
+Humana,none,health
+IDEXX,none,health
+Illumina,none,health
+Imperative Care,none,health
+Impiricus,none,health
+Insulet Corporation,none,health
+Intuitive Surgical,none,health
+Johnson & Johnson,none,health
+Kaiser Permanente,none,health
+LabCorp,none,health
+LivaNova,none,health
+McKesson,none,health
+Medline,none,health
+"Medpace, Inc.",none,health
+Medtronic,none,health
+Melaleuca,none,health
+Merck,none,health
+Moderna,none,health
+Modernizing Medicine,none,health
+MSD,none,health
+Natera,none,health
+Netsmart,none,health
+NimbleRx,none,health
+Noah Medical,none,health
+Nuna,none,health
+Optum,none,health
+Oscar Health,none,health
+PathAI,none,health
+Pfizer,none,health
+Philips,none,health
+Premera Blue Cross,none,health
+Premier,none,health
+PROCEPT BioRobotics,none,health
+Quest Diagnostics,none,health
+Recursion Pharmaceuticals,none,health
+Regeneron,none,health
+Resmed,none,health
+Revvity,none,health
+Roche,none,health
+Sartorius,none,health
+Schrödinger,none,health
+Siemens Healthineers,none,health
+Smith+Nephew,none,health
+St. Jude Children's Research Hospital,none,health
+Stanford Health Care,none,health
+Stryker,none,health
+Synthego,none,health
+Takeda,none,health
+The Joint Commission,none,health
+Thermo Fisher Scientific,none,health
+Transcarent,none,health
+TRIMEDX,none,health
+Truveta,none,health
+UnitedHealth Group,none,health
+Varian,none,health
+Ventas,none,health
+Vertex Pharmaceuticals,none,health
+Vizient,none,health
+VSP Vision,none,health
+Waters Corporation,none,health
+Wellmark,none,health
+WellSky,none,health
+Werfen,none,health
+Zocdoc,none,health
+Zoetis,none,health
+Zoll Medical,none,health
+ABB,none,industrial_energy
+ADT,none,industrial_energy
+Allegion,none,industrial_energy
+Altom Transport,none,industrial_energy
+Ameren,none,industrial_energy
+Antora Energy,none,industrial_energy
+Armada,none,industrial_energy
+Ascend Analytics,none,industrial_energy
+ASSA ABLOY,none,industrial_energy
+Autostore,none,industrial_energy
+Badger Meter,none,industrial_energy
+Baker Hughes,none,industrial_energy
+Base Power,none,industrial_energy
+Black & Veatch,none,industrial_energy
+Bloom Energy,none,industrial_energy
+BlueScope,none,industrial_energy
+Bosch Home Comfort,none,industrial_energy
+Brady,none,industrial_energy
+Brink's,none,industrial_energy
+Burns & McDonnell,none,industrial_energy
+C.H. Robinson,none,industrial_energy
+Canon,none,industrial_energy
+Carpenter Technology,none,industrial_energy
+Carrier Global,none,industrial_energy
+ChampionX,none,industrial_energy
+Chevron Corporation,none,industrial_energy
+Commonwealth Fusion Systems,none,industrial_energy
+Corteva,none,industrial_energy
+Corteva Agriscience,none,industrial_energy
+Daifuku,none,industrial_energy
+Dayton Freight Lines,none,industrial_energy
+DEKA Research & Development,none,industrial_energy
+Dover,none,industrial_energy
+Eaton Corporation,none,industrial_energy
+Echo Global Logistics,none,industrial_energy
+Electric Hydrogen,none,industrial_energy
+Emerson Electric,none,industrial_energy
+Energy Vault,none,industrial_energy
+EquipmentShare,none,industrial_energy
+Eversource Energy,none,industrial_energy
+Exxon Mobil,none,industrial_energy
+FedEx,none,industrial_energy
+Flexport,none,industrial_energy
+Formlabs,none,industrial_energy
+Fortive,none,industrial_energy
+Futronics,none,industrial_energy
+GE Appliances,none,industrial_energy
+GE Vernova,none,industrial_energy
+Generac,none,industrial_energy
+General Matter,none,industrial_energy
+Graco,none,industrial_energy
+Greenheck Group,none,industrial_energy
+HNTB,none,industrial_energy
+Hypertherm Associates,none,industrial_energy
+IGS Energy,none,industrial_energy
+IKO,none,industrial_energy
+Illinois Tool Works,none,industrial_energy
+Intelcom | Dragonfly,none,industrial_energy
+Itron,none,industrial_energy
+Jacobs,none,industrial_energy
+JB&B,none,industrial_energy
+Johnson Controls,none,industrial_energy
+Kairos Power,none,industrial_energy
+Kimley-Horn,none,industrial_energy
+KION Group,none,industrial_energy
+Kodak,none,industrial_energy
+Layup Parts,none,industrial_energy
+Leggett & Platt,none,industrial_energy
+Legrand,none,industrial_energy
+Lennar Corporation,none,industrial_energy
+Lennox,none,industrial_energy
+Lumafield,none,industrial_energy
+Marathon Petroleum,none,industrial_energy
+Mariana Minerals,none,industrial_energy
+Markforged,none,industrial_energy
+Marmon Holdings,none,industrial_energy
+Masco,none,industrial_energy
+MillerKnoll,none,industrial_energy
+Nextracker,none,industrial_energy
+Nidec,none,industrial_energy
+NiSource,none,industrial_energy
+Nordson,none,industrial_energy
+NOV,none,industrial_energy
+NRG Energy,none,industrial_energy
+nVent,none,industrial_energy
+Omnidian,none,industrial_energy
+Otis,none,industrial_energy
+Palomar Products,none,industrial_energy
+Panasonic,none,industrial_energy
+Pella Corporation,none,industrial_energy
+Pitney Bowes,none,industrial_energy
+Plastipak,none,industrial_energy
+Plug Power,none,industrial_energy
+PulteGroup,none,industrial_energy
+Ragle Inc,none,industrial_energy
+Raptor Maps,none,industrial_energy
+Regal Rexnord,none,industrial_energy
+RESPEC,none,industrial_energy
+RJ Lee Group,none,industrial_energy
+Rockwell Automation,none,industrial_energy
+RR Donnelley,none,industrial_energy
+Ryder System,none,industrial_energy
+Sargent & Lundy,none,industrial_energy
+Schneider Electric,none,industrial_energy
+Schweitzer Engineering Laboratories,none,industrial_energy
+SEL,none,industrial_energy
+Shamrock Trading,none,industrial_energy
+Siemens,none,industrial_energy
+Signify,none,industrial_energy
+Span,none,industrial_energy
+Spot Freight,none,industrial_energy
+SSOE Group,none,industrial_energy
+Stanley Black & Decker,none,industrial_energy
+Steel Dynamics,none,industrial_energy
+Syska Hennessy Group,none,industrial_energy
+Terex,none,industrial_energy
+Tesla Energy,none,industrial_energy
+Third Pole,none,industrial_energy
+Tive,none,industrial_energy
+Toshiba Global Commerce,none,industrial_energy
+Trane Technologies,none,industrial_energy
+Trillium,none,industrial_energy
+U.S. Venture,none,industrial_energy
+United Parcel Service (UPS),none,industrial_energy
+Valmont,none,industrial_energy
+Vanderlande Industries,none,industrial_energy
+Veolia,none,industrial_energy
+Vermeer,none,industrial_energy
+Vertiv,none,industrial_energy
+Viridien,none,industrial_energy
+Vistra,none,industrial_energy
+Wabtec,none,industrial_energy
+Wade Trim,none,industrial_energy
+Watershed,none,industrial_energy
+Watts Water,none,industrial_energy
+WeaveGrid,none,industrial_energy
+Westinghouse Electric Company,none,industrial_energy
+WSP,none,industrial_energy
+Xcimer Energy,none,industrial_energy
+Xometry,none,industrial_energy
+Xylem,none,industrial_energy
+Zeiss,none,industrial_energy
+Wealthfront,pipeline,other
+Zillow,pipeline,other
+Akuna Capital,pipeline,quant
+AQR Capital Management,pipeline,quant
+Aquatic Capital Management,none,quant
+Arrowstreet Capital,pipeline,quant
+Belvedere Trading,pipeline,quant
+Blockhouse,none,quant
+Bracebridge Capital,none,quant
+Capstone Investment Advisors,none,quant
+Castleton Commodities International,none,quant
+Chicago Trading Company,pipeline,quant
+Citadel,prestige,quant
+Citadel Securities,prestige,quant
+D. E. Shaw,prestige,quant
+Databento,none,quant
+DRW,prestige,quant
+DV Trading,pipeline,quant
+Exegy,none,quant
+Farallon Capital Management,none,quant
+Five Rings,prestige,quant
+G-Research,prestige,quant
+Garda Capital Partners,pipeline,quant
+Gelber Group,pipeline,quant
+Geneva Trading,pipeline,quant
+HBK Capital Management,none,quant
+Hudson River Trading,prestige,quant
+Hyannis Port Research,pipeline,quant
+IMC Trading,prestige,quant
+InfiniteQuant,none,quant
+Jane Street,prestige,quant
+Jump Trading,prestige,quant
+Maven Securities,none,quant
+Old Mission,prestige,quant
+Optiver,prestige,quant
+PDT Partners,prestige,quant
+PEAK6,pipeline,quant
+Point72,prestige,quant
+Quantbot Technologies,none,quant
+QuantCo,none,quant
+Quantiq Partners,none,quant
+Schonfeld,pipeline,quant
+Squarepoint Capital,pipeline,quant
+Stevens Capital Management,none,quant
+Susquehanna,prestige,quant
+Talos Trading,pipeline,quant
+The Voleon Group,prestige,quant
+Tower Research Capital,prestige,quant
+Two Sigma,prestige,quant
+Virtu,pipeline,quant
+Voloridge Health,none,quant
+Walleye Capital,none,quant
+XTX Markets,prestige,quant
+1Password,none,software
+ACI Worldwide,none,software
+Actian,none,software
+Activision-Blizzard,pipeline,software
+AffiniPay,none,software
+Age of Learning,none,software
+Airtable,none,software
+Akamai Technologies,none,software
+Alarm.com,none,software
+AllTrails,none,software
+Altair,none,software
+Amperity,none,software
+Amplitude,none,software
+Anomali,none,software
+Ansys,none,software
+Appian,none,software
+AppLovin,none,software
+Aptos,none,software
+Arcade,none,software
+Arista Networks,none,software
+Asana,pipeline,software
+AspenTech,none,software
+athenahealth,none,software
+Atlassian,pipeline,software
+Atomic,none,software
+Atomic Object,none,software
+Auctane,none,software
+AuditBoard,none,software
+Autodesk,pipeline,software
+AVEVA,none,software
+Awardco,none,software
+Axway,none,software
+Babel Street,none,software
+BambooHR,none,software
+Bandwidth,none,software
+Benchling,prestige,software
+Bentley Systems,none,software
+BigCommerce,none,software
+BigID,none,software
+Blackberry,none,software
+Blizzard Entertainment,pipeline,software
+Blue Yonder,none,software
+Boomi,none,software
+Braze,none,software
+Brevium,none,software
+Brilliant,none,software
+Bumble,none,software
+Businessolver,none,software
+Cadence Design Systems,pipeline,software
+Calix,none,software
+Cambium Learning Group,none,software
+Cambly,none,software
+Cambridge Mobile Telematics,none,software
+Canva,none,software
+CCC Intelligent Solutions,none,software
+Censys,none,software
+Chewy,pipeline,software
+Ciena,none,software
+Clever,none,software
+Cloudflare,prestige,software
+Cockroach Labs,none,software
+Cohesity,none,software
+ConductorOne,none,software
+Confluent,pipeline,software
+CrowdStrike,pipeline,software
+CWAN,none,software
+Cyberark,none,software
+Databricks,prestige,software
+Datadog,prestige,software
+Datavisor,none,software
+dbt Labs,none,software
+Deel,none,software
+Dialpad,none,software
+DigitalOcean,none,software
+Docugami,none,software
+Docusign,pipeline,software
+Domo,none,software
+DoubleVerify,none,software
+Duolingo,prestige,software
+Dynatrace,none,software
+EBSCO,none,software
+Elastic,none,software
+Electronic Arts,pipeline,software
+Elsevier,none,software
+Entrust,none,software
+Epic Games,prestige,software
+Epicor,none,software
+Equinix,none,software
+Esri,none,software
+Eulerity,none,software
+Exiger,none,software
+Extreme Networks,none,software
+F5,none,software
+Fastly,none,software
+Figma,prestige,software
+Five9,none,software
+Fivetran,none,software
+Flatiron Health,none,software
+Fortanix,none,software
+Fortinet,none,software
+Fortra,none,software
+G2,none,software
+Gearset,none,software
+Gen,none,software
+Genesys,none,software
+Geotab,none,software
+GitHub,none,software
+GitLab,none,software
+Glassdoor,none,software
+Global Relay,none,software
+GoDaddy,none,software
+Gong,none,software
+Grammarly,none,software
+Guidewire,none,software
+Gusto,pipeline,software
+Handshake,none,software
+Harris Computer,none,software
+HashiCorp,none,software
+Hexagon,none,software
+Highspot,none,software
+Hootsuite,none,software
+HubSpot,pipeline,software
+Hudl,none,software
+IDeaS,none,software
+Illumio,none,software
+iManage,none,software
+Immuta,none,software
+Imprivata,none,software
+Indeed,none,software
+Infor,none,software
+Instacart,prestige,software
+Institutional Shareholder Services - ISS,none,software
+Intapp,none,software
+Integral Ad Science,none,software
+Intradiem,none,software
+iPipeline,none,software
+Ironclad,none,software
+IXL Learning,none,software
+Jobber,none,software
+Juniper Networks,none,software
+Juvare,none,software
+Kabam,none,software
+Khan Academy,none,software
+Kinaxis,none,software
+Kira,none,software
+Kitware,none,software
+Klaviyo,pipeline,software
+KnowBe4,none,software
+Kognitos,none,software
+LaunchDarkly,none,software
+LexisNexis,none,software
+Lightcast,none,software
+Litify,none,software
+LiveRamp,none,software
+LogicGate,none,software
+Magnite,none,software
+Manhattan Associates,none,software
+Mark43,none,software
+MasterControl,none,software
+Match Group,none,software
+MathWorks,none,software
+Medallia,none,software
+Minitab,none,software
+Mixpanel,none,software
+Moloco,none,software
+Momentive,none,software
+MongoDB,pipeline,software
+Mozilla,none,software
+Nasuni,none,software
+National Information Solutions Cooperative,none,software
+NetApp,none,software
+New Relic,none,software
+Nextdoor,none,software
+NICE,none,software
+Normalyze,none,software
+Notion,prestige,software
+Nucleus Security,none,software
+Nutanix,none,software
+Obsidian Security,none,software
+Okta,pipeline,software
+Olo,none,software
+Ontra,none,software
+OpenGov,none,software
+OpenSesame,none,software
+Origami Risk,none,software
+Outreach,none,software
+Own Company,none,software
+OwnBackup,none,software
+PagerDuty,none,software
+Palantir,prestige,software
+Palo Alto Networks,pipeline,software
+Patch My PC,none,software
+Patreon,none,software
+Pegasystems,none,software
+Pendo,none,software
+Perchwell,none,software
+Pluralsight,none,software
+Podium,none,software
+Poshmark,none,software
+Precisely,none,software
+Proofpoint,none,software
+PTC,none,software
+Pure Storage,none,software
+Q2,none,software
+Qlik,none,software
+Qualtrics,none,software
+Quest Analytics,none,software
+Qumulo,none,software
+Recorded Future,none,software
+Red Hat,pipeline,software
+RELX,none,software
+Retool,none,software
+RF-SMART,none,software
+RIB,none,software
+RingCentral,none,software
+Riot Games,prestige,software
+RippleMatch,none,software
+Rippling,prestige,software
+Roblox,prestige,software
+Rokt,none,software
+Rubrik,none,software
+Sage,none,software
+SailPoint,none,software
+Samsara,pipeline,software
+SAP,none,software
+SAS,none,software
+Saviynt,none,software
+Scopely,none,software
+SeatGeek,none,software
+Second Dinner,none,software
+Seismic,none,software
+Semgrep,none,software
+SentinelOne,none,software
+Sentra,none,software
+ServiceNow,pipeline,software
+Sift,none,software
+Sigma Computing,none,software
+SingleStore,none,software
+Skyward,none,software
+Slack,pipeline,software
+Snowflake,prestige,software
+Snyk,none,software
+Solink,none,software
+SonicWall,none,software
+Sophos,none,software
+SOTI,none,software
+SpecterOps,none,software
+Splunk,none,software
+SPS Commerce,none,software
+Squarespace,none,software
+Starburst,none,software
+StockX,none,software
+Strava,none,software
+Superhuman,none,software
+Symphony,none,software
+Symplicity,none,software
+Synopsys,pipeline,software
+Tableau,none,software
+Taboola,none,software
+Take-Two,none,software
+Tamr,none,software
+Tanium,none,software
+Temporal,none,software
+Tempus,none,software
+The Trade Desk,pipeline,software
+ThousandEyes,none,software
+ThredUp,none,software
+TraceLink,none,software
+Tricentis,none,software
+Trimble,none,software
+Twilio,pipeline,software
+Tyler Technologies,none,software
+Udemy,none,software
+UiPath,none,software
+Unite Us,none,software
+Unity,none,software
+UserTesting,none,software
+Valsoft Corporation,none,software
+Vectra,none,software
+Veeva,none,software
+Vercel,prestige,software
+Verkada,pipeline,software
+Vestmark,none,software
+Viavi Solutions,none,software
+Vimeo,none,software
+Virtru,none,software
+Visier,none,software
+VMware,pipeline,software
+Volaris Group,none,software
+Webflow,none,software
+WhatNot,none,software
+Wikimedia Foundation,none,software
+WillowTree,none,software
+Wind River,none,software
+Wix,none,software
+Wolfram,none,software
+Workato,none,software
+Workday,pipeline,software
+Workiva,none,software
+Yelp,pipeline,software
+Yext,none,software
+YugaByte,none,software
+Zendesk,none,software
+ZipRecruiter,none,software
+ZoomInfo,none,software
+Zscaler,pipeline,software
+Zynga,none,software
+Arrcus,none,telecom
+AT&T,none,telecom
+Boingo,none,telecom
+CenturyLink,none,telecom
+Charter,none,telecom
+CommScope,none,telecom
+Ericsson,none,telecom
+Gogo,none,telecom
+HERE,none,telecom
+Lumen,none,telecom
+Motorola Solutions,none,telecom
+NCR Voyix,none,telecom
+Nokia,none,telecom
+Optimum (An Altice USA Company),none,telecom
+Ribbon,none,telecom
+T-Mobile,pipeline,telecom
+Taara,none,telecom
+TDS,none,telecom
+TELUS Digital,none,telecom
+TNS,none,telecom
+Verizon,pipeline,telecom
+Xfinity Communities,none,telecom
+Xfinity Creative,none,telecom
