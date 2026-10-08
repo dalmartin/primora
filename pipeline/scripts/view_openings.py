@@ -5,7 +5,8 @@ opens cleanly in Excel / Numbers / Google Sheets. Then prints the top companies 
 
 Markers in the table: "<=" opened on or before that date (history starts 2023-08-02);
 "*" date set by a rolling post tagged for several Summers (may be early); "?" date set by a
-posting with no season label on Simplify; "-" nothing seen; "not yet" = 2027 not open yet.
+posting with no season label on Simplify; "+" date from speedyapply (earlier than Simplify, or
+Simplify missed it); "-" nothing seen; "not yet" = 2027 not open yet.
 
 Run (from pipeline/):
   uv run python scripts/view_openings.py                  top 40 companies + chart
@@ -31,18 +32,21 @@ def cell(r) -> str:
     if r.status == "opened_by":
         return f"<={r.opened_at:%Y-%m-%d}"
     if pd.notna(r.opened_at):
-        return f"{r.opened_at:%Y-%m-%d}" + ("*" if r.via_multi_cycle else "?" if r.via_unlabeled else "")
+        mark = "*" if r.via_multi_cycle else "?" if r.via_unlabeled else ""
+        return f"{r.opened_at:%Y-%m-%d}" + mark + ("+" if r.opened_source == "speedyapply" else "")
     return {"not_yet": "not yet", "backfilled": "seen, no date"}.get(r.status, "-")
 
 
 def wide(o: pd.DataFrame) -> pd.DataFrame:
     o = o.assign(cell=[cell(r) for r in o.itertuples()])
-    w = o.pivot(index="company_name", columns="cycle", values="cell")[CYCLES]
+    w = o.pivot(index="company_key", columns="cycle", values="cell")[CYCLES]
     w.columns = [f"summer_{c}" for c in CYCLES]
-    stats = o.groupby("company_name").agg(cycles_open=("cycles_open", "first"),
-                                          swe_postings=("n_swe_postings", "sum"),
-                                          board_misses_2027=("board_misses_2027", "first"))
-    return (stats.join(w).reset_index()
+    stats = o.groupby("company_key").agg(company_name=("company_name", "first"),
+                                         cycles_open=("cycles_open", "first"),
+                                         swe_postings=("n_swe_postings", "sum"),
+                                         speedyapply_postings=("n_speedyapply_postings", "sum"),
+                                         board_misses_2027=("board_misses_2027", "first"))
+    return (stats.join(w).reset_index(drop=True)
             .sort_values(["cycles_open", "swe_postings"], ascending=False, ignore_index=True))
 
 

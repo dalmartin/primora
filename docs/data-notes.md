@@ -66,7 +66,22 @@ What we learned about the SimplifyJobs data, and the decisions that follow from 
 
 **Unlabeled postings (new finding).** Since 2026, Simplify often leaves `terms` as "N/A" (about 30-75 SWE postings a month). Some are real Summer internships: Jane Street's "Software Engineer Intern" (2026-08-03) has terms N/A, so Jane Street shows "not yet" for 2027 when it has opened. **Decision (Daniel, 2026-10-08): they count.** An SWE intern posting with no season counts toward the Summer after it (first seen Jul 1 of the prior year through Jun 30), flagged `via_unlabeled`. It sets the opening for 21 companies in 2027 (Jane Street: 2026-07-06), 27 in 2025, 17 in 2026.
 
-**Still missing after this:** Meta and Citadel show "not yet" for 2027. Meta's Summer 2027 SWE intern posting is on speedyapply but not Simplify; that's the case for adding speedyapply next.
+**Still missing after this:** Meta and Citadel showed "not yet" for 2027. speedyapply (below) fixed Meta.
+
+## Second source: speedyapply (2026-10-08)
+`pipeline/src/primora_pipeline/speedyapply.py` → `speedyapply_postings.parquet`. Repo `speedyapply/2027-SWE-College-Jobs` (2025-/2026- names redirect to it, like Simplify). Its data lives in speedyapply's own database; the repo only has markdown tables, so we parse every version of the internship tables (README.md = USA, INTERN_INTL.md): 1,037 commits from 2024-01-01, about one a day. **19,303 internship postings**, 2,254 company names.
+
+**Dates are good.** Against company job boards (Summer 2027 posts, 283 matched): speedyapply first_seen trails the company by a median 0.9 days. Its "Age" column does better: first_seen minus Age lands within a day of the company's date (p90 1.0 day). Simplify is faster (4.6 hours) but speedyapply is fine at day level.
+
+**It covers what Simplify misses.** Meta's Summer 2025 SWE intern opening: Simplify 2025-01-04, speedyapply 2024-09-27. Meta and Apple Summer 2027: Simplify has nothing, speedyapply has 2026-09-26 and 2026-07-22. When both lists have a company, they agree within hours (2025-2027 median under a day).
+
+**How it's merged (openings rule 6).** USA list only; same SWE title rule; titles naming Fall / Spring / Winter without Summer dropped. Date = first_seen minus Age when Age is 14 days or less, else first_seen (old postings added late are often evergreen). Cycle = the Summer year in the title, else the Summer after the date (Jul-Jun). Window rule and left-censoring apply (speedyapply's first snapshot, 2024-01-01, counts as "on or before"). A cycle's opening is the earlier of the two lists; `opened_source` says which.
+
+**Company names** are matched by a normalized key (lowercase, punctuation and Inc / LLC / Corp dropped): 1,463 of 2,239 speedyapply names match Simplify exactly, plus about 120 by a unique word-prefix ("Dell" / "Dell Technologies"). A few prefix matches may be wrong (e.g. "Atomic Object" / "Atomic"); unmatched names become their own company.
+
+**Result:** 2,700 companies. Openings per cycle: 2024: 826 (+106 left-censored) · 2025: 1,097 · 2026: 1,770 · 2027 so far: 667. speedyapply sets the date for about half (often by hours; about 250 a cycle are companies only speedyapply has).
+
+**Not yet:** speedyapply isn't in the Modal hourly job (1.10). Citadel still shows "not yet" for 2027 in both lists.
 
 ## Decisions
 - **2026-10-04 (Daniel): "opening" = the first SWE-intern posting per company per Summer cycle.** Category-level openings can come later.
@@ -77,3 +92,4 @@ What we learned about the SimplifyJobs data, and the decisions that follow from 
   4. No company is dropped for coverage now. Add a coverage flag; the 1.7 backtests decide whether low-coverage companies hurt predictions.
   5. Cycle window: a tag only counts between Jan 1 of the year before the cycle and Aug 31 of the cycle year.
   6. SWE intern postings with no season (terms N/A) count toward the Summer after them (Jul-Jun).
+  7. speedyapply is a second source; the opening is the earlier of the two lists (rules in the speedyapply section).
