@@ -55,6 +55,17 @@ What we learned about the SimplifyJobs data, and the decisions that follow from 
 2. The real risk is **coverage, not lag.** Something like 1 in 6 companies' openings are missing or more than a week late. An opening never seen looks like a company that didn't open, which biases toward "opens late / doesn't hire." Worth weighing in 1.4 (which companies count) and when choosing the top ~100 in 1.5 (prefer ones with consistent coverage across cycles).
 3. Evergreen and multi-cycle postings are the same phenomenon seen from two sides (see `multi_cycle` / `terms_changed` in 1.2). For those, the opening is when Simplify (re)tagged them for the cycle, not the post's own date.
 
+## Openings table (tracker 1.4)
+`pipeline/src/primora_pipeline/openings.py` → `openings.parquet` + `openings.csv`: one row per company per Summer cycle (2024-2027), 2,284 companies with any SWE Summer posting. Columns documented in the module. To look at it: `uv run python scripts/view_openings.py` (from `pipeline/`) writes `data/openings_wide.csv` (one row per company, one date column per cycle) and draws a chart.
+
+**Opened per cycle:** 2024: 632 (+60 left-censored "on or before 2023-08-02") · 2025: 782 · 2026: 1,494 · 2027 so far: 423 (1,861 not yet).
+
+**Cycle window (Tauros, 2026-10-08, for Daniel to confirm).** A tag only counts if it lands between Jan 1 of the year before the cycle and Aug 31 of the cycle year. Without it, rolling and mislabeled posts set absurd dates: Amazon's Summer 2026 and 2027 both "opened" 2024-10-17 via one rolling post; General Motors' Summer 2024 "opened" in Jan 2026; Intuitive Surgical's Summer 2027 in Jan 2025. Out-of-window tags are counted in `n_out_of_window`. The constant is easy to change.
+
+**Spot check now looks right:** Microsoft early-to-mid Aug every year; NVIDIA late Aug / early Sep; American Express, Stryker, Oshkosh within days of the same date each cycle. Some companies wander by months (Tesla, Tradeweb, Applied Materials). That spread is what the model has to learn.
+
+**Unlabeled postings (new finding).** Since 2026, Simplify often leaves `terms` as "N/A" (about 30-75 SWE postings a month). Some are real Summer internships: Jane Street's "Software Engineer Intern" (2026-08-03) has terms N/A, so Jane Street shows "not yet" for 2027 when it has opened. `first_unlabeled_intern_at` records these (only 9 companies for 2027 so far) but doesn't set `opened_at`. Open question for Daniel: count N/A-term SWE intern posts seen Jul-Jun as that Summer's opening?
+
 ## Decisions
 - **2026-10-04 (Daniel): "opening" = the first SWE-intern posting per company per Summer cycle.** Category-level openings can come later.
 - **2026-10-08 (Daniel), rules for the `openings` table (1.4):**
