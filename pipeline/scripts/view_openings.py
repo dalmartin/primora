@@ -4,8 +4,8 @@ Writes data/openings_wide.csv: one row per company, one column per cycle (opened
 opens cleanly in Excel / Numbers / Google Sheets. Then prints the top companies and shows a chart.
 
 Markers in the table: "<=" opened on or before that date (history starts 2023-08-02);
-"*" date set by a rolling post tagged for several Summers (may be early); "?" no season label
-on Simplify but an SWE intern post was seen (date shown); "-" nothing seen; "not yet" = 2027 open.
+"*" date set by a rolling post tagged for several Summers (may be early); "?" date set by a
+posting with no season label on Simplify; "-" nothing seen; "not yet" = 2027 not open yet.
 
 Run (from pipeline/):
   uv run python scripts/view_openings.py                  top 40 companies + chart
@@ -31,9 +31,7 @@ def cell(r) -> str:
     if r.status == "opened_by":
         return f"<={r.opened_at:%Y-%m-%d}"
     if pd.notna(r.opened_at):
-        return f"{r.opened_at:%Y-%m-%d}" + ("*" if r.via_multi_cycle else "")
-    if pd.notna(r.first_unlabeled_intern_at):
-        return f"?{r.first_unlabeled_intern_at:%Y-%m-%d}"
+        return f"{r.opened_at:%Y-%m-%d}" + ("*" if r.via_multi_cycle else "?" if r.via_unlabeled else "")
     return {"not_yet": "not yet", "backfilled": "seen, no date"}.get(r.status, "-")
 
 

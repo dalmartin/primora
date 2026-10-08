@@ -28,6 +28,7 @@ def test_openings(tmp_path, monkeypatch):
         co(row("plain", "added", 165, terms=("Summer 2027",)), "Roll"),
         co(row("back", "added", 6, active=False), "Back"),          # backfilled closed only
         co(row("na", "added", 8, title="Software Engineer Intern", terms=("N/A",)), "Early"),
+        co(row("na2", "added", 8, title="Software Engineer Intern", terms=("N/A",)), "NA"),
     ]
     obs = tmp_path / "obs.parquet"
     pq.write_table(pa.Table.from_pylist(rows, schema=SCHEMA), obs)
@@ -39,7 +40,9 @@ def test_openings(tmp_path, monkeypatch):
 
     assert o["Early", 2026]["status"] == "opened_by"
     assert o["Early", 2027]["status"] == "not_yet"
-    assert o["Early", 2026]["first_unlabeled_intern_at"] == T0 + timedelta(days=8)  # Jul-Jun window
+    assert o["Early", 2026]["opened_at"] == T0 and not o["Early", 2026]["via_unlabeled"]
+    # no-season intern post on day 8 (Aug 2025) -> Summer 2026; sets the opening when it's first
+    assert o["NA", 2026]["opened_at"] == T0 + timedelta(days=8) and o["NA", 2026]["via_unlabeled"]
     assert o["Acme", 2026]["opened_at"] == T0 + timedelta(days=3)
     assert o["Acme", 2027]["opened_at"] == T0 + timedelta(days=160)
     assert o["Relab", 2026]["status"] == "none"                     # latest terms only

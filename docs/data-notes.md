@@ -58,13 +58,15 @@ What we learned about the SimplifyJobs data, and the decisions that follow from 
 ## Openings table (tracker 1.4)
 `pipeline/src/primora_pipeline/openings.py` → `openings.parquet` + `openings.csv`: one row per company per Summer cycle (2024-2027), 2,284 companies with any SWE Summer posting. Columns documented in the module. To look at it: `uv run python scripts/view_openings.py` (from `pipeline/`) writes `data/openings_wide.csv` (one row per company, one date column per cycle) and draws a chart.
 
-**Opened per cycle:** 2024: 632 (+60 left-censored "on or before 2023-08-02") · 2025: 782 · 2026: 1,494 · 2027 so far: 423 (1,861 not yet).
+**Opened per cycle:** 2024: 632 (+61 left-censored "on or before 2023-08-02") · 2025: 807 · 2026: 1,509 · 2027 so far: 442 (1,878 not yet). 2,320 companies.
 
-**Cycle window (Tauros, 2026-10-08, for Daniel to confirm).** A tag only counts if it lands between Jan 1 of the year before the cycle and Aug 31 of the cycle year. Without it, rolling and mislabeled posts set absurd dates: Amazon's Summer 2026 and 2027 both "opened" 2024-10-17 via one rolling post; General Motors' Summer 2024 "opened" in Jan 2026; Intuitive Surgical's Summer 2027 in Jan 2025. Out-of-window tags are counted in `n_out_of_window`. The constant is easy to change.
+**Cycle window (Daniel confirmed 2026-10-08).** A tag only counts if it lands between Jan 1 of the year before the cycle and Aug 31 of the cycle year. Without it, rolling and mislabeled posts set absurd dates: Amazon's Summer 2026 and 2027 both "opened" 2024-10-17 via one rolling post; General Motors' Summer 2024 "opened" in Jan 2026; Intuitive Surgical's Summer 2027 in Jan 2025. Out-of-window tags are counted in `n_out_of_window`. The constant is easy to change.
 
 **Spot check now looks right:** Microsoft early-to-mid Aug every year; NVIDIA late Aug / early Sep; American Express, Stryker, Oshkosh within days of the same date each cycle. Some companies wander by months (Tesla, Tradeweb, Applied Materials). That spread is what the model has to learn.
 
-**Unlabeled postings (new finding).** Since 2026, Simplify often leaves `terms` as "N/A" (about 30-75 SWE postings a month). Some are real Summer internships: Jane Street's "Software Engineer Intern" (2026-08-03) has terms N/A, so Jane Street shows "not yet" for 2027 when it has opened. `first_unlabeled_intern_at` records these (only 9 companies for 2027 so far) but doesn't set `opened_at`. Open question for Daniel: count N/A-term SWE intern posts seen Jul-Jun as that Summer's opening?
+**Unlabeled postings (new finding).** Since 2026, Simplify often leaves `terms` as "N/A" (about 30-75 SWE postings a month). Some are real Summer internships: Jane Street's "Software Engineer Intern" (2026-08-03) has terms N/A, so Jane Street shows "not yet" for 2027 when it has opened. **Decision (Daniel, 2026-10-08): they count.** An SWE intern posting with no season counts toward the Summer after it (first seen Jul 1 of the prior year through Jun 30), flagged `via_unlabeled`. It sets the opening for 21 companies in 2027 (Jane Street: 2026-07-06), 27 in 2025, 17 in 2026.
+
+**Still missing after this:** Meta and Citadel show "not yet" for 2027. Meta's Summer 2027 SWE intern posting is on speedyapply but not Simplify; that's the case for adding speedyapply next.
 
 ## Decisions
 - **2026-10-04 (Daniel): "opening" = the first SWE-intern posting per company per Summer cycle.** Category-level openings can come later.
@@ -73,3 +75,5 @@ What we learned about the SimplifyJobs data, and the decisions that follow from 
   2. `terms_changed` postings (about 56 reused from earlier cycles) count from the relabel date.
   3. Summer 2024 is kept. Openings already present on 2023-08-02 (`first_seen_censored`) are marked left-censored ("opened on or before 2023-08-02"), not given a guessed date.
   4. No company is dropped for coverage now. Add a coverage flag; the 1.7 backtests decide whether low-coverage companies hurt predictions.
+  5. Cycle window: a tag only counts between Jan 1 of the year before the cycle and Aug 31 of the cycle year.
+  6. SWE intern postings with no season (terms N/A) count toward the Summer after them (Jul-Jun).

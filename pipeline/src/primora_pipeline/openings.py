@@ -11,15 +11,18 @@ Rules (Daniel, 2026-10-08; see docs/data-notes.md):
      for several Summers) and terms_changed postings (reused, counted from the relabel date).
   2. Openings already in the very first commit (2023-08-02) are left-censored: "on or before".
   3. Nothing is dropped for coverage; `board_misses_2027` and `cycles_open` flag it instead.
-  4. (Tauros, 2026-10-08, for Daniel to confirm) A tag only counts inside the cycle's window,
-     Jan 1 of the year before through Aug 31 of the cycle year. Outside it the tag is a data error
-     or a rolling post, not an opening: e.g. General Motors tagged Summer 2024 in Jan 2026,
-     Amazon's rolling post tagged Summer 2027 in Oct 2024. Counted in `n_out_of_window`.
+  4. A tag only counts inside the cycle's window, Jan 1 of the year before through Aug 31 of the
+     cycle year. Outside it the tag is a data error or a rolling post, not an opening: e.g.
+     General Motors tagged Summer 2024 in Jan 2026, Amazon's rolling post tagged Summer 2027 in
+     Oct 2024. Counted in `n_out_of_window`.
+  5. SWE intern postings with no season (terms "N/A", common from 2026) count toward the Summer
+     after them: first seen Jul 1 of the year before the cycle through Jun 30 of the cycle, from
+     first_seen. E.g. Jane Street's Summer 2027 SWE intern, posted 2026-08-03 with terms N/A.
 Postings added already closed (backfilled; first_seen says when Simplify found it, not when it
 opened) don't set an opening date.
 
 Columns
-  company_name, cycle           one row per company (any SWE Summer posting in CYCLES) x cycle
+  company_name, cycle           one row per company (any SWE posting counted in CYCLES) x cycle
   status          opened / opened_by (left-censored) / not_yet (current cycle, right-censored)
                   / none (past cycle, nothing seen: didn't hire, or Simplify missed it)
                   / backfilled (only postings Simplify added already closed; no usable date)
@@ -31,10 +34,7 @@ Columns
   via_relabel     the opening posting was relabeled into this cycle
   opened_at_excl_multi  opened_at ignoring multi_cycle postings (rolling posts can set a cycle's
                   opening years early, e.g. Amazon Summer 2027 via an Oct 2024 rolling post)
-  first_unlabeled_intern_at  first SWE intern posting with no season (terms "N/A", common from
-                  2026) seen Jul 1 of the year before the cycle through Jun 30 of the cycle. Not
-                  used for opened_at (undecided); shows openings the terms rule misses, e.g.
-                  Jane Street's Summer 2027 SWE intern, posted 2026-08-03 with terms N/A.
+  via_unlabeled   the opening posting had no season (rule 5)
   n_swe_postings  SWE postings for the company in the cycle
   n_out_of_window of those, tagged outside the cycle's window (rule 4; not used for opened_at)
   cycles_open     cycles (of CYCLES) in which the company has an opening
@@ -95,13 +95,20 @@ def build(observations: Path = OBSERVATIONS, postings: Path = POSTINGS, out: Pat
         group by 1, 2
     ),
     swe as (  -- SWE postings x every Summer cycle in their latest terms
-        select p.listing_id, p.company_name, p.title, p.url, p.multi_cycle, p.terms_changed,
-               p.added_closed, t.cycle, t.tagged_at,
-               t.tagged_at > p.first_seen as relabeled
+        select p.listing_id, p.company_name, p.title, p.url, p.multi_cycle, p.added_closed,
+               t.cycle, t.tagged_at,
+               t.tagged_at > p.first_seen as relabeled, false as unlabeled
         from postings p
         join tags t on t.listing_id = p.listing_id
             and list_contains(p.terms, 'Summer ' || t.cycle)
         where p.is_swe and t.cycle in ({cycles})
+        union all  -- no season: the Summer after first_seen (Jul-Jun)
+        select listing_id, company_name, title, url, false, added_closed,
+               year(first_seen) + (month(first_seen) >= 7)::int as cycle, first_seen,
+               false, true
+        from postings
+        where is_swe and season = 'unknown' and regexp_matches(lower(title), 'intern|co-?op')
+          and year(first_seen) + (month(first_seen) >= 7)::int in ({cycles})
     ),
     windowed as (
         select *, tagged_at >= make_date(cycle - 1, 1, 1) and tagged_at < make_date(cycle, 9, 1)
@@ -116,13 +123,6 @@ def build(observations: Path = OBSERVATIONS, postings: Path = POSTINGS, out: Pat
                min(tagged_at) filter (where usable) as opened_at,
                min(tagged_at) filter (where usable and not multi_cycle) as opened_at_excl_multi
         from windowed group by 1, 2
-    ),
-    unlabeled as (
-        select company_name, y.cycle, min(first_seen) as first_unlabeled_intern_at
-        from postings, (select unnest([{cycles}]) as cycle) y
-        where is_swe and season = 'unknown' and regexp_matches(lower(title), 'intern|co-?op')
-          and first_seen >= make_date(y.cycle - 1, 7, 1) and first_seen < make_date(y.cycle, 7, 1)
-        group by 1, 2
     ),
     grid as (
         select c.company_name, y.cycle
@@ -143,8 +143,8 @@ def build(observations: Path = OBSERVATIONS, postings: Path = POSTINGS, out: Pat
         f.first_listing_id, s.title as first_title, s.url as first_url,
         coalesce(s.multi_cycle, false) as via_multi_cycle,
         coalesce(s.relabeled, false) as via_relabel,
+        coalesce(s.unlabeled, false) as via_unlabeled,
         f.opened_at_excl_multi,
-        u.first_unlabeled_intern_at,
         coalesce(f.n_swe_postings, 0) as n_swe_postings,
         coalesce(f.n_out_of_window, 0) as n_out_of_window,
         count(f.opened_at) over (partition by g.company_name) as cycles_open,
@@ -152,7 +152,6 @@ def build(observations: Path = OBSERVATIONS, postings: Path = POSTINGS, out: Pat
         timestamptz '{as_of.isoformat()}' as as_of
     from grid g
     left join firsts f using (company_name, cycle)
-    left join unlabeled u using (company_name, cycle)
     left join swe s on s.listing_id = f.first_listing_id and s.cycle = g.cycle
     order by g.company_name, g.cycle
     """)
@@ -167,7 +166,8 @@ def report(con: duckdb.DuckDBPyConnection) -> None:
     print(con.sql("""
         select cycle, status, count(*) as companies,
                count(*) filter (where via_multi_cycle) as via_multi_cycle,
-               count(*) filter (where via_relabel) as via_relabel
+               count(*) filter (where via_relabel) as via_relabel,
+               count(*) filter (where via_unlabeled) as via_unlabeled
         from openings group by all order by all"""))
 
 
