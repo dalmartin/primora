@@ -1,6 +1,6 @@
 # Primora
 
-A Chrome extension that logs your internship applications when you submit them, and a dashboard that keeps the promising ones on top.
+A browser extension (Chrome + Firefox) that logs your internship applications when you submit them, and a dashboard that keeps the promising ones on top.
 
 - **Scope:** [`docs/PRD.md`](docs/PRD.md) (v2, 2026-10-15)
 - **Build progress:** [`docs/BUILD-TRACKER.md`](docs/BUILD-TRACKER.md)
@@ -9,7 +9,7 @@ A Chrome extension that logs your internship applications when you submit them, 
 ## Layout
 | Folder | What | Stack |
 |---|---|---|
-| `extension/` | Detects submits on Greenhouse + Ashby; popup with "I applied" and quick status | WXT + React + TypeScript (MV3) |
+| `extension/` | Detects submits on Greenhouse + Ashby; popup with "I applied" and quick status | WXT + React + TypeScript (MV3, Chrome + Firefox) |
 | `web/` | Dashboard: applications sorted by how promising, status edits | React + Vite + TypeScript |
 | `shared/` | Types, statuses, priority sort, auto-ghost rule, posting keys, theme tokens (`theme.css`) | TypeScript, CSS |
 | `supabase/` | Schema (`job_applications` + row-level security) | Supabase Postgres + Auth |
@@ -25,6 +25,7 @@ cp extension/.env.example extension/.env.local    # same values
 
 cd web && npm install && npm run dev              # dashboard at localhost:5173
 cd extension && npm install && npm run build      # then load extension/.output/chrome-mv3 unpacked
+cd extension && npm run build:firefox             # Firefox: about:debugging → Load Temporary Add-on → .output/firefox-mv3
 node --test shared/*.test.ts                      # shared logic tests
 ```
 

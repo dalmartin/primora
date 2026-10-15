@@ -155,17 +155,21 @@ function showToast(result: LogResult) {
       : `Primora couldn't reach the server; ${what} is queued and will retry.`;
 
   const host = document.createElement('div');
+  host.dataset.primoraToast = '';
   const shadow = host.attachShadow({ mode: 'closed' });
-  shadow.innerHTML = `
-    <style>
-      .toast { position: fixed; z-index: 2147483647; right: 16px; bottom: 16px; max-width: 360px;
-        padding: 12px 14px; border-radius: 10px; font: 14px/1.4 system-ui, sans-serif;
-        color: #fff; background: ${result.ok ? '#166534' : '#92400e'}; box-shadow: 0 6px 24px rgba(0,0,0,.25);
-        animation: in .2s ease-out; }
-      @keyframes in { from { opacity: 0; transform: translateY(8px); } }
-    </style>
-    <div class="toast" role="status"></div>`;
-  shadow.querySelector('.toast')!.textContent = text;
+  // Built with DOM calls rather than innerHTML (Firefox add-on review flags innerHTML).
+  const style = document.createElement('style');
+  style.textContent = `
+    .toast { position: fixed; z-index: 2147483647; right: 16px; bottom: 16px; max-width: 360px;
+      padding: 12px 14px; border-radius: 10px; font: 14px/1.4 system-ui, sans-serif;
+      color: #fff; background: ${result.ok ? '#166534' : '#92400e'}; box-shadow: 0 6px 24px rgba(0,0,0,.25);
+      animation: in .2s ease-out; }
+    @keyframes in { from { opacity: 0; transform: translateY(8px); } }`;
+  const toast = document.createElement('div');
+  toast.className = 'toast';
+  toast.setAttribute('role', 'status');
+  toast.textContent = text;
+  shadow.append(style, toast);
   document.documentElement.appendChild(host);
   setTimeout(() => host.remove(), 6000);
 }
