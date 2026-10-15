@@ -33,8 +33,15 @@ export default defineConfig({
       },
     }),
   }),
+  zip: {
+    // AMO rebuilds from the sources zip, and the build imports ../shared, so zip from the repo root.
+    sourcesRoot: '..',
+    // Dotfiles are skipped unless named, so .env.production (public Supabase URL + anon key) is listed.
+    includeSources: ['extension/**', 'extension/.env.production', 'shared/**'],
+    excludeSources: ['extension/e2e/**', 'extension/icon-src/**', 'extension/scripts/**'],
+  },
   vite: () => ({
-    // shared/ lives one level up, next to web/.
+    // shared/ lives one level up, next to extension/.
     server: { fs: { allow: ['..'] } },
   }),
 });
