@@ -34,6 +34,7 @@ Takes Primora from the existing scaffold to a launched Chrome extension + dashbo
 - [~] **1.4 Greenhouse detection (embedded iframes)** on company career pages. Done: verified on 2 companies that embed Greenhouse.
 - [~] **1.5 Ashby detection.** Done: verified on a real Ashby posting.
 - [x] **1.6 Duplicate guard + feedback.** Same URL twice → one row; a small toast/badge confirms "Logged: Company, Role." Done: double submit gives one row and one confirmation.
+- [ ] **1.7 Firefox port.** Firefox is Daniel's default browser. Build the extension for Firefox with WXT (`wxt build -b firefox`) and fix what differs from Chrome: sign-in (`chrome.identity.launchWebAuthFlow` vs `browser.identity`; the Firefox redirect URL must be allowed in Supabase), content scripts in all frames for embedded Greenhouse, storage, toast + badge. Load via `about:debugging` > This Firefox > Load Temporary Add-on. Done: email sign-in, a Greenhouse confirmation logs with a toast, duplicate guard, and popup status change all work in Firefox; the Chrome build still works.
 
 ## Phase 2 -- Dashboard
 - [x] **2.1 Applications list.** Priority sort (offer → interview → OA → applied → likely ghosted → rejected, newest first within each); auto-ghost display rule (applied + no change in 30 days). Done: renders Daniel's real applications in the right order.
@@ -69,6 +70,8 @@ Takes Primora from the existing scaffold to a launched Chrome extension + dashbo
 - 2026-10-15: Daniel restored the Supabase project; `supabase db push` applied the v2 migration. Database end-to-end check with two throwaway users (deleted after): insert, duplicate ignored, other user can't read or insert, status change restarts the ghost clock, signed-out sees nothing. All 6 pass. 0.2 verified.
 - 2026-10-15: **Daniel's live browser test.** Account created + signed in on the dashboard (email/password); extension loaded unpacked and signed in. Greenhouse confirmation URL → toast + row on the dashboard; refresh → "already logged", no duplicate; popup "This page" status change to Interview → dashboard regrouped. Verified: 0.3, 1.1 (email; Google not configured), 1.6, 2.2. 1.3 confirmation-URL path verified; a real submit still to watch.
 - 2026-10-15: Live test found a bug: a backdated manual entry never showed as likely ghosted (its clock started at save time). Fixed in `c69920b` (clock starts at the applied date). Retested by Daniel: ghosted + "Still alive" work; add/delete work. Verified 2.1, 2.3. **Still to see live (during the dogfood week):** a real Greenhouse submit, embedded Greenhouse, a real Ashby submit, manual "I applied" on another site, the signed-out queue. **Next:** 2.4 dogfood week; Daniel's theme; Google sign-in setup.
+
+- 2026-10-15: Added **1.7 Firefox port** (Daniel's default browser). **Next session starts here**, then 2.4 dogfood week, Daniel's theme, Google sign-in setup.
 
 ---
 
