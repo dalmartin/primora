@@ -5,6 +5,14 @@ export default defineConfig({
   modules: ['@wxt-dev/module-react'],
   manifest: {
     name: 'Primora',
-    description: 'Know when internships open, log every application automatically, and see which ones are still alive.',
+    description: 'Logs your internship applications when you submit them, and keeps the promising ones on top.',
+    // storage: session + queued logs; activeTab: prefill "I applied"; identity: Google sign-in.
+    permissions: ['storage', 'activeTab', 'identity'],
+    // Public job-board APIs, used to clean up company / role names after a submit.
+    host_permissions: ['https://boards-api.greenhouse.io/*', 'https://api.ashbyhq.com/*'],
   },
+  vite: () => ({
+    // shared/ lives one level up, next to web/.
+    server: { fs: { allow: ['..'] } },
+  }),
 });

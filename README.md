@@ -1,32 +1,32 @@
 # Primora
 
-Know when internships open, log every application automatically, and see which ones are still alive.
+A Chrome extension that logs your internship applications when you submit them, and a dashboard that keeps the promising ones on top.
 
-- **Scope:** [`docs/PRD.md`](docs/PRD.md)
+- **Scope:** [`docs/PRD.md`](docs/PRD.md) (v2, 2026-10-15)
 - **Build progress:** [`docs/BUILD-TRACKER.md`](docs/BUILD-TRACKER.md)
+- **Try it in your browser:** [`docs/TESTING.md`](docs/TESTING.md)
 
 ## Layout
 | Folder | What | Stack |
 |---|---|---|
-| `pipeline/` | SimplifyJobs history → DuckDB/Parquet → opening predictions | Python, DuckDB, lifelines / scikit-survival (later PyMC) |
-| `api/` | Backend for the dashboard + extension | FastAPI |
-| `modal_app.py` | Scheduled jobs (hourly refresh, nightly retrain) + hosts the API | Modal |
-| `supabase/` | Database schema (migrations), auth | Supabase Postgres |
-| `web/` | Dashboard | React + Vite + TypeScript |
-| `extension/` | Chrome extension | WXT + React + TypeScript |
+| `extension/` | Detects submits on Greenhouse + Ashby; popup with "I applied" and quick status | WXT + React + TypeScript (MV3) |
+| `web/` | Dashboard: applications sorted by how promising, status edits | React + Vite + TypeScript |
+| `shared/` | Types, statuses, priority sort, auto-ghost rule, posting keys, theme tokens (`theme.css`) | TypeScript, CSS |
+| `supabase/` | Schema (`job_applications` + row-level security) | Supabase Postgres + Auth |
+| `pipeline/`, `api/`, `modal_app.py` | **Parked** (v1 prediction work). Kept for future "opens soon" reminders | Python |
+
+No API server: both clients talk to Supabase directly; RLS keeps each user's rows private.
 
 ## Getting started
 ```bash
-uv sync                              # Python env (pipeline + api)
-uv run jupyter lab pipeline/notebooks
-uv run fastapi dev api/src/primora_api/main.py   # API at localhost:8000/health
+supabase db push                                  # apply migrations to the linked project
+cp web/.env.example web/.env.local                # fill in URL + anon key
+cp extension/.env.example extension/.env.local    # same values
 
-cd web && npm install && npm run dev             # dashboard
-cd extension && npm install && npm run dev       # extension (opens Chrome with it loaded)
-
-uv run modal deploy modal_app.py     # deploy jobs + API to Modal
-supabase db push                     # apply migrations to the linked Supabase project
+cd web && npm install && npm run dev              # dashboard at localhost:5173
+cd extension && npm install && npm run build      # then load extension/.output/chrome-mv3 unpacked
+node --test shared/*.test.ts                      # shared logic tests
 ```
 
 ## Data
-Posting history comes from [SimplifyJobs/Summer2027-Internships](https://github.com/SimplifyJobs/Summer2027-Internships). Check the license and credit it before launch (tracker 5.1).
+The parked pipeline uses posting history from [SimplifyJobs](https://github.com/SimplifyJobs/Summer2027-Internships) and [speedyapply](https://github.com/speedyapply/2027-SWE-College-Jobs).

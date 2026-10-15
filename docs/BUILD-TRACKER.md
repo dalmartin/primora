@@ -6,6 +6,8 @@
 
 Takes Primora from the existing scaffold to a launched Chrome extension + dashboard that logs applications automatically and keeps the promising ones on top. Order: Supabase + auth, then the extension logger (the part Daniel needs while applying), then the dashboard, then launch.
 
+**Legend:** `[~]` built, waiting on Daniel's live test; `[x]` verified live.
+
 **Hard rules**
 - Never commit secrets. The Supabase anon key is public by design; the service-role key never goes in client code or git.
 - RLS on every user table (`user_id = auth.uid()`).
@@ -21,22 +23,22 @@ Takes Primora from the existing scaffold to a launched Chrome extension + dashbo
 ---
 
 ## Phase 0 -- Foundation
-- [ ] **0.1 Repo cleanup.** README reflects v2 (extension + dashboard + Supabase; pipeline/api/modal marked parked). Done: README updated.
-- [ ] **0.2 Supabase + v2 schema.** Supabase project linked; new migration with only `applications` (see PRD section 7) + RLS + unique (user_id, url). Retire the v1 tables. Done: table visible; a signed-in user can insert/read their own rows and can't read another user's.
-- [ ] **0.3 Dashboard sign-in.** supabase-js + Google sign-in in `web/`. Done: signs in, shows the user's email.
+- [~] **0.1 Repo cleanup.** README reflects v2 (extension + dashboard + Supabase; pipeline/api/modal marked parked). Done: README updated.
+- [~] **0.2 Supabase + v2 schema.** Supabase project linked; new migration with only `job_applications` (see PRD section 7) + RLS + unique (user_id, url). v1 tables left in place (drop by hand if wanted). Done: table visible; a signed-in user can insert/read their own rows and can't read another user's.
+- [~] **0.3 Dashboard sign-in.** supabase-js + Google sign-in in `web/`. Done: signs in, shows the user's email.
 
 ## Phase 1 -- Extension logging
-- [ ] **1.1 Extension sign-in.** Google via `chrome.identity.launchWebAuthFlow` + Supabase OAuth; session stored in `chrome.storage`. Fallback: email + password. Done: popup shows the signed-in email after a browser restart.
-- [ ] **1.2 Manual "I applied."** Popup button prefilled from the active tab (company, role, URL); editable before saving. Done: a manual log shows up in Supabase.
-- [ ] **1.3 Greenhouse detection (hosted boards).** Inspect real pages; pick the signal (confirmation page, submit request, or form submit). Log company, role, URL, date, source. Done: a real or test application gets logged automatically.
-- [ ] **1.4 Greenhouse detection (embedded iframes)** on company career pages. Done: verified on 2 companies that embed Greenhouse.
-- [ ] **1.5 Ashby detection.** Done: verified on a real Ashby posting.
-- [ ] **1.6 Duplicate guard + feedback.** Same URL twice → one row; a small toast/badge confirms "Logged: Company, Role." Done: double submit gives one row and one confirmation.
+- [~] **1.1 Extension sign-in.** Google via `chrome.identity.launchWebAuthFlow` + Supabase OAuth; session stored in `chrome.storage`. Fallback: email + password. Done: popup shows the signed-in email after a browser restart.
+- [~] **1.2 Manual "I applied."** Popup button prefilled from the active tab (company, role, URL); editable before saving. Done: a manual log shows up in Supabase.
+- [~] **1.3 Greenhouse detection (hosted boards).** Inspect real pages; pick the signal (confirmation page, submit request, or form submit). Log company, role, URL, date, source. Done: a real or test application gets logged automatically.
+- [~] **1.4 Greenhouse detection (embedded iframes)** on company career pages. Done: verified on 2 companies that embed Greenhouse.
+- [~] **1.5 Ashby detection.** Done: verified on a real Ashby posting.
+- [~] **1.6 Duplicate guard + feedback.** Same URL twice → one row; a small toast/badge confirms "Logged: Company, Role." Done: double submit gives one row and one confirmation.
 
 ## Phase 2 -- Dashboard
-- [ ] **2.1 Applications list.** Priority sort (offer → interview → OA → applied → likely ghosted → rejected, newest first within each); auto-ghost display rule (applied + no change in 30 days). Done: renders Daniel's real applications in the right order.
-- [ ] **2.2 Status updates.** Change status from the dashboard and the popup; "still alive" resets the ghost clock. Done: an edit in the popup shows on the dashboard.
-- [ ] **2.3 Edit, delete, search.** Done: works end to end.
+- [~] **2.1 Applications list.** Priority sort (offer → interview → OA → applied → likely ghosted → rejected, newest first within each); auto-ghost display rule (applied + no change in 30 days). Done: renders Daniel's real applications in the right order.
+- [~] **2.2 Status updates.** Change status from the dashboard and the popup; "still alive" resets the ghost clock. Done: an edit in the popup shows on the dashboard.
+- [~] **2.3 Edit, delete, search.** Done: works end to end.
 - [ ] **2.4 Dogfood week.** Daniel uses it for his own applications for a week. Done: a list of what annoyed him, fixes triaged.
 
 ## Phase 3 -- Launch prep
@@ -53,6 +55,17 @@ Takes Primora from the existing scaffold to a launched Chrome extension + dashbo
 
 ## Progress log
 - 2026-10-15: **Rescoped to v2** (Daniel's call). Survival model cut: per-company data too thin, and "about when it opened last year" is the useful estimate anyway (1.7 backtest: ~26 days off for tiered companies). Email/Gmail cut for now. MVP = submit interceptor (Greenhouse + Ashby, manual button elsewhere) + applications dashboard + status updates, sorted by how promising. Auto-ghost after 30 days with no change, computed on read. Dropped FastAPI + Modal; both clients talk to Supabase directly with RLS. Phase 1 data work parked for future reminders. Old PRD and tracker archived in `docs/archive/`. **Next:** 0.1-0.3.
+
+- 2026-10-15: **Built 0.1 through 2.3 in one pass** (Daniel: "just build it all now following the PRD"). Waiting on Daniel's live test.
+  - 0.1: README rewritten for v2; `docs/TESTING.md` added.
+  - 0.2: `supabase/migrations/20261015000000_v2_job_applications.sql`: new table `job_applications` (RLS, unique user+posting_key, trigger restarts the ghost clock on status change). Named `job_applications` because dropping the v1 tables was blocked as destructive; they stay, unused. **Not pushed yet: the `primora` Supabase project is paused** (DNS gone); restore it, then `supabase db push`.
+  - 0.3 / 1.1: email + password sign-in in both clients; Google sign-in wired (dashboard redirect; extension via `chrome.identity.launchWebAuthFlow` in the background worker) but needs the Google provider configured in Supabase.
+  - 1.2: popup "I applied", prefilled from the tab title (Greenhouse "Job Application for X at Y", Ashby "X @ Y", "Company Careers | Role").
+  - 1.3 / 1.4: checked real pages first. Greenhouse confirmation is `/<board>/jobs/<id>/confirmation` (hosted) or `/embed/job_app/confirmation?for=&token=` (iframe); content script runs in all frames. Fallback: "Thank you for applying" after a seen submit click. Names cleaned via the public boards API.
+  - 1.5: Ashby stays on `/application` and shows "Your application was successfully submitted" (default text, found in Ashby's bundle); weaker phrases count only after a seen submit.
+  - 1.6: posting keys (`greenhouse:board:id`, `ashby:org:id`, normalized URL) + upsert ignore; toast in-page; logs queue while signed out and sync on sign-in (badge shows the count).
+  - 2.1 to 2.3: dashboard grouped by priority, filter chips with counts, search, add/edit/delete with inline confirm, "Still alive" on auto-ghosted rows, refresh on tab focus. Shared logic in `shared/applications.ts` (6 tests pass: `node --test shared/*.test.ts`). Theme tokens in `shared/theme.css` for Daniel's theme later.
+  - **Next:** Daniel restores Supabase + tests per `docs/TESTING.md`; then 2.4 dogfood week.
 
 ---
 

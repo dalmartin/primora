@@ -76,14 +76,14 @@ Extension (WXT)                          Dashboard (React)
         └──────────── supabase-js ─────────────────────┘
                               ▼
                  Supabase: Auth + Postgres (RLS)
-                 table: applications
+                 table: job_applications
 ```
 
 ### Data model
-- `applications` -- id, user_id, company, role, url, applied_at, source (greenhouse / ashby / manual), status (applied / oa / interview / offer / rejected / ghosted), status_updated_at, notes (optional). Unique on (user_id, url) for the duplicate guard.
+- `job_applications` -- id, user_id, company, role, url, applied_at, source (greenhouse / ashby / manual), status (applied / oa / interview / offer / rejected / ghosted), status_updated_at, posting_key, notes (optional). Unique on (user_id, posting_key) for the duplicate guard.
 - "Likely ghosted" display = status is `ghosted`, OR status is `applied` and `status_updated_at` is older than N days. "Still alive" just bumps `status_updated_at`.
 
-The v1 migration (`supabase/migrations/20260924000000_initial_schema.sql`) has 7 tables; v2 needs only `applications` (simplified). New migration replaces it.
+The v1 migration (`supabase/migrations/20260924000000_initial_schema.sql`) has 7 tables; v2 needs only one table; `supabase/migrations/20261015000000_v2_job_applications.sql` adds `job_applications` and leaves the v1 tables unused.
 
 ### Constraints
 - Solo build; Daniel is applying now, so the Greenhouse/Ashby logger is the first thing to make real.
