@@ -248,6 +248,35 @@ def main():
             check("manual: 'I applied' saved a row", got and got[0]["url"].startswith("https://example.com"), json.dumps(got)[:200])
             d.close()
             d.switch_to.window(MAIN["handle"])
+
+        # 8. "Open dashboard" opens the in-extension dashboard, signed in with the popup's session.
+        open_popup(d, base)
+        link = wait_for(lambda: d.find_elements(By.XPATH, "//a[contains(., 'Open dashboard')]"))
+        before = set(d.window_handles)
+        link[0].click()  # opens dashboard.html in a new tab and closes the popup tab
+        if BROWSER == "firefox":
+            new = wait_for(lambda: [h for h in d.window_handles if h not in before])
+        else:
+            # ChromeDriver doesn't hand out tabs an extension creates; find it through CDP, then load it directly.
+            d.switch_to.window(MAIN["handle"])
+            new = wait_for(lambda: [t for t in d.execute_cdp_cmd("Target.getTargets", {})["targetInfos"]
+                                    if t["type"] == "page" and t["url"] == f"{base}/dashboard.html"])
+        check("dashboard: link opens a new tab", new)
+        if new:
+            if BROWSER == "firefox":
+                d.switch_to.window(new[0])
+            else:
+                d.switch_to.new_window("tab")
+                d.get(f"{base}/dashboard.html")
+            check("dashboard: extension page, not localhost",
+                  wait_for(lambda: d.current_url == f"{base}/dashboard.html"), d.current_url)
+            body = wait_for(lambda: email in (t := d.find_element(By.TAG_NAME, "body").text) and "Anthropic" in t and t)
+            check("dashboard: signed in and lists applications", body, (body or "")[:120].replace("\n", " | "))
+            d.save_screenshot(str(OUT / "8-dashboard.png"))
+            d.find_element(By.XPATH, "//button[normalize-space()='Sign out']").click()
+            check("dashboard: sign-out shows the sign-in form",
+                  wait_for(lambda: d.find_elements(By.XPATH, "//button[normalize-space()='Create account']")))
+        d.switch_to.window(MAIN["handle"])
     except Exception:
         traceback.print_exc()
         check("no exceptions", False)

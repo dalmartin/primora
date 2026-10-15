@@ -1,6 +1,6 @@
-import { useCallback, useEffect, useMemo, useState } from 'react'
-import type { Session } from '@supabase/supabase-js'
-import { supabase } from './supabase'
+import { useCallback, useEffect, useMemo, useState } from 'react';
+import type { Session } from '@supabase/supabase-js';
+import { supabase } from '@/lib/supabase';
 import {
   GHOST_AFTER_DAYS,
   PRIORITY,
@@ -15,55 +15,62 @@ import {
   urlPostingKey,
   type Application,
   type Status,
-} from '../../shared/applications'
-import { THEMES, applyTheme, savedTheme, type ThemeName } from '../../shared/theme'
+} from '../../../shared/applications';
+import { THEMES, applyTheme, savedTheme, type ThemeName } from '../../../shared/theme';
 
 export default function App() {
-  const [session, setSession] = useState<Session | null | undefined>(undefined)
+  const [session, setSession] = useState<Session | null | undefined>(undefined);
 
   useEffect(() => {
-    supabase.auth.getSession().then(({ data }) => setSession(data.session))
-    const { data } = supabase.auth.onAuthStateChange((_e, s) => setSession(s))
-    return () => data.subscription.unsubscribe()
-  }, [])
+    supabase.auth.getSession().then(({ data }) => setSession(data.session));
+    const { data } = supabase.auth.onAuthStateChange((_e, s) => setSession(s));
+    // Signing in or out from the popup only changes extension storage; re-read the session from there.
+    const onStorage = (_changes: unknown, area: string) => {
+      if (area === 'local') supabase.auth.getSession().then(({ data }) => setSession(data.session));
+    };
+    browser.storage.onChanged.addListener(onStorage);
+    return () => {
+      data.subscription.unsubscribe();
+      browser.storage.onChanged.removeListener(onStorage);
+    };
+  }, []);
 
-  if (session === undefined) return <div className="page muted">Loading…</div>
-  return session ? <Dashboard session={session} /> : <SignIn />
+  if (session === undefined) return <div className="page muted">Loading…</div>;
+  return session ? <Dashboard session={session} /> : <SignIn />;
 }
 
 function SignIn() {
-  const [email, setEmail] = useState('')
-  const [password, setPassword] = useState('')
-  const [busy, setBusy] = useState(false)
-  const [msg, setMsg] = useState<{ text: string; error?: boolean } | null>(null)
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [busy, setBusy] = useState(false);
+  const [msg, setMsg] = useState<{ text: string; error?: boolean } | null>(null);
 
   const run = async (mode: 'in' | 'up') => {
-    setBusy(true)
-    setMsg(null)
+    setBusy(true);
+    setMsg(null);
     const { data, error } =
       mode === 'in'
         ? await supabase.auth.signInWithPassword({ email, password })
-        : await supabase.auth.signUp({ email, password })
-    setBusy(false)
-    if (error) setMsg({ text: error.message, error: true })
-    else if (mode === 'up' && !data.session) setMsg({ text: 'Check your email to confirm, then sign in.' })
-  }
+        : await supabase.auth.signUp({ email, password });
+    setBusy(false);
+    if (error) setMsg({ text: error.message, error: true });
+    else if (mode === 'up' && !data.session) setMsg({ text: 'Check your email to confirm, then sign in.' });
+  };
 
+  // Same flow as the popup: the background script runs the identity window.
   const google = async () => {
-    const { error } = await supabase.auth.signInWithOAuth({
-      provider: 'google',
-      options: { redirectTo: window.location.origin },
-    })
-    if (error) setMsg({ text: error.message, error: true })
-  }
+    setMsg({ text: 'Opening Google sign-in…' });
+    const res = (await browser.runtime.sendMessage({ type: 'sign-in-google' })) as { ok?: boolean; error?: string };
+    if (res?.error) setMsg({ text: res.error, error: true });
+  };
 
   return (
     <div className="signin-wrap">
       <form
         className="signin card"
         onSubmit={(e) => {
-          e.preventDefault()
-          void run('in')
+          e.preventDefault();
+          void run('in');
         }}
       >
         <h1>Primora</h1>
@@ -91,70 +98,69 @@ function SignIn() {
         {msg && <p className={msg.error ? 'error' : 'muted'}>{msg.text}</p>}
       </form>
     </div>
-  )
+  );
 }
 
 function Dashboard({ session }: { session: Session }) {
-  const [apps, setApps] = useState<Application[] | null>(null)
-  const [error, setError] = useState<string | null>(null)
-  const [query, setQuery] = useState('')
-  const [filter, setFilter] = useState<Status | 'all'>('all')
-  const [adding, setAdding] = useState(false)
+  const [apps, setApps] = useState<Application[] | null>(null);
+  const [error, setError] = useState<string | null>(null);
+  const [query, setQuery] = useState('');
+  const [filter, setFilter] = useState<Status | 'all'>('all');
+  const [adding, setAdding] = useState(false);
 
   const load = useCallback(async () => {
-    const { data, error } = await supabase.from(TABLE).select('*')
-    if (error) setError(error.message)
+    const { data, error } = await supabase.from(TABLE).select('*');
+    if (error) setError(error.message);
     else {
-      setError(null)
-      setApps(data as Application[])
+      setError(null);
+      setApps(data as Application[]);
     }
-  }, [])
+  }, []);
 
   useEffect(() => {
-    void load()
+    void load();
     // Pick up applications the extension logged while this tab was in the background.
-    const onFocus = () => void load()
-    window.addEventListener('focus', onFocus)
-    return () => window.removeEventListener('focus', onFocus)
-  }, [load])
+    const onFocus = () => void load();
+    window.addEventListener('focus', onFocus);
+    return () => window.removeEventListener('focus', onFocus);
+  }, [load]);
 
   const patch = async (id: string, changes: Partial<Application>) => {
-    setApps((prev) => prev?.map((a) => (a.id === id ? { ...a, ...changes } : a)) ?? null)
-    const { error } = await supabase.from(TABLE).update(changes).eq('id', id)
+    setApps((prev) => prev?.map((a) => (a.id === id ? { ...a, ...changes } : a)) ?? null);
+    const { error } = await supabase.from(TABLE).update(changes).eq('id', id);
     if (error) {
-      setError(error.message)
-      void load()
+      setError(error.message);
+      void load();
     }
-  }
+  };
 
   // Always restart the clock, so picking "Applied" on an auto-ghosted row revives it.
-  const setStatus = (id: string, status: Status) =>
-    patch(id, { status, status_updated_at: new Date().toISOString() })
+  const setStatus = (id: string, status: Status) => patch(id, { status, status_updated_at: new Date().toISOString() });
 
   const remove = async (id: string) => {
-    setApps((prev) => prev?.filter((a) => a.id !== id) ?? null)
-    const { error } = await supabase.from(TABLE).delete().eq('id', id)
+    setApps((prev) => prev?.filter((a) => a.id !== id) ?? null);
+    const { error } = await supabase.from(TABLE).delete().eq('id', id);
     if (error) {
-      setError(error.message)
-      void load()
+      setError(error.message);
+      void load();
     }
-  }
+  };
 
   const counts = useMemo(() => {
-    const c = Object.fromEntries(STATUSES.map((s) => [s, 0])) as Record<Status, number>
-    for (const a of apps ?? []) c[effectiveStatus(a)]++
-    return c
-  }, [apps])
+    const c = Object.fromEntries(STATUSES.map((s) => [s, 0])) as Record<Status, number>;
+    for (const a of apps ?? []) c[effectiveStatus(a)]++;
+    return c;
+  }, [apps]);
 
   const groups = useMemo(() => {
-    const q = query.trim().toLowerCase()
+    const q = query.trim().toLowerCase();
     const visible = (apps ?? []).filter(
       (a) =>
         (filter === 'all' || effectiveStatus(a) === filter) &&
         (!q || a.company.toLowerCase().includes(q) || (a.role ?? '').toLowerCase().includes(q)),
-    )
-    return groupByPriority(visible)
-  }, [apps, query, filter])
+    );
+    return groupByPriority(visible);
+  }, [apps, query, filter]);
 
   return (
     <div className="page">
@@ -203,7 +209,7 @@ function Dashboard({ session }: { session: Session }) {
           title="Add an application"
           onCancel={() => setAdding(false)}
           onSave={async (v) => {
-            const ref = v.url ? parsePostingUrl(v.url) : null
+            const ref = v.url ? parsePostingUrl(v.url) : null;
             const { error } = await supabase.from(TABLE).insert({
               user_id: session.user.id,
               company: v.company,
@@ -216,11 +222,11 @@ function Dashboard({ session }: { session: Session }) {
               status: v.status,
               posting_key: ref?.key ?? (v.url ? urlPostingKey(v.url) : `manual:${crypto.randomUUID()}`),
               source: 'manual',
-            })
-            if (error) return error.code === '23505' ? 'You already logged this posting.' : error.message
-            setAdding(false)
-            void load()
-            return null
+            });
+            if (error) return error.code === '23505' ? 'You already logged this posting.' : error.message;
+            setAdding(false);
+            void load();
+            return null;
           }}
         />
       )}
@@ -247,20 +253,20 @@ function Dashboard({ session }: { session: Session }) {
         ))
       )}
     </div>
-  )
+  );
 }
 
 function ThemePicker() {
-  const [theme, setTheme] = useState<ThemeName>(savedTheme)
+  const [theme, setTheme] = useState<ThemeName>(savedTheme);
   return (
     <select
       className="theme-select small"
       value={theme}
       aria-label="Theme"
       onChange={(e) => {
-        const t = e.target.value as ThemeName
-        applyTheme(t, true)
-        setTheme(t)
+        const t = e.target.value as ThemeName;
+        applyTheme(t, true);
+        setTheme(t);
       }}
     >
       {(Object.keys(THEMES) as ThemeName[]).map((t) => (
@@ -269,7 +275,7 @@ function ThemePicker() {
         </option>
       ))}
     </select>
-  )
+  );
 }
 
 function EmptyState() {
@@ -277,14 +283,14 @@ function EmptyState() {
     <div className="card empty">
       <h2>No applications yet</h2>
       <p className="muted">
-        With the extension installed, submit an application on a Greenhouse or Ashby page and it shows up here on
-        its own. Anywhere else, click the Primora icon and hit "I applied". You can also add one by hand above.
+        With the extension installed, submit an application on a Greenhouse or Ashby page and it shows up here on its
+        own. Anywhere else, click the Primora icon and hit "I applied". You can also add one by hand above.
       </p>
     </div>
-  )
+  );
 }
 
-const dateFmt = new Intl.DateTimeFormat(undefined, { month: 'short', day: 'numeric', year: 'numeric' })
+const dateFmt = new Intl.DateTimeFormat(undefined, { month: 'short', day: 'numeric', year: 'numeric' });
 
 function Row({
   app,
@@ -292,15 +298,15 @@ function Row({
   onPatch,
   onDelete,
 }: {
-  app: Application
-  onStatus: (id: string, s: Status) => void
-  onPatch: (id: string, c: Partial<Application>) => Promise<void>
-  onDelete: (id: string) => void
+  app: Application;
+  onStatus: (id: string, s: Status) => void;
+  onPatch: (id: string, c: Partial<Application>) => Promise<void>;
+  onDelete: (id: string) => void;
 }) {
-  const [editing, setEditing] = useState(false)
-  const [confirmDelete, setConfirmDelete] = useState(false)
-  const shown = effectiveStatus(app)
-  const days = daysSince(app.applied_at)
+  const [editing, setEditing] = useState(false);
+  const [confirmDelete, setConfirmDelete] = useState(false);
+  const shown = effectiveStatus(app);
+  const days = daysSince(app.applied_at);
 
   if (editing) {
     return (
@@ -316,14 +322,14 @@ function Row({
                 ? { status_updated_at: new Date().toISOString() }
                 : app.status_updated_at === app.applied_at
                   ? { status_updated_at: v.applied_at }
-                  : {}
-            await onPatch(app.id, { ...v, ...clock })
-            setEditing(false)
-            return null
+                  : {};
+            await onPatch(app.id, { ...v, ...clock });
+            setEditing(false);
+            return null;
           }}
         />
       </li>
-    )
+    );
   }
 
   return (
@@ -393,21 +399,21 @@ function Row({
         )}
       </div>
     </li>
-  )
+  );
 }
 
 interface FormValues {
-  company: string
-  role: string | null
-  url: string | null
-  notes: string | null
-  applied_at: string
-  status: Status
+  company: string;
+  role: string | null;
+  url: string | null;
+  notes: string | null;
+  applied_at: string;
+  status: Status;
 }
 
 function toDateInput(iso: string) {
-  const d = new Date(iso)
-  return new Date(d.getTime() - d.getTimezoneOffset() * 60000).toISOString().slice(0, 10)
+  const d = new Date(iso);
+  return new Date(d.getTime() - d.getTimezoneOffset() * 60000).toISOString().slice(0, 10);
 }
 
 function EditForm({
@@ -416,30 +422,30 @@ function EditForm({
   onSave,
   onCancel,
 }: {
-  title: string
-  initial?: Application
-  onSave: (v: FormValues) => Promise<string | null>
-  onCancel: () => void
+  title: string;
+  initial?: Application;
+  onSave: (v: FormValues) => Promise<string | null>;
+  onCancel: () => void;
 }) {
-  const [company, setCompany] = useState(initial?.company ?? '')
-  const [role, setRole] = useState(initial?.role ?? '')
-  const [url, setUrl] = useState(initial?.url ?? '')
-  const [notes, setNotes] = useState(initial?.notes ?? '')
-  const [date, setDate] = useState(toDateInput(initial?.applied_at ?? new Date().toISOString()))
-  const [status, setStatus] = useState<Status>(initial?.status ?? 'applied')
-  const [busy, setBusy] = useState(false)
-  const [error, setError] = useState<string | null>(null)
+  const [company, setCompany] = useState(initial?.company ?? '');
+  const [role, setRole] = useState(initial?.role ?? '');
+  const [url, setUrl] = useState(initial?.url ?? '');
+  const [notes, setNotes] = useState(initial?.notes ?? '');
+  const [date, setDate] = useState(toDateInput(initial?.applied_at ?? new Date().toISOString()));
+  const [status, setStatus] = useState<Status>(initial?.status ?? 'applied');
+  const [busy, setBusy] = useState(false);
+  const [error, setError] = useState<string | null>(null);
 
   return (
     <form
       className="card edit-form"
       onSubmit={async (e) => {
-        e.preventDefault()
-        setBusy(true)
+        e.preventDefault();
+        setBusy(true);
         // Keep the original time of day when only the date changes.
-        const base = initial ? new Date(initial.applied_at) : new Date()
-        const [y, m, d] = date.split('-').map(Number)
-        base.setFullYear(y, m - 1, d)
+        const base = initial ? new Date(initial.applied_at) : new Date();
+        const [y = 0, m = 1, d = 1] = date.split('-').map(Number);
+        base.setFullYear(y, m - 1, d);
         const err = await onSave({
           company: company.trim(),
           role: role.trim() || null,
@@ -447,9 +453,9 @@ function EditForm({
           notes: notes.trim() || null,
           applied_at: base.toISOString(),
           status,
-        })
-        setBusy(false)
-        setError(err)
+        });
+        setBusy(false);
+        setError(err);
       }}
     >
       <h3>{title}</h3>
@@ -495,5 +501,5 @@ function EditForm({
         </button>
       </div>
     </form>
-  )
+  );
 }

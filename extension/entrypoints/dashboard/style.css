@@ -1,4 +1,4 @@
-@import '../../shared/theme.css';
+@import '../../../shared/theme.css';
 
 body { font-size: 14px; }
 h1, h2, h3, p { margin: 0; }

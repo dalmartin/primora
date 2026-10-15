@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useState } from 'react';
 import type { Session } from '@supabase/supabase-js';
-import { DASHBOARD_URL, supabase } from '@/lib/supabase';
+import { supabase } from '@/lib/supabase';
 import { QUEUE_KEY } from '@/lib/messages';
 import {
   STATUSES,
@@ -43,6 +43,13 @@ export default function App() {
       {session ? <SignedIn session={session} /> : <SignIn />}
     </div>
   );
+}
+
+/** The dashboard is an extension page (dashboard.html), opened in a full tab. */
+function openDashboard(e: React.MouseEvent) {
+  e.preventDefault();
+  void browser.tabs.create({ url: browser.runtime.getURL('/dashboard.html') });
+  window.close();
 }
 
 function SignIn() {
@@ -170,7 +177,7 @@ function SignedIn({ session }: { session: Session }) {
       <section className="card">
         <div className="row spread">
           <h2>Top of your list</h2>
-          <a className="link" href={DASHBOARD_URL} target="_blank" rel="noreferrer">
+          <a className="link" href="#" onClick={openDashboard}>
             Open dashboard →
           </a>
         </div>

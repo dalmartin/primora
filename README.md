@@ -9,21 +9,18 @@ A browser extension (Chrome + Firefox) that logs your internship applications wh
 ## Layout
 | Folder | What | Stack |
 |---|---|---|
-| `extension/` | Detects submits on Greenhouse + Ashby; popup with "I applied" and quick status | WXT + React + TypeScript (MV3, Chrome + Firefox) |
-| `web/` | Dashboard: applications sorted by how promising, status edits | React + Vite + TypeScript |
+| `extension/` | Detects submits on Greenhouse + Ashby; popup with "I applied" and quick status; full-tab dashboard (`dashboard.html`) sorted by how promising | WXT + React + TypeScript (MV3, Chrome + Firefox) |
 | `shared/` | Types, statuses, priority sort, auto-ghost rule, posting keys, themes (`theme.css`, `themes/`; default in `theme.ts`) | TypeScript, CSS |
 | `supabase/` | Schema (`job_applications` + row-level security) | Supabase Postgres + Auth |
 | `pipeline/`, `api/`, `modal_app.py` | **Parked** (v1 prediction work). Kept for future "opens soon" reminders | Python |
 
-No API server: both clients talk to Supabase directly; RLS keeps each user's rows private.
+No API server or website: the extension talks to Supabase directly; RLS keeps each user's rows private.
 
 ## Getting started
 ```bash
 supabase db push                                  # apply migrations to the linked project
-cp web/.env.example web/.env.local                # fill in URL + anon key
-cp extension/.env.example extension/.env.local    # same values
+cp extension/.env.example extension/.env.local    # fill in URL + anon key
 
-cd web && npm install && npm run dev              # dashboard at localhost:5173
 cd extension && npm install && npm run build      # then load extension/.output/chrome-mv3 unpacked
 cd extension && npm run build:firefox             # Firefox: about:debugging → Load Temporary Add-on → .output/firefox-mv3
 node --test shared/*.test.ts                      # shared logic tests

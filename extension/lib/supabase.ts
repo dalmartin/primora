@@ -2,7 +2,6 @@ import { createClient, type SupportedStorage } from '@supabase/supabase-js';
 
 export const SUPABASE_URL = import.meta.env.WXT_SUPABASE_URL as string;
 const SUPABASE_ANON_KEY = import.meta.env.WXT_SUPABASE_ANON_KEY as string;
-export const DASHBOARD_URL = (import.meta.env.WXT_DASHBOARD_URL as string | undefined) ?? 'http://localhost:5173';
 
 if (!SUPABASE_URL || !SUPABASE_ANON_KEY) {
   console.error('Primora: set WXT_SUPABASE_URL and WXT_SUPABASE_ANON_KEY in extension/.env.local');

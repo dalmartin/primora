@@ -44,7 +44,7 @@ Takes Primora from the existing scaffold to a launched Chrome extension + dashbo
 
 ## Phase 3 -- Launch prep
 - [ ] **3.1 Privacy policy.** What the extension reads and stores. Done: published page.
-- [ ] **3.2 Deploy dashboard** (Vercel or Cloudflare Pages). Done: public URL.
+- [x] **3.2 Dashboard inside the extension** (replaces hosting; Daniel's call 2026-10-15). Full-tab `dashboard.html` opened from the popup's "Open dashboard", sharing the popup's session and theme. Done: e2e passes on both browsers (Firefox 21/21, Chrome 19/19); shipped in 0.1.1.
 - [ ] **3.3 Chrome Web Store.** Developer account (one-time fee), listing, review. Done: approved and installable.
 - [ ] **3.4 First users.** Onboard 5 AI Club members. Done: 5 active users + feedback notes.
 - [ ] **3.5 Success check** against PRD section 6. Done: numbers written down.
@@ -87,6 +87,7 @@ Takes Primora from the existing scaffold to a launched Chrome extension + dashbo
   - **Next:** Daniel's real-Firefox check of 1.7, then 2.4 dogfood week, Google sign-in setup.
 
 ---
+- 2026-10-15: **Deployment Phase 1 started** (plan: Claude Doc "Primora: Firefox + Chrome Web Store deployment plan"). 0.1.0 uploaded to AMO as unlisted and signed; sources zip now includes `shared/` + `.env.production` (gitignored, local only), clean rebuild matches. **Built 3.2**: the dashboard moved into the extension (`extension/entrypoints/dashboard/`), `WXT_DASHBOARD_URL` removed, e2e step 8 added. Version 0.1.1. `web/` is now unused. **Next:** Daniel uploads 0.1.1 to AMO and reinstalls; then the rest of Phase 2 (privacy policy, Confirm email off, Google sign-in + Supabase plan decisions).
 
 ## Resuming this build
 Default: `claude --continue` (same folder) or `claude --resume`. In a fresh session: read this tracker, skim `docs/PRD.md`, check `git log` / `git status` against what's marked done, then start at the first unchecked box. Sessions started from the Tauros vault can work here too: orient with this file first, do the work in this repo, and write durable notes back to the vault.
