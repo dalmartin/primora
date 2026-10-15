@@ -25,19 +25,19 @@ Takes Primora from the existing scaffold to a launched Chrome extension + dashbo
 ## Phase 0 -- Foundation
 - [~] **0.1 Repo cleanup.** README reflects v2 (extension + dashboard + Supabase; pipeline/api/modal marked parked). Done: README updated.
 - [x] **0.2 Supabase + v2 schema.** Supabase project linked; new migration with only `job_applications` (see PRD section 7) + RLS + unique (user_id, url). v1 tables left in place (drop by hand if wanted). Done: table visible; a signed-in user can insert/read their own rows and can't read another user's.
-- [~] **0.3 Dashboard sign-in.** supabase-js + Google sign-in in `web/`. Done: signs in, shows the user's email.
+- [x] **0.3 Dashboard sign-in.** supabase-js + Google sign-in in `web/`. Done: signs in, shows the user's email.
 
 ## Phase 1 -- Extension logging
-- [~] **1.1 Extension sign-in.** Google via `chrome.identity.launchWebAuthFlow` + Supabase OAuth; session stored in `chrome.storage`. Fallback: email + password. Done: popup shows the signed-in email after a browser restart.
+- [x] **1.1 Extension sign-in.** Google via `chrome.identity.launchWebAuthFlow` + Supabase OAuth; session stored in `chrome.storage`. Fallback: email + password. Done: popup shows the signed-in email after a browser restart.
 - [~] **1.2 Manual "I applied."** Popup button prefilled from the active tab (company, role, URL); editable before saving. Done: a manual log shows up in Supabase.
 - [~] **1.3 Greenhouse detection (hosted boards).** Inspect real pages; pick the signal (confirmation page, submit request, or form submit). Log company, role, URL, date, source. Done: a real or test application gets logged automatically.
 - [~] **1.4 Greenhouse detection (embedded iframes)** on company career pages. Done: verified on 2 companies that embed Greenhouse.
 - [~] **1.5 Ashby detection.** Done: verified on a real Ashby posting.
-- [~] **1.6 Duplicate guard + feedback.** Same URL twice → one row; a small toast/badge confirms "Logged: Company, Role." Done: double submit gives one row and one confirmation.
+- [x] **1.6 Duplicate guard + feedback.** Same URL twice → one row; a small toast/badge confirms "Logged: Company, Role." Done: double submit gives one row and one confirmation.
 
 ## Phase 2 -- Dashboard
 - [~] **2.1 Applications list.** Priority sort (offer → interview → OA → applied → likely ghosted → rejected, newest first within each); auto-ghost display rule (applied + no change in 30 days). Done: renders Daniel's real applications in the right order.
-- [~] **2.2 Status updates.** Change status from the dashboard and the popup; "still alive" resets the ghost clock. Done: an edit in the popup shows on the dashboard.
+- [x] **2.2 Status updates.** Change status from the dashboard and the popup; "still alive" resets the ghost clock. Done: an edit in the popup shows on the dashboard.
 - [~] **2.3 Edit, delete, search.** Done: works end to end.
 - [ ] **2.4 Dogfood week.** Daniel uses it for his own applications for a week. Done: a list of what annoyed him, fixes triaged.
 
@@ -67,6 +67,7 @@ Takes Primora from the existing scaffold to a launched Chrome extension + dashbo
   - 2.1 to 2.3: dashboard grouped by priority, filter chips with counts, search, add/edit/delete with inline confirm, "Still alive" on auto-ghosted rows, refresh on tab focus. Shared logic in `shared/applications.ts` (6 tests pass: `node --test shared/*.test.ts`). Theme tokens in `shared/theme.css` for Daniel's theme later.
   - **Next:** Daniel restores Supabase + tests per `docs/TESTING.md`; then 2.4 dogfood week.
 - 2026-10-15: Daniel restored the Supabase project; `supabase db push` applied the v2 migration. Database end-to-end check with two throwaway users (deleted after): insert, duplicate ignored, other user can't read or insert, status change restarts the ghost clock, signed-out sees nothing. All 6 pass. 0.2 verified.
+- 2026-10-15: **Daniel's live browser test.** Account created + signed in on the dashboard (email/password); extension loaded unpacked and signed in. Greenhouse confirmation URL → toast + row on the dashboard; refresh → "already logged", no duplicate; popup "This page" status change to Interview → dashboard regrouped. Verified: 0.3, 1.1 (email; Google not configured), 1.6, 2.2. 1.3 confirmation-URL path verified; a real submit still to watch.
 
 ---
 
