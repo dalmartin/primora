@@ -1,0 +1,39 @@
+/* Components shared by every theme. Colors, radii, shadows and fonts come from tokens
+   (see classic.css for the full list); decorations belong in a theme file, not here. */
+
+* { box-sizing: border-box; }
+body { margin: 0; font-family: var(--font); background: var(--bg); color: var(--text); }
+h1, h2, h3 { font-family: var(--font-display); }
+
+button, input, select, textarea { font: inherit; color: inherit; }
+input, select, textarea {
+  background: var(--surface); border: 1px solid var(--border-input); border-radius: var(--radius-control); padding: 7px 10px;
+}
+input:focus, select:focus, textarea:focus { outline: 2px solid var(--accent); outline-offset: -1px; }
+
+.btn {
+  border: 1px solid var(--border-strong); background: var(--surface); border-radius: var(--radius-control);
+  padding: 7px 12px; cursor: pointer; white-space: nowrap; box-shadow: var(--shadow-control);
+  transition: transform .08s ease-out, box-shadow .08s ease-out, background-color .15s;
+}
+.btn:hover { background: var(--surface-2); }
+.btn:active:not(:disabled) { transform: var(--press); box-shadow: var(--shadow-control-pressed); }
+.btn:disabled { opacity: .55; cursor: default; }
+.btn-primary { background: var(--primary-bg); color: var(--primary-text); border-color: var(--primary-border); }
+.btn-primary:hover { background: var(--primary-bg); filter: brightness(1.05); }
+.btn-ghost { border-color: transparent; background: transparent; box-shadow: none; }
+.btn-ghost:active:not(:disabled) { transform: none; box-shadow: none; }
+.btn-danger { color: var(--danger); }
+
+.muted { color: var(--text-muted); }
+.error { color: var(--danger); }
+
+.status-pill { display: inline-flex; align-items: center; gap: 5px; padding: 2px 8px; border-radius: var(--radius-pill); font-size: 12px; font-weight: 600; }
+.st-offer { background: var(--st-offer-bg); color: var(--st-offer); }
+.st-interview { background: var(--st-interview-bg); color: var(--st-interview); }
+.st-oa { background: var(--st-oa-bg); color: var(--st-oa); }
+.st-applied { background: var(--st-applied-bg); color: var(--st-applied); }
+.st-ghosted { background: var(--st-ghosted-bg); color: var(--st-ghosted); }
+.st-rejected { background: var(--st-rejected-bg); color: var(--st-rejected); }
+
+.status-select { border-radius: var(--radius-pill); padding: 3px 8px; font-size: 12px; font-weight: 600; border: none; cursor: pointer; }

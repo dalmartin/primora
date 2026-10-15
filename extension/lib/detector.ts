@@ -161,8 +161,9 @@ function showToast(result: LogResult) {
   const style = document.createElement('style');
   style.textContent = `
     .toast { position: fixed; z-index: 2147483647; right: 16px; bottom: 16px; max-width: 360px;
-      padding: 12px 14px; border-radius: 10px; font: 14px/1.4 system-ui, sans-serif;
-      color: #fff; background: ${result.ok ? '#166534' : '#92400e'}; box-shadow: 0 6px 24px rgba(0,0,0,.25);
+      padding: 12px 14px; border-radius: 4px; font: 14px/1.4 system-ui, sans-serif;
+      color: #2f2737; background: ${result.ok ? '#f5bccd' : '#fbe2d3'};
+      border: 1px solid #4a3f55; box-shadow: 3px 3px 0 #4a3f55;
       animation: in .2s ease-out; }
     @keyframes in { from { opacity: 0; transform: translateY(8px); } }`;
   const toast = document.createElement('div');

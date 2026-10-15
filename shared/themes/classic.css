@@ -1,0 +1,61 @@
+/* Classic: the original plain look. Also the fallback when no data-theme is set.
+   This file lists every token a theme can set. */
+:root, :root[data-theme="classic"] {
+  --font: ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+  --font-display: var(--font);
+  --radius: 10px;          /* cards, lists */
+  --radius-control: 8px;   /* buttons, inputs */
+  --radius-pill: 999px;    /* status pills, chips */
+
+  --bg: #f7f7f5;
+  --surface: #ffffff;
+  --surface-2: #f0f0ec;
+  --border: #e3e3dd;               /* dividers */
+  --border-strong: var(--border);  /* card and button outlines */
+  --border-input: var(--border);
+  --text: #1c1c1a;
+  --text-muted: #6b6b66;
+  --accent: #2f5bea;               /* links, focus rings */
+  --primary-bg: var(--accent);     /* primary button */
+  --primary-text: #ffffff;
+  --primary-border: var(--accent);
+  --danger: #c62828;
+
+  --shadow-card: none;
+  --shadow-control: none;
+  --shadow-control-pressed: none;
+  --press: none;                   /* transform on button press */
+
+  /* Status colors (background / text) */
+  --st-offer-bg: #dcfce7;     --st-offer: #166534;
+  --st-interview-bg: #dbeafe; --st-interview: #1e40af;
+  --st-oa-bg: #ede9fe;        --st-oa: #5b21b6;
+  --st-applied-bg: #f1f1ee;   --st-applied: #44443f;
+  --st-ghosted-bg: #fef3c7;   --st-ghosted: #92400e;
+  --st-rejected-bg: #fee2e2;  --st-rejected: #991b1b;
+
+  color-scheme: light;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme]), :root[data-theme="classic"] {
+    --bg: #141413;
+    --surface: #1e1e1c;
+    --surface-2: #262624;
+    --border: #34342f;
+    --text: #ececea;
+    --text-muted: #9a9a94;
+    --accent: #7c9bff;
+    --primary-text: #0b0b0a;
+    --danger: #ff7b7b;
+
+    --st-offer-bg: #12341f;     --st-offer: #86efac;
+    --st-interview-bg: #172a4d; --st-interview: #93c5fd;
+    --st-oa-bg: #2a1f4a;        --st-oa: #c4b5fd;
+    --st-applied-bg: #2a2a27;   --st-applied: #d4d4cf;
+    --st-ghosted-bg: #3a2a0c;   --st-ghosted: #fcd34d;
+    --st-rejected-bg: #3d1616;  --st-rejected: #fca5a5;
+
+    color-scheme: dark;
+  }
+}

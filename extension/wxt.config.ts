@@ -13,6 +13,14 @@ export default defineConfig({
     // Public job-board APIs, used to clean up company / role names after a submit.
     host_permissions: ['https://boards-api.greenhouse.io/*', 'https://api.ashbyhq.com/*'],
     ...(browser === 'firefox' && {
+      // Primrose outline: light ink on dark toolbars (Firefox only; Chrome has no equivalent).
+      action: {
+        theme_icons: [16, 32, 48, 96, 128].map((size) => ({
+          light: `icon/light-${size}.png`,
+          dark: `icon/${size}.png`,
+          size,
+        })),
+      },
       browser_specific_settings: {
         gecko: {
           // Fixed ID: Firefox MV3 requires one, and it keeps the identity redirect URL stable.

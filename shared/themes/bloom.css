@@ -1,0 +1,160 @@
+/* Bloom: pastel watercolor primroses on cream paper, held together by crisp ink outlines
+   and hard offset shadows (soft color, sharp edges).
+   Everything here is scoped to [data-theme="bloom"]; artwork lives in ./bloom/. */
+
+@font-face {
+  font-family: 'Fraunces Bloom';
+  src: url('./bloom/fraunces.woff2') format('woff2');
+  font-weight: 100 900;
+  font-display: swap;
+}
+
+:root[data-theme="bloom"] {
+  --font: ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+  --font-display: 'Fraunces Bloom', 'Iowan Old Style', Georgia, serif;
+  --radius: 4px;
+  --radius-control: 3px;
+  --radius-pill: 999px;
+
+  --ink: #4a3f55;
+  --bg: #fbf6f1;
+  --surface: #fffcf8;
+  --surface-2: #f7eee9;
+  --border: #eadfd8;
+  --border-strong: var(--ink);
+  --border-input: #cbbfcd;
+  --text: #2f2737;
+  --text-muted: #7b7084;
+  --accent: #b4537c;
+  --primary-bg: #f5bccd;
+  --primary-text: #2f2737;
+  --primary-border: var(--ink);
+  --danger: #b23a48;
+
+  --shadow-card: 4px 4px 0 #ebc3d6;
+  --shadow-control: 2px 2px 0 var(--ink);
+  --shadow-control-pressed: 0 0 0 var(--ink);
+  --press: translate(2px, 2px);
+
+  --st-offer-bg: #d5efdd;     --st-offer: #2f6b47;
+  --st-interview-bg: #dce4fa; --st-interview: #3b4f98;
+  --st-oa-bg: #e9dffa;        --st-oa: #67479c;
+  --st-applied-bg: #f6ead6;   --st-applied: #765833;
+  --st-ghosted-bg: #fbe2d3;   --st-ghosted: #9a573a;
+  --st-rejected-bg: #ede6ea;  --st-rejected: #7d6b77;
+
+  --paper-opacity: 1;
+  --primrose-opacity: .95;
+
+  color-scheme: light;
+}
+
+@media (prefers-color-scheme: dark) {
+  /* Night garden: deep moss green, cream ink, primrose pastels. */
+  :root[data-theme="bloom"] {
+    --ink: #e6dfcc;
+    --bg: #161c19;
+    --surface: #1e2622;
+    --surface-2: #26302b;
+    --border: #34403a;
+    --border-input: #4a5650;
+    --text: #f1efe6;
+    --text-muted: #a5b0a8;
+    --accent: #f2a9c4;
+    --primary-bg: #f2b6cb;
+    --primary-text: #1b211e;
+    --danger: #ff8c9b;
+
+    --shadow-card: 4px 4px 0 #4a3340;
+
+    --st-offer-bg: #22402f;     --st-offer: #b3e6c6;
+    --st-interview-bg: #243250; --st-interview: #bccbf6;
+    --st-oa-bg: #352a4d;        --st-oa: #d8c9f5;
+    --st-applied-bg: #3d3524;   --st-applied: #eedbb0;
+    --st-ghosted-bg: #45302a;   --st-ghosted: #f5c4a6;
+    --st-rejected-bg: #2c3330;  --st-rejected: #b9c1bb;
+
+    --paper-opacity: .5;
+    --primrose-opacity: .85;
+
+    color-scheme: dark;
+  }
+}
+
+/* ---------- Type ---------- */
+:root[data-theme="bloom"] :is(h1, h2, h3, .brand) {
+  font-family: var(--font-display);
+  font-variation-settings: 'SOFT' 100;
+  letter-spacing: -.01em;
+}
+
+/* ---------- Paper grain behind everything ---------- */
+:root[data-theme="bloom"] body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  opacity: var(--paper-opacity);
+  background: url('./bloom/paper.svg') 0 0 / 240px repeat;
+}
+
+/* Small flower mark, colored by currentColor (or --flower). */
+:root[data-theme="bloom"] :is(.topbar h1, .signin h1, .brand)::before,
+:root[data-theme="bloom"] .status-pill::before {
+  content: '';
+  display: inline-block;
+  flex: none;
+  width: 1em;
+  height: 1em;
+  background: var(--flower, currentColor);
+  -webkit-mask: url('./bloom/flower.svg') center / contain no-repeat;
+  mask: url('./bloom/flower.svg') center / contain no-repeat;
+}
+:root[data-theme="bloom"] :is(.topbar h1, .signin h1, .brand) {
+  --flower: var(--accent);
+  display: inline-flex;
+  align-items: center;
+  gap: .35em;
+}
+:root[data-theme="bloom"] .status-pill::before { width: 11px; height: 11px; }
+:root[data-theme="bloom"] .status-pill { font-family: var(--font); font-variation-settings: normal; letter-spacing: 0; }
+
+/* ---------- Dashboard ---------- */
+:root[data-theme="bloom"] .topbar h1 { font-size: 28px; font-weight: 600; }
+:root[data-theme="bloom"] .group h2 { font-size: 15px; }
+:root[data-theme="bloom"] .group h2::after {
+  content: '';
+  flex: 1;
+  border-top: 1px solid var(--border);
+}
+:root[data-theme="bloom"] .row-item { transition: background-color .15s; }
+:root[data-theme="bloom"] .row-item:hover { background: color-mix(in srgb, var(--surface-2) 60%, transparent); }
+:root[data-theme="bloom"] .status-select { box-shadow: inset 0 0 0 1px color-mix(in srgb, currentColor 35%, transparent); }
+:root[data-theme="bloom"] .chip { border-color: color-mix(in srgb, currentColor 30%, transparent); }
+
+/* A primrose growing up from the bottom-left corner (behind the content). */
+:root[data-theme="bloom"] :is(.page, .signin-wrap)::before {
+  content: '';
+  position: fixed;
+  z-index: -1;
+  left: 8px;
+  bottom: 0;
+  width: 210px;
+  height: 268px;
+  pointer-events: none;
+  opacity: var(--primrose-opacity);
+  background: url('./bloom/primrose.svg') center / contain no-repeat;
+}
+@media (max-width: 1240px) {
+  :root[data-theme="bloom"] .page::before { opacity: calc(var(--primrose-opacity) * .35); }
+}
+@media (max-width: 720px) {
+  :root[data-theme="bloom"] .page::before { display: none; }
+}
+
+:root[data-theme="bloom"] .signin h1 { font-size: 30px; font-weight: 600; }
+
+/* ---------- Extension popup ---------- */
+:root[data-theme="bloom"] .brand { font-size: 18px; font-weight: 600; }
+:root[data-theme="bloom"] .popup .card h2 { font-family: var(--font); font-variation-settings: normal; }

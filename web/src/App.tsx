@@ -16,6 +16,7 @@ import {
   type Application,
   type Status,
 } from '../../shared/applications'
+import { THEMES, applyTheme, savedTheme, type ThemeName } from '../../shared/theme'
 
 export default function App() {
   const [session, setSession] = useState<Session | null | undefined>(undefined)
@@ -160,6 +161,7 @@ function Dashboard({ session }: { session: Session }) {
       <header className="topbar">
         <h1>Primora</h1>
         <div className="row">
+          <ThemePicker />
           <span className="muted small">{session.user.email}</span>
           <button className="btn btn-ghost" onClick={() => supabase.auth.signOut()}>
             Sign out
@@ -245,6 +247,28 @@ function Dashboard({ session }: { session: Session }) {
         ))
       )}
     </div>
+  )
+}
+
+function ThemePicker() {
+  const [theme, setTheme] = useState<ThemeName>(savedTheme)
+  return (
+    <select
+      className="theme-select small"
+      value={theme}
+      aria-label="Theme"
+      onChange={(e) => {
+        const t = e.target.value as ThemeName
+        applyTheme(t, true)
+        setTheme(t)
+      }}
+    >
+      {(Object.keys(THEMES) as ThemeName[]).map((t) => (
+        <option key={t} value={t}>
+          {THEMES[t].label}
+        </option>
+      ))}
+    </select>
   )
 }
 

@@ -1,0 +1,26 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="-17 -17 34 34">
+  <!-- Primrose outline for the toolbar icon. Only the outer edge of the five notched
+       petals is drawn (petals filled, minus a slightly smaller fill = an outline with no
+       overlapping lines), the open eye, and a line from the eye to each dip between
+       petals so the five petals read at a glance. STROKE and INK are filled in per size/variant
+       by scripts/render-icons.py. -->
+  <defs>
+    <path id="p" d="M0 0 C-6 -3 -9.5 -9 -7.5 -13 C-5.5 -16.2 -1.6 -16.2 0 -14 C1.6 -16.2 5.5 -16.2 7.5 -13 C9.5 -9 6 -3 0 0Z"/>
+    <g id="petals">
+      <use href="#p"/>
+      <use href="#p" transform="rotate(72)"/>
+      <use href="#p" transform="rotate(144)"/>
+      <use href="#p" transform="rotate(216)"/>
+      <use href="#p" transform="rotate(288)"/>
+    </g>
+    <mask id="edge" maskUnits="userSpaceOnUse" x="-17" y="-17" width="34" height="34">
+      <use href="#petals" fill="#fff" stroke="#fff" stroke-width="STROKE" stroke-linejoin="round"/>
+      <use href="#petals" fill="#000" stroke="#000" stroke-width="0"/>
+    </mask>
+  </defs>
+  <g transform="scale(.94)">
+    <rect x="-17" y="-17" width="34" height="34" fill="INK" mask="url(#edge)"/>
+    <circle r="3.6" fill="none" stroke="INK" stroke-width="STROKE_HALF"/>
+    <path d="M2.12 -2.91 L8.05 -11.08 M3.42 1.11 L13.03 4.23 M0.00 3.60 L0.00 13.70 M-3.42 1.11 L-13.03 4.23 M-2.12 -2.91 L-8.05 -11.08" stroke="INK" stroke-width="STROKE_HALF" stroke-linecap="round"/>
+  </g>
+</svg>

@@ -1,82 +1,15 @@
-/* Primora theme tokens, shared by the dashboard and the extension popup.
-   Restyle the whole app from here. */
-:root {
-  --font: ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
-  --radius: 10px;
+/* Primora themes, shared by the dashboard and the extension popup.
 
-  --bg: #f7f7f5;
-  --surface: #ffffff;
-  --surface-2: #f0f0ec;
-  --border: #e3e3dd;
-  --text: #1c1c1a;
-  --text-muted: #6b6b66;
-  --accent: #2f5bea;
-  --accent-text: #ffffff;
-  --danger: #c62828;
+   How it fits together:
+   - themes/base.css     components (buttons, inputs, pills). Uses only tokens, no colors.
+   - themes/classic.css  the original look. Also the fallback when no theme is set.
+   - themes/bloom.css    pastel watercolor primroses. Every decoration is scoped to
+                         [data-theme="bloom"], so switching away removes all of it.
 
-  /* Status colors (background / text) */
-  --st-offer-bg: #dcfce7;     --st-offer: #166534;
-  --st-interview-bg: #dbeafe; --st-interview: #1e40af;
-  --st-oa-bg: #ede9fe;        --st-oa: #5b21b6;
-  --st-applied-bg: #f1f1ee;   --st-applied: #44443f;
-  --st-ghosted-bg: #fef3c7;   --st-ghosted: #92400e;
-  --st-rejected-bg: #fee2e2;  --st-rejected: #991b1b;
-
-  color-scheme: light;
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --bg: #141413;
-    --surface: #1e1e1c;
-    --surface-2: #262624;
-    --border: #34342f;
-    --text: #ececea;
-    --text-muted: #9a9a94;
-    --accent: #7c9bff;
-    --accent-text: #0b0b0a;
-    --danger: #ff7b7b;
-
-    --st-offer-bg: #12341f;     --st-offer: #86efac;
-    --st-interview-bg: #172a4d; --st-interview: #93c5fd;
-    --st-oa-bg: #2a1f4a;        --st-oa: #c4b5fd;
-    --st-applied-bg: #2a2a27;   --st-applied: #d4d4cf;
-    --st-ghosted-bg: #3a2a0c;   --st-ghosted: #fcd34d;
-    --st-rejected-bg: #3d1616;  --st-rejected: #fca5a5;
-
-    color-scheme: dark;
-  }
-}
-
-* { box-sizing: border-box; }
-body { margin: 0; font-family: var(--font); background: var(--bg); color: var(--text); }
-
-button, input, select, textarea { font: inherit; color: inherit; }
-input, select, textarea {
-  background: var(--surface); border: 1px solid var(--border); border-radius: 8px; padding: 7px 10px;
-}
-input:focus, select:focus, textarea:focus { outline: 2px solid var(--accent); outline-offset: -1px; }
-
-.btn {
-  border: 1px solid var(--border); background: var(--surface); border-radius: 8px;
-  padding: 7px 12px; cursor: pointer; white-space: nowrap;
-}
-.btn:hover { background: var(--surface-2); }
-.btn:disabled { opacity: .55; cursor: default; }
-.btn-primary { background: var(--accent); color: var(--accent-text); border-color: var(--accent); }
-.btn-primary:hover { background: var(--accent); filter: brightness(1.08); }
-.btn-ghost { border-color: transparent; background: transparent; }
-.btn-danger { color: var(--danger); }
-
-.muted { color: var(--text-muted); }
-.error { color: var(--danger); }
-
-.status-pill { display: inline-block; padding: 2px 8px; border-radius: 999px; font-size: 12px; font-weight: 600; }
-.st-offer { background: var(--st-offer-bg); color: var(--st-offer); }
-.st-interview { background: var(--st-interview-bg); color: var(--st-interview); }
-.st-oa { background: var(--st-oa-bg); color: var(--st-oa); }
-.st-applied { background: var(--st-applied-bg); color: var(--st-applied); }
-.st-ghosted { background: var(--st-ghosted-bg); color: var(--st-ghosted); }
-.st-rejected { background: var(--st-rejected-bg); color: var(--st-rejected); }
-
-.status-select { border-radius: 999px; padding: 3px 8px; font-size: 12px; font-weight: 600; border: none; cursor: pointer; }
+   Pick the default theme in shared/theme.ts (DEFAULT_THEME). The dashboard also has a
+   picker that remembers your choice per browser.
+   New theme: copy classic.css, rename the selector, change tokens, import it here,
+   and add it to THEMES in shared/theme.ts. */
+@import './themes/base.css';
+@import './themes/classic.css';
+@import './themes/bloom.css';

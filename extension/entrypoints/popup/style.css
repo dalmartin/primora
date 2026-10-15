@@ -1,6 +1,6 @@
 @import '../../../shared/theme.css';
 
-body { width: 380px; min-height: 120px; }
+body { width: 380px; min-height: 120px; overflow-x: hidden; }
 .popup { padding: 12px; font-size: 13px; }
 .popup-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 10px; gap: 8px; }
 .brand { font-size: 15px; letter-spacing: .2px; }
@@ -14,7 +14,8 @@ body { width: 380px; min-height: 120px; }
 .small { font-size: 12px; padding: 3px 6px; }
 p { margin: 0; }
 
-.card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 10px; display: flex; flex-direction: column; gap: 8px; }
+.card { background: var(--surface); border: 1px solid var(--border-strong); border-radius: var(--radius); padding: 10px;
+  box-shadow: var(--shadow-card); display: flex; flex-direction: column; gap: 8px; }
 .card h2 { font-size: 12px; text-transform: uppercase; letter-spacing: .6px; color: var(--text-muted); margin: 0; }
 .link { color: var(--accent); text-decoration: none; font-size: 12px; }
 

@@ -79,6 +79,13 @@ Takes Primora from the existing scaffold to a launched Chrome extension + dashbo
   - Google sign-in on Firefox: the code path is the same; Supabase must allow `https://ae1479f9372be75efe117634082fe5cd7148462a.extensions.allizom.org/` (in `docs/TESTING.md`). Not tested (Google provider still not configured).
   - **Next:** Daniel loads `.output/firefox-mv3` in his Firefox (steps in `docs/TESTING.md`), then 2.4 dogfood week, Daniel's theme, Google sign-in setup. A temporary add-on unloads when Firefox quits; for permanent install it needs AMO signing (unlisted is fine), worth adding to Phase 3.
 
+- 2026-10-15: **Makeover: "Bloom" theme** (Daniel: pastel/watercolor, flowers, cutesy but not over the top, soft with sharp edges, easy to switch). Daniel picked Bloom after one round of feedback.
+  - Themes are swappable: `shared/theme.css` imports `themes/base.css` (components, tokens only), `themes/classic.css` (the old look, every token listed) and `themes/bloom.css` (all decoration scoped to `[data-theme="bloom"]`). Default in `shared/theme.ts` (`DEFAULT_THEME`); the dashboard header has a Bloom / Classic picker (per browser). The popup always uses the default.
+  - Bloom: cream paper grain, a watercolor primrose (the namesake) growing from the bottom-left corner, primrose marks on the logo and status pills, Fraunces headings (bundled, OFL), thin ink outlines + hard offset shadows. Dark mode is a moss-green "night garden" (Daniel didn't like plum).
+  - Extension: primrose-outline toolbar icon (source `extension/icon-src/primrose.svg`, rendered by `extension/scripts/render-icons.py`; Firefox switches to a light outline on dark toolbars), pastel pink toast (peach for queued / error). Dashboard favicon is the filled primrose.
+  - Checked with headless screenshots (dashboard light/dark/mobile, sign-in, empty state, popup, toast); Firefox e2e still 17/17.
+  - **Next:** Daniel's real-Firefox check of 1.7, then 2.4 dogfood week, Google sign-in setup.
+
 ---
 
 ## Resuming this build

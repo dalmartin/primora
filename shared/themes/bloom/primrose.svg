@@ -1,0 +1,91 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 220 280">
+  <!-- Primrose (Primula vulgaris), Primora's namesake: a rosette of crinkled leaves, single
+       flowers on slender stalks, five notched heart-shaped petals around a deeper yellow eye.
+       Soft watercolor fills sit slightly off crisp ink outlines. The flower outline matches
+       the toolbar icon (extension/icon-src/primrose.svg). -->
+  <defs>
+    <filter id="wc" x="-20%" y="-20%" width="140%" height="140%">
+      <feTurbulence type="fractalNoise" baseFrequency=".05" numOctaves="2" seed="5"/>
+      <feDisplacementMap in="SourceGraphic" scale="4" xChannelSelector="R" yChannelSelector="G"/>
+      <feGaussianBlur stdDeviation=".45"/>
+    </filter>
+    <!-- One notched petal pointing up from the flower's center. -->
+    <path id="petal" d="M0 0 C-6 -3 -9.5 -9 -7.5 -13 C-5.5 -16.2 -1.6 -16.2 0 -14 C1.6 -16.2 5.5 -16.2 7.5 -13 C9.5 -9 6 -3 0 0Z"/>
+    <g id="flower">
+      <use href="#petal"/>
+      <use href="#petal" transform="rotate(72)"/>
+      <use href="#petal" transform="rotate(144)"/>
+      <use href="#petal" transform="rotate(216)"/>
+      <use href="#petal" transform="rotate(288)"/>
+    </g>
+    <!-- Ink for one flower: only the outer edge of the petals, a line from the eye to each
+         dip between petals, and the eye. -->
+    <mask id="edge" maskUnits="userSpaceOnUse" x="-20" y="-20" width="40" height="40">
+      <use href="#flower" fill="#fff" stroke="#fff" stroke-width="1.25" stroke-linejoin="round"/>
+      <use href="#flower" fill="#000"/>
+    </mask>
+    <g id="flower-ink">
+      <rect x="-20" y="-20" width="40" height="40" fill="#4a3f55" mask="url(#edge)"/>
+      <g fill="none" stroke="#4a3f55" stroke-width=".65" stroke-linecap="round">
+        <path d="M2.12 -2.91 L8.05 -11.08 M3.42 1.11 L13.03 4.23 M0 3.6 L0 13.7 M-3.42 1.11 L-13.03 4.23 M-2.12 -2.91 L-8.05 -11.08"/>
+        <circle r="3.6"/>
+      </g>
+    </g>
+    <!-- Tongue-shaped leaf from the rosette center, pointing up. -->
+    <path id="leaf" d="M0 0 C-7 -10 -14 -30 -12 -48 C-11 -58 -5 -64 0 -64 C5 -64 11 -58 12 -48 C14 -30 7 -10 0 0Z" vector-effect="non-scaling-stroke"/>
+    <!-- Midrib + side veins give the crinkled primrose texture. -->
+    <path id="veins" d="M0 -2 C0 -20 0 -40 0 -58 M0 -16 L-6 -24 M0 -16 L6 -24 M0 -30 L-8 -38 M0 -30 L8 -38 M0 -44 L-7 -51 M0 -44 L7 -51" vector-effect="non-scaling-stroke"/>
+    <g id="rosette">
+      <use href="#leaf" transform="rotate(-72) scale(.85)"/>
+      <use href="#leaf" transform="rotate(-42)"/>
+      <use href="#leaf" transform="rotate(-12) scale(.9)"/>
+      <use href="#leaf" transform="rotate(20) scale(.95)"/>
+      <use href="#leaf" transform="rotate(52) scale(.85)"/>
+      <use href="#leaf" transform="rotate(78) scale(.7)"/>
+    </g>
+    <g id="rosette-veins">
+      <use href="#veins" transform="rotate(-72) scale(.85)"/>
+      <use href="#veins" transform="rotate(-42)"/>
+      <use href="#veins" transform="rotate(-12) scale(.9)"/>
+      <use href="#veins" transform="rotate(20) scale(.95)"/>
+      <use href="#veins" transform="rotate(52) scale(.85)"/>
+      <use href="#veins" transform="rotate(78) scale(.7)"/>
+    </g>
+  </defs>
+
+  <!-- Watercolor layer (nudged off the ink) -->
+  <g filter="url(#wc)" opacity=".88" transform="translate(2.5 2)">
+    <use href="#rosette" transform="translate(108 258)" fill="#c4dfc0"/>
+    <use href="#flower" transform="translate(76 118) scale(1.55)" fill="#f8e7a2"/>
+    <use href="#flower" transform="translate(132 76) scale(1.8) rotate(14)" fill="#f8e7a2"/>
+    <use href="#flower" transform="translate(168 146) scale(1.35) rotate(-10)" fill="#f5bccd"/>
+    <ellipse cx="146" cy="192" rx="5" ry="8" transform="rotate(24 146 192)" fill="#f8e7a2"/>
+    <g fill="#ecc152">
+      <circle cx="76" cy="118" r="5.2"/>
+      <circle cx="132" cy="76" r="6"/>
+      <circle cx="168" cy="146" r="4.6"/>
+    </g>
+    <g fill="#a9c77b">
+      <circle cx="76" cy="118" r="1.8"/>
+      <circle cx="132" cy="76" r="2"/>
+      <circle cx="168" cy="146" r="1.6"/>
+    </g>
+  </g>
+
+  <!-- Ink layer -->
+  <g fill="none" stroke="#4a3f55" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round">
+    <!-- stalks, each ending at its flower's lowest dip -->
+    <path d="M104 252 C98 210 84 170 76 139"/>
+    <path d="M108 252 C114 190 122 135 126 100"/>
+    <path d="M110 252 C132 220 160 190 171 164"/>
+    <path d="M109 252 C122 232 136 214 143 200"/>
+    <use href="#rosette" transform="translate(108 258)"/>
+    <use href="#rosette-veins" transform="translate(108 258)" stroke-width=".7" opacity=".7"/>
+    <!-- bud with its calyx -->
+    <ellipse cx="146" cy="192" rx="5" ry="8" transform="rotate(24 146 192)"/>
+    <path d="M140 200 C142 205 146 206 149 202" stroke-width=".9"/>
+  </g>
+  <use href="#flower-ink" transform="translate(76 118) scale(1.55)"/>
+  <use href="#flower-ink" transform="translate(132 76) scale(1.8) rotate(14)"/>
+  <use href="#flower-ink" transform="translate(168 146) scale(1.35) rotate(-10)"/>
+</svg>

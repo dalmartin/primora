@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="-17 -17 34 34">
+  <!-- Primrose mark (five notched petals, open eye), used as a CSS mask: it takes the
+       color of currentColor (or the flower CSS variable). -->
+  <mask id="eye">
+    <rect x="-17" y="-17" width="34" height="34" fill="#fff"/>
+    <circle r="3.6" fill="#000"/>
+    <!-- gaps between petals -->
+    <path d="M2.12 -2.91 L8.05 -11.08 M3.42 1.11 L13.03 4.23 M0.00 3.60 L0.00 13.70 M-3.42 1.11 L-13.03 4.23 M-2.12 -2.91 L-8.05 -11.08" stroke="#000" stroke-width="1.6" stroke-linecap="round"/>
+  </mask>
+  <g mask="url(#eye)" fill="#000">
+    <path id="p" d="M0 0 C-6 -3 -9.5 -9 -7.5 -13 C-5.5 -16.2 -1.6 -16.2 0 -14 C1.6 -16.2 5.5 -16.2 7.5 -13 C9.5 -9 6 -3 0 0Z"/>
+    <use href="#p" transform="rotate(72)"/>
+    <use href="#p" transform="rotate(144)"/>
+    <use href="#p" transform="rotate(216)"/>
+    <use href="#p" transform="rotate(288)"/>
+  </g>
+  <circle r="1.7" fill="#000"/>
+</svg>

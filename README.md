@@ -11,7 +11,7 @@ A browser extension (Chrome + Firefox) that logs your internship applications wh
 |---|---|---|
 | `extension/` | Detects submits on Greenhouse + Ashby; popup with "I applied" and quick status | WXT + React + TypeScript (MV3, Chrome + Firefox) |
 | `web/` | Dashboard: applications sorted by how promising, status edits | React + Vite + TypeScript |
-| `shared/` | Types, statuses, priority sort, auto-ghost rule, posting keys, theme tokens (`theme.css`) | TypeScript, CSS |
+| `shared/` | Types, statuses, priority sort, auto-ghost rule, posting keys, themes (`theme.css`, `themes/`; default in `theme.ts`) | TypeScript, CSS |
 | `supabase/` | Schema (`job_applications` + row-level security) | Supabase Postgres + Auth |
 | `pipeline/`, `api/`, `modal_app.py` | **Parked** (v1 prediction work). Kept for future "opens soon" reminders | Python |
 
