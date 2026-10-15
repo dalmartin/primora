@@ -36,9 +36,9 @@ Takes Primora from the existing scaffold to a launched Chrome extension + dashbo
 - [x] **1.6 Duplicate guard + feedback.** Same URL twice → one row; a small toast/badge confirms "Logged: Company, Role." Done: double submit gives one row and one confirmation.
 
 ## Phase 2 -- Dashboard
-- [~] **2.1 Applications list.** Priority sort (offer → interview → OA → applied → likely ghosted → rejected, newest first within each); auto-ghost display rule (applied + no change in 30 days). Done: renders Daniel's real applications in the right order.
+- [x] **2.1 Applications list.** Priority sort (offer → interview → OA → applied → likely ghosted → rejected, newest first within each); auto-ghost display rule (applied + no change in 30 days). Done: renders Daniel's real applications in the right order.
 - [x] **2.2 Status updates.** Change status from the dashboard and the popup; "still alive" resets the ghost clock. Done: an edit in the popup shows on the dashboard.
-- [~] **2.3 Edit, delete, search.** Done: works end to end.
+- [x] **2.3 Edit, delete, search.** Done: works end to end.
 - [ ] **2.4 Dogfood week.** Daniel uses it for his own applications for a week. Done: a list of what annoyed him, fixes triaged.
 
 ## Phase 3 -- Launch prep
@@ -68,6 +68,7 @@ Takes Primora from the existing scaffold to a launched Chrome extension + dashbo
   - **Next:** Daniel restores Supabase + tests per `docs/TESTING.md`; then 2.4 dogfood week.
 - 2026-10-15: Daniel restored the Supabase project; `supabase db push` applied the v2 migration. Database end-to-end check with two throwaway users (deleted after): insert, duplicate ignored, other user can't read or insert, status change restarts the ghost clock, signed-out sees nothing. All 6 pass. 0.2 verified.
 - 2026-10-15: **Daniel's live browser test.** Account created + signed in on the dashboard (email/password); extension loaded unpacked and signed in. Greenhouse confirmation URL → toast + row on the dashboard; refresh → "already logged", no duplicate; popup "This page" status change to Interview → dashboard regrouped. Verified: 0.3, 1.1 (email; Google not configured), 1.6, 2.2. 1.3 confirmation-URL path verified; a real submit still to watch.
+- 2026-10-15: Live test found a bug: a backdated manual entry never showed as likely ghosted (its clock started at save time). Fixed in `c69920b` (clock starts at the applied date). Retested by Daniel: ghosted + "Still alive" work; add/delete work. Verified 2.1, 2.3. **Still to see live (during the dogfood week):** a real Greenhouse submit, embedded Greenhouse, a real Ashby submit, manual "I applied" on another site, the signed-out queue. **Next:** 2.4 dogfood week; Daniel's theme; Google sign-in setup.
 
 ---
 
