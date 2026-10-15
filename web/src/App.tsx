@@ -209,6 +209,8 @@ function Dashboard({ session }: { session: Session }) {
               url: v.url,
               notes: v.notes,
               applied_at: v.applied_at,
+              // The ghost clock starts when you applied, not when you logged it.
+              status_updated_at: v.applied_at,
               status: v.status,
               posting_key: ref?.key ?? (v.url ? urlPostingKey(v.url) : `manual:${crypto.randomUUID()}`),
               source: 'manual',
@@ -284,10 +286,14 @@ function Row({
           initial={app}
           onCancel={() => setEditing(false)}
           onSave={async (v) => {
-            await onPatch(app.id, {
-              ...v,
-              ...(v.status !== app.status ? { status_updated_at: new Date().toISOString() } : {}),
-            })
+            // Status changed: restart the clock. Untouched since applying: the clock follows the new date.
+            const clock =
+              v.status !== app.status
+                ? { status_updated_at: new Date().toISOString() }
+                : app.status_updated_at === app.applied_at
+                  ? { status_updated_at: v.applied_at }
+                  : {}
+            await onPatch(app.id, { ...v, ...clock })
             setEditing(false)
             return null
           }}
